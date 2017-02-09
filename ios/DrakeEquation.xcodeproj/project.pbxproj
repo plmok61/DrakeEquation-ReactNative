@@ -22,6 +22,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		147B69C61E4BEA0000DE5D3E /* Audiowide-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 147B69C51E4BEA0000DE5D3E /* Audiowide-Regular.ttf */; };
+		147B69CB1E4BEA2600DE5D3E /* Exo2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 147B69CA1E4BEA2600DE5D3E /* Exo2-Regular.ttf */; };
+		147B69D01E4BEA3900DE5D3E /* Exo2-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 147B69CF1E4BEA3900DE5D3E /* Exo2-Bold.ttf */; };
+		147B69D51E4BEA4A00DE5D3E /* Exo2-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 147B69D41E4BEA4A00DE5D3E /* Exo2-Italic.ttf */; };
+		147B69DA1E4BEA5800DE5D3E /* Exo2-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 147B69D91E4BEA5800DE5D3E /* Exo2-BlackItalic.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -250,6 +255,11 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = DrakeEquation/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = DrakeEquation/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		147B69C51E4BEA0000DE5D3E /* Audiowide-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Audiowide-Regular.ttf"; path = "../../../fonts/Audiowide/Audiowide-Regular.ttf"; sourceTree = "<group>"; };
+		147B69CA1E4BEA2600DE5D3E /* Exo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Regular.ttf"; path = "../../../fonts/Exo_2/Exo2-Regular.ttf"; sourceTree = "<group>"; };
+		147B69CF1E4BEA3900DE5D3E /* Exo2-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Bold.ttf"; path = "../../../fonts/Exo_2/Exo2-Bold.ttf"; sourceTree = "<group>"; };
+		147B69D41E4BEA4A00DE5D3E /* Exo2-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-Italic.ttf"; path = "../../../fonts/Exo_2/Exo2-Italic.ttf"; sourceTree = "<group>"; };
+		147B69D91E4BEA5800DE5D3E /* Exo2-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Exo2-BlackItalic.ttf"; path = "../../../fonts/Exo_2/Exo2-BlackItalic.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* DrakeEquation-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DrakeEquation-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* DrakeEquation-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DrakeEquation-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -467,6 +477,11 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* DrakeEquationTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				147B69C51E4BEA0000DE5D3E /* Audiowide-Regular.ttf */,
+				147B69CA1E4BEA2600DE5D3E /* Exo2-Regular.ttf */,
+				147B69CF1E4BEA3900DE5D3E /* Exo2-Bold.ttf */,
+				147B69D41E4BEA4A00DE5D3E /* Exo2-Italic.ttf */,
+				147B69D91E4BEA5800DE5D3E /* Exo2-BlackItalic.ttf */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -569,14 +584,22 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = S5C688V9WF;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = S5C688V9WF;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = S5C688V9WF;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = S5C688V9WF;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -840,7 +863,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				147B69CB1E4BEA2600DE5D3E /* Exo2-Regular.ttf in Resources */,
+				147B69D51E4BEA4A00DE5D3E /* Exo2-Italic.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				147B69C61E4BEA0000DE5D3E /* Audiowide-Regular.ttf in Resources */,
+				147B69DA1E4BEA5800DE5D3E /* Exo2-BlackItalic.ttf in Resources */,
+				147B69D01E4BEA3900DE5D3E /* Exo2-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,6 +987,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -979,7 +1009,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				INFOPLIST_FILE = DrakeEquationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -996,15 +1028,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: PHILIP MOK (XK5MJDNT5B)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				INFOPLIST_FILE = DrakeEquation/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = space.drakeequation.DrakeEquationCalculator;
 				PRODUCT_NAME = DrakeEquation;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1014,14 +1051,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: PHILIP MOK (S5C688V9WF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				INFOPLIST_FILE = DrakeEquation/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = space.drakeequation.DrakeEquationCalculator;
 				PRODUCT_NAME = DrakeEquation;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1036,7 +1078,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "DrakeEquation-tvOS/Info.plist";
@@ -1062,8 +1106,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "DrakeEquation-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1087,7 +1133,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "DrakeEquation-tvOSTests/Info.plist";
@@ -1108,8 +1156,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "DrakeEquation-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1138,8 +1188,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: PHILIP MOK (XK5MJDNT5B)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: PHILIP MOK (XK5MJDNT5B)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1179,8 +1231,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: PHILIP MOK (S5C688V9WF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: PHILIP MOK (S5C688V9WF)";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = S5C688V9WF;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Slider } from 'react-native'
-import TextPrimary from './TextPrimary'
+import TextSecondary from './TextSecondary'
 
 export default class DrakeInput extends Component {
   constructor(props) {
@@ -14,13 +14,14 @@ export default class DrakeInput extends Component {
     const { descriptionText, changeValue, inputId, min, max, step, value } = this.props
     return (
       <View>
-        <TextPrimary>
+        <TextSecondary style={{color: 'black', fontSize: 15}}>
           {descriptionText} {this.state.value}
-        </TextPrimary>
+        </TextSecondary>
         <Slider
           onValueChange={(value) => {
-            this.setState({ value: value },
-              changeValue(inputId, value)) 
+            const rounded = Math.round(100*value)/100
+            this.setState({ value: rounded },
+              changeValue(inputId, rounded)) 
           }}
           minimumValue={min}
           maximumValue={max}

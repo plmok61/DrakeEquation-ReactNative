@@ -1,12 +1,16 @@
 import React from 'react'
 import { View } from 'react-native'
-import TextPrimary from './TextPrimary'
+import TextSecondary from './TextSecondary'
+import styles from '../styles'
 
 const Result = (props) =>
-  <View className="result">
-    <TextPrimary>
-      If these values are correct {props.numCivs} alien civilizations currently exist.
-    </TextPrimary>
+  <View style={styles.result}>
+    <TextSecondary style={{fontSize: 20, textAlign: 'center'}}>
+      Alien civilizations in the Milky Way:
+    </TextSecondary>
+    <TextSecondary style={{fontSize: 40}}>
+      {props.numCivs}
+    </TextSecondary>
   </View>
 
 export default Result;

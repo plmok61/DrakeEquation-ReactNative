@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import Result from './Result'
 import DrakeInput from './DrakeInput'
 import initialValues from './initialValues'
+import styles from '../styles'
 
 export default class Equation extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export default class Equation extends Component {
   render() {
     return (
       <View>
-        <View>
+        <View style={styles.equation}>
 
           {
             initialValues.map(val => (

@@ -22,6 +22,14 @@ const styles = StyleSheet.create({
   },
   result: {
     alignItems: 'center'
+  },
+  apodContainer: {
+    height: height,
+    padding: 10
+  },
+  apod: {
+    width: width - 30,
+    height: width - 30
   }
 })
 

@@ -11,7 +11,7 @@ const initialValues = [
     inputId: 'fPlanets',
     min: 0,
     max: 1,
-    step: 0.1,
+    step: 0.01,
     startValue: 1,
     descriptionText: 'Fraction of stars with planets: '
   },
@@ -19,7 +19,7 @@ const initialValues = [
     inputId: 'nEarthLike',
     min: 0,
     max: 5,
-    step: 0.1,
+    step: 0.01,
     startValue: 1,
     descriptionText: 'Number of Earth-like planets per star: '
   },
@@ -45,7 +45,7 @@ const initialValues = [
     max: 1,
     step: 0.01,
     startValue: 0.1,
-    descriptionText: 'Fraction that communicate their existence: '
+    descriptionText: 'Fraction that are communicative: '
   },
   {
     inputId: 'lComm',

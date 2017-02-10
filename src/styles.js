@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 8,
   },
+  flexRow: {
+    flexDirection: 'row',
+    justifyContent:'space-between'
+  },
   equation: {
     backgroundColor: '#d7d7d7',
     padding: 20,

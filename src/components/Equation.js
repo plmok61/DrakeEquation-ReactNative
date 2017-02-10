@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableHighlight, Text } from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import Result from './Result'
 import DrakeInput from './DrakeInput'
 import initialValues from './initialValues'
 import styles from '../styles'
+import TextSecondary from './TextSecondary'
 
 export default class Equation extends Component {
   constructor(props) {
@@ -21,7 +23,6 @@ export default class Equation extends Component {
     this.calculateCivs = this.calculateCivs.bind(this)
     this.changeValue = this.changeValue.bind(this)
   }
-
 
   calculateCivs() {
     let values = []
@@ -48,9 +49,11 @@ export default class Equation extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
+        <TextSecondary style={{fontSize: 20, textAlign: 'center'}}>
+          Calculate the number of alien civilizations in our galaxy
+        </TextSecondary>
         <View style={styles.equation}>
-
           {
             initialValues.map(val => (
               <DrakeInput
@@ -68,6 +71,9 @@ export default class Equation extends Component {
       
         </View>
         <Result numCivs={this.state.numCivs} />
+        <TouchableHighlight onPress={Actions.apod}>
+          <Text>APOD</Text>
+        </TouchableHighlight>
       </View>
     )
   }

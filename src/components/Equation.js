@@ -22,7 +22,6 @@ export default class Equation extends Component {
     this.changeValue = this.changeValue.bind(this)
   }
 
-
   calculateCivs() {
     let values = []
     let inputs = this.state
@@ -48,7 +47,7 @@ export default class Equation extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.equation}>
 
           {

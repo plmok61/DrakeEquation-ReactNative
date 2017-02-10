@@ -7,8 +7,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#222',
-    marginTop: 22
+    backgroundColor: 'transparent',
+    marginTop: 64
+  },
+  tabBarStyle: {
+    backgroundColor: '#d7d7d7',
+    borderTopColor: 'darkslateblue',
+    borderTopWidth: 1,
   },
   centering: {
     alignItems: 'center',

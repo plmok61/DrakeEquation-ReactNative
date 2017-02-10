@@ -1,24 +1,32 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Provider, connect } from 'react-redux'
-import { Actions, Router, Scene } from 'react-native-router-flux'
+import { Actions, Router, Scene, Modal } from 'react-native-router-flux'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import store from '../store'
 import styles from '../styles'
 import TextPrimary from './TextPrimary'
 import Equation from './Equation'
-import APODModal from './APODModal'
+import APOD from './APOD'
 
 const RouterWithRedux = connect()(Router)
 
+const TabIcon = ({ selected, iconName }) => (
+  <Icon name={iconName} size={30} color={selected ? '#222' : 'darkslateblue'} />
+)
+
+
 const Scenes = Actions.create(
-  <Scene key='root'>
-    <Scene
-      key='equation'
-      component={Equation}
-      title='Drake Equation'
-      titleStyle={{color:'darkslateblue'}}
-      initial={true}
-    >
+  <Scene key='modal' component={Modal}>
+    <Scene key='root'>
+      <Scene key='tabbar' tabs={true} tabBarStyle={styles.tabBarStyle}>
+        <Scene key='tab1' title='Drake Equation' icon={TabIcon} iconName='plus'>
+          <Scene key='equation' component={Equation} title='Drake Equation' initial={true} />
+        </Scene>
+        <Scene key='tab2' title='Astronomy Picture of the Day' icon={TabIcon} iconName='star'>
+          <Scene key='apod' component={APOD} title='Astronomy Picture of the Day' />
+        </Scene>
+      </Scene>
     </Scene>
   </Scene>
 )
@@ -31,25 +39,9 @@ export default class App extends Component {
           scenes={Scenes}
           sceneStyle={{backgroundColor: '#222'}} 
           navigationBarStyle={{backgroundColor:'#D7D7D7'}}
-          titleStyle={{fontFamily: 'Audiowide'}}
+          titleStyle={{fontFamily: 'Audiowide', color: 'darkslateblue'}}
         />
       </Provider>
     )
   }
 }
-
-// export default class App extends Component {
-//   render() {
-//     return (
-//       <Provider store={store}>
-//         <View style={styles.container}>
-//           <TextPrimary style={{fontSize: 30, marginBottom: 10}}>
-//             Drake Equation
-//           </TextPrimary>
-//           <Equation />
-//           <APODModal />
-//         </View>
-//       </Provider>
-//     )
-//   }
-// }

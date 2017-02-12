@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableHighlight, Text } from 'react-native'
+import { View, StyleSheet, TouchableHighlight, Text, ScrollView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Result from './Result'
 import DrakeInput from './DrakeInput'
@@ -50,30 +50,26 @@ export default class Equation extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextSecondary style={{fontSize: 20, textAlign: 'center'}}>
-          Calculate the number of alien civilizations in our galaxy
-        </TextSecondary>
-        <View style={styles.equation}>
-          {
-            initialValues.map(val => (
-              <DrakeInput
-                inputId={val.inputId}
-                changeValue={this.changeValue}
-                min={val.min}
-                max={val.max}
-                step={val.step}
-                inputValue={val.startValue}
-                descriptionText={val.descriptionText}
-                key={val.inputId}
-              />
-            ))
-          }
-      
-        </View>
-        <Result numCivs={this.state.numCivs} />
-        <TouchableHighlight onPress={Actions.apod}>
-          <Text>APOD</Text>
-        </TouchableHighlight>
+        <ScrollView>
+          <Result numCivs={this.state.numCivs} />
+          <View style={styles.equation}>
+            {
+              initialValues.map(val => (
+                <DrakeInput
+                  inputId={val.inputId}
+                  changeValue={this.changeValue}
+                  min={val.min}
+                  max={val.max}
+                  step={val.step}
+                  inputValue={val.startValue}
+                  descriptionText={val.descriptionText}
+                  key={val.inputId}
+                />
+              ))
+            }
+        
+          </View>
+        </ScrollView>
       </View>
     )
   }

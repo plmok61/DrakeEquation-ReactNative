@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, TouchableHighlight, Text, ActivityIndicator, Image, ScrollView } from 'react-native'
+import { View, TouchableHighlight, Text, ActivityIndicator, Image, ScrollView, Dimensions } from 'react-native'
 import axios from 'axios'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
+import ScaledImage from './ScaledImage'
 import styles from '../styles'
 
 export default class APODModal extends Component {
@@ -54,17 +55,20 @@ export default class APODModal extends Component {
               color="white"
             />
           :
-            <ScrollView style={styles.apodContainer}>
-              <TextPrimary>
-                {this.state.title}
-              </TextPrimary>
-              <TextSecondary>
-                {this.state.explanation}
-              </TextSecondary>
-              <Image 
-                source={{uri: this.state.hdurl}}
-                style={styles.apod}
+            <ScrollView>
+              
+              <ScaledImage
+                uri={this.state.hdurl}
+                width={Dimensions.get('window').width}
               />
+              <View style={styles.apodText}>
+                <TextPrimary>
+                  {this.state.title}
+                </TextPrimary>
+                <TextSecondary>
+                  {this.state.explanation}
+                </TextSecondary>
+              </View>
             </ScrollView>
         }
       </View>

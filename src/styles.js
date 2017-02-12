@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    marginTop: 64
+    marginTop: 64,
+    marginBottom: 50,
   },
   tabBarStyle: {
     backgroundColor: '#d7d7d7',
@@ -30,15 +31,22 @@ const styles = StyleSheet.create({
     width: width
   },
   result: {
-    alignItems: 'center'
-  },
-  apodContainer: {
-    height: height,
-    padding: 10
+    alignItems: 'center',
+    marginBottom: 10,
   },
   apod: {
-    width: width - 30,
-    height: width - 30
+    width: width,
+    height: width
+  },
+  apodText: {
+    padding: 15
+  },
+  infoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#222',
+    width: width,
   }
 })
 

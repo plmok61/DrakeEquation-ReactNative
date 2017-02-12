@@ -15,7 +15,6 @@ const TabIcon = ({ selected, iconName }) => (
   <Icon name={iconName} size={30} color={selected ? '#222' : 'darkslateblue'} />
 )
 
-
 const Scenes = Actions.create(
   <Scene key='modal' component={Modal}>
     <Scene key='root'>
@@ -23,8 +22,8 @@ const Scenes = Actions.create(
         <Scene key='tab1' title='Drake Equation' icon={TabIcon} iconName='plus'>
           <Scene key='equation' component={Equation} title='Drake Equation' initial={true} />
         </Scene>
-        <Scene key='tab2' title='Astronomy Picture of the Day' icon={TabIcon} iconName='star'>
-          <Scene key='apod' component={APOD} title='Astronomy Picture of the Day' />
+        <Scene key='tab2' title='APOD' icon={TabIcon} iconName='star'>
+          <Scene key='apod' component={APOD} title='APOD' />
         </Scene>
       </Scene>
     </Scene>

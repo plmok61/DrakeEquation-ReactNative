@@ -26,13 +26,13 @@ export default class InfoModal extends Component {
           transparent={false}
           visible={this.state.visible}
         >
-          <View style={styles.container}>        
-            <ScrollView style={styles.apodContainer}>
+          <View style={styles.infoContainer}>        
+            <ScrollView>
               <TextPrimary>
                 Title
               </TextPrimary>
               <TextSecondary>
-                Explanation text
+                Explanation text. Explanation text. Explanation text. Explanation text. v
               </TextSecondary>
               <TouchableHighlight onPress={this.toggleModal}>
                 <Text style={{color: 'white'}}>Close</Text>

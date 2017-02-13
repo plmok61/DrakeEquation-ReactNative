@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
-import { View, TouchableHighlight, Text, ActivityIndicator, Image, ScrollView, Dimensions } from 'react-native'
+import { View, ActivityIndicator, ScrollView, Dimensions } from 'react-native'
 import axios from 'axios'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
 import ScaledImage from './ScaledImage'
 import styles from '../styles'
 
-export default class APODModal extends Component {
+export default class APOD extends Component {
   constructor(props) {
     super(props)
     this.state = {
       animating: true,
-      hdurl: "http://apod.nasa.gov",
+      hdurl: 'http://apod.nasa.gov',
       title: null,
       explanation: null,
-      date: null
+      date: null,
     }
     this.getAPOD = this.getAPOD.bind(this)
   }
@@ -28,18 +28,15 @@ export default class APODModal extends Component {
     const apiKey = 'MYsfdOuaFm4HsA7dQpr8dXBtzO7bKz13cXJWwZyc'
 
     axios.get(`${baseURL}${apiKey}`)
-      .then(response => {
-        console.log(response.data)
+      .then((response) => {
         const { hdurl, title, explanation, date } = response.data
-        console.log(title)
         this.setState({
           animating: false,
           hdurl,
           title,
           explanation,
-          date
+          date,
         })
-
       })
   }
 
@@ -47,16 +44,15 @@ export default class APODModal extends Component {
     return (
       <View style={styles.container}>
         {
-          this.state.animating ? 
+          this.state.animating ?
             <ActivityIndicator
               animating={this.state.animating}
-              style={[styles.centering, {height: 80}]}
+              style={[styles.centering, { height: 80 }]}
               size="large"
               color="white"
             />
           :
             <ScrollView>
-              
               <ScaledImage
                 uri={this.state.hdurl}
                 width={Dimensions.get('window').width}

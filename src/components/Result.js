@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { View } from 'react-native'
 import TextSecondary from './TextSecondary'
 import styles from '../styles'
@@ -8,8 +8,6 @@ const Result = ({ numCivs }) => {
 
   if (numCivs === 0) {
     resultText = 'What a lonely galaxy'
-  } else if (numCivs === 69) {
-    resultText = 'He he. 69'
   } else if (numCivs < 100) {
     resultText = 'Likely too far away to reach'
   } else if (numCivs >= 100 && numCivs < 1000) {
@@ -24,17 +22,20 @@ const Result = ({ numCivs }) => {
 
   return (
     <View style={styles.result}>
-      <TextSecondary style={{fontSize: 20, textAlign: 'center'}}>
+      <TextSecondary style={{ fontSize: 20, textAlign: 'center' }}>
         Alien civilizations in our galaxy:
       </TextSecondary>
-      <TextSecondary style={{fontSize: 40}}>
+      <TextSecondary style={{ fontSize: 40 }}>
         {numCivs}
       </TextSecondary>
-      <TextSecondary style={{fontSize: 20, textAlign: 'center'}}>
+      <TextSecondary style={{ fontSize: 20, textAlign: 'center' }}>
         {resultText}
       </TextSecondary>
     </View>
   )
 }
+Result.propTypes = {
+  numCivs: PropTypes.number.isRequired,
+}
 
-export default Result;
+export default Result

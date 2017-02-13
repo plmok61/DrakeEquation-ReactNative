@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Modal, View, TouchableHighlight, Text, Image, ScrollView } from 'react-native'
+import { Modal, View, TouchableHighlight, Text, ScrollView } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
-import Icon from 'react-native-vector-icons/FontAwesome'
 import styles from '../styles'
 
 export default class InfoModal extends Component {
@@ -15,18 +15,18 @@ export default class InfoModal extends Component {
   }
 
   toggleModal() {
-    this.setState({ visible: !this.state.visible})
+    this.setState({ visible: !this.state.visible })
   }
 
   render() {
     return (
       <View>
         <Modal
-          animationType={"slide"}
+          animationType={'slide'}
           transparent={false}
           visible={this.state.visible}
         >
-          <View style={styles.infoContainer}>        
+          <View style={styles.infoContainer}>
             <ScrollView>
               <TextPrimary>
                 Title
@@ -35,14 +35,14 @@ export default class InfoModal extends Component {
                 Explanation text. Explanation text. Explanation text. Explanation text. v
               </TextSecondary>
               <TouchableHighlight onPress={this.toggleModal}>
-                <Text style={{color: 'white'}}>Close</Text>
+                <Text style={{ color: 'white' }}>Close</Text>
               </TouchableHighlight>
             </ScrollView>
           </View>
         </Modal>
         <TouchableHighlight
           onPress={() => {
-            this.toggleModal();
+            this.toggleModal()
           }}
         >
           <Icon name="info-circle" size={15} color="darkslateblue" />

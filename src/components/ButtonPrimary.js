@@ -47,6 +47,10 @@ class ButtonPrimary extends Component {
   }
 }
 
+ButtonPrimary.defaultProps = {
+  underlayColor: false,
+}
+
 ButtonPrimary.propTypes = {
   onPress: PropTypes.func.isRequired,
   btnStyle: PropTypes.object,

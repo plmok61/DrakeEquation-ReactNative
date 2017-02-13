@@ -5,7 +5,6 @@ import Result from './Result'
 import DrakeInput from './DrakeInput'
 import initialValues from './initialValues'
 import styles from '../styles'
-import TextSecondary from './TextSecondary'
 
 export default class Equation extends Component {
   constructor(props) {
@@ -25,8 +24,8 @@ export default class Equation extends Component {
   }
 
   calculateCivs() {
-    let values = []
-    let inputs = this.state
+    const values = []
+    const inputs = this.state
 
     for (let key in inputs) {
       if (key !== 'numCivs') {
@@ -34,16 +33,16 @@ export default class Equation extends Component {
       }
     }
 
-    var result = Math.round(values.reduce((result, val) => result * val))
+    const result = Math.round(values.reduce((acc, val) => acc * val))
 
     this.setState({
-      numCivs: result
+      numCivs: result,
     })
   }
 
   changeValue(inputId, value) {
     this.setState({
-      [inputId]: value
+      [inputId]: value,
     }, this.calculateCivs)
   }
 
@@ -67,7 +66,6 @@ export default class Equation extends Component {
                 />
               ))
             }
-        
           </View>
         </ScrollView>
       </View>

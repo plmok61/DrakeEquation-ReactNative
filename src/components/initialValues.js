@@ -1,11 +1,11 @@
 const initialValues = [
-   {
+  {
     inputId: 'rStar',
     min: 1,
     max: 15,
     step: 1,
     startValue: 7,
-    descriptionText: 'Rate of star formation: '
+    descriptionText: 'Rate of star formation: ',
   },
   {
     inputId: 'fPlanets',
@@ -13,7 +13,7 @@ const initialValues = [
     max: 1,
     step: 0.01,
     startValue: 1,
-    descriptionText: 'Fraction of stars with planets: '
+    descriptionText: 'Fraction of stars with planets: ',
   },
   {
     inputId: 'nEarthLike',
@@ -21,7 +21,7 @@ const initialValues = [
     max: 5,
     step: 0.01,
     startValue: 1,
-    descriptionText: 'Number of Earth-like planets per star: '
+    descriptionText: 'Number of Earth-like planets per star: ',
   },
   {
     inputId: 'fLife',
@@ -29,7 +29,7 @@ const initialValues = [
     max: 1,
     step: 0.01,
     startValue: 0.1,
-    descriptionText: 'Fraction of planets with life: '
+    descriptionText: 'Fraction of planets with life: ',
   },
   {
     inputId: 'fIntelligent',
@@ -37,7 +37,7 @@ const initialValues = [
     max: 1,
     step: 0.01,
     startValue: 0.1,
-    descriptionText: 'Fraction in which intelligence arises: '
+    descriptionText: 'Fraction in which intelligence arises: ',
   },
   {
     inputId: 'fComm',
@@ -45,7 +45,7 @@ const initialValues = [
     max: 1,
     step: 0.01,
     startValue: 0.1,
-    descriptionText: 'Fraction that are communicative: '
+    descriptionText: 'Fraction that are communicative: ',
   },
   {
     inputId: 'lComm',
@@ -53,8 +53,8 @@ const initialValues = [
     max: 1000000,
     step: 1000,
     startValue: 10000,
-    descriptionText: 'Number of years communicative: '
-  }
+    descriptionText: 'Number of years communicative: ',
+  },
 ]
 
 export default initialValues

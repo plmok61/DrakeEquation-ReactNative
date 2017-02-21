@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, ActivityIndicator, ScrollView, Dimensions } from 'react-native'
-import axios from 'axios'
+import { getAPOD } from '../actions/apodActions'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
 import ScaledImage from './ScaledImage'
 import styles from '../styles'
 
-export default class APOD extends Component {
+class APOD extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,29 +17,32 @@ export default class APOD extends Component {
       explanation: null,
       date: null,
     }
-    this.getAPOD = this.getAPOD.bind(this)
   }
 
   componentDidMount() {
-    this.getAPOD()
+    console.log('APOD props: ', this.props)
+    this.props.getAPOD()
   }
 
-  getAPOD() {
-    const baseURL = 'https://api.nasa.gov/planetary/apod?api_key='
-    const apiKey = 'MYsfdOuaFm4HsA7dQpr8dXBtzO7bKz13cXJWwZyc'
+  // getAPOD() {
+  //   const baseURL = 'https://api.nasa.gov/planetary/apod?api_key='
+  //   const apiKey = 'MYsfdOuaFm4HsA7dQpr8dXBtzO7bKz13cXJWwZyc'
 
-    axios.get(`${baseURL}${apiKey}`)
-      .then((response) => {
-        const { hdurl, title, explanation, date } = response.data
-        this.setState({
-          animating: false,
-          hdurl,
-          title,
-          explanation,
-          date,
-        })
-      })
-  }
+  //   axios.get(`${baseURL}${apiKey}`)
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       const { hdurl, title, explanation, date, media_type } = response.data
+  //       if (media_type === 'image') {
+  //         this.setState({
+  //           animating: false,
+  //           hdurl,
+  //           title,
+  //           explanation,
+  //           date,
+  //         })
+  //       }
+  //     })
+  // }
 
   render() {
     return (
@@ -71,3 +75,15 @@ export default class APOD extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  apod: state.apod,
+})
+
+const mapDispatchToProps = dispatch => ({
+  getAPOD() {
+    dispatch(getAPOD())
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(APOD)

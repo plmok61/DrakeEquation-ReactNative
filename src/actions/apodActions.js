@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 export function getAPOD() {
-  console.log('got here')
   return (dispatch) => {
     dispatch({ type: 'FETCH_APOD_START' })
     const baseURL = 'https://api.nasa.gov/planetary/apod?api_key='

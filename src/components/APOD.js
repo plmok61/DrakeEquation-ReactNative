@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { View, ActivityIndicator, ScrollView, Dimensions, WebView } from 'react-native'
+import { View, ActivityIndicator, ScrollView, Dimensions, WebView, RefreshControl } from 'react-native'
 import { getAPOD } from '../actions/apodActions'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
@@ -17,10 +17,30 @@ class APOD extends Component {
   render() {
     const { fetching, apodData, error } = this.props.apod
 
+    if (fetching) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={fetching}
+            style={[styles.centering, { height: 80 }]}
+            size="large"
+            color="white"
+          />
+        </View>
+      )
+    }
+
     if (apodData.media_type === 'image') {
       return (
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={fetching}
+                onRefresh={this.props.getAPOD()}
+              />
+            }
+          >
             <ScaledImage
               uri={apodData.hdurl}
               width={Dimensions.get('window').width}
@@ -39,7 +59,14 @@ class APOD extends Component {
     } else if (apodData.media_type === 'video') {
       return (
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={fetching}
+                onRefresh={this.props.getAPOD}
+              />
+            }
+          >
             <WebView
               style={{height: Dimensions.get('window').width * 0.5625, width: Dimensions.get('window').width}}
               source={{ uri: apodData.url }}
@@ -58,12 +85,7 @@ class APOD extends Component {
     }
     return (
       <View style={styles.container}>
-        <ActivityIndicator
-          animating={fetching}
-          style={[styles.centering, { height: 80 }]}
-          size="large"
-          color="white"
-        />
+        <TextPrimary>Error: {error}</TextPrimary>
       </View>
     )
   }

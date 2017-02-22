@@ -10,7 +10,6 @@ import styles from '../styles'
 class APOD extends Component {
 
   componentDidMount() {
-    console.log('APOD props: ', this.props)
     this.props.getAPOD()
   }
 
@@ -68,7 +67,7 @@ class APOD extends Component {
             }
           >
             <WebView
-              style={{height: Dimensions.get('window').width * 0.5625, width: Dimensions.get('window').width}}
+              style={styles.apodVideo}
               source={{ uri: apodData.url }}
             />
             <View style={styles.apodText}>

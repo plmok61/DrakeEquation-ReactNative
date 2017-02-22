@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { View, StyleSheet, TouchableHighlight, Text, ScrollView } from 'react-native'
-import { Actions } from 'react-native-router-flux'
+import React, { Component, PropTypes } from 'react'
+import { View, ScrollView } from 'react-native'
+import { connect } from 'react-redux'
 import Result from './Result'
 import DrakeInput from './DrakeInput'
-import initialValues from './initialValues'
+import { updateNumCivs, updateInputs } from '../actions/equationActions'
 import styles from '../styles'
 
-export default class Equation extends Component {
+class Equation extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,58 +17,147 @@ export default class Equation extends Component {
       fIntelligent: 0.1,
       fComm: 0.1,
       lComm: 10000,
-      numCivs: 70,
     }
-    this.calculateCivs = this.calculateCivs.bind(this)
+    //this.calculateCivs = this.calculateCivs.bind(this)
     this.changeValue = this.changeValue.bind(this)
   }
 
-  calculateCivs() {
-    const values = []
-    const inputs = this.state
-
-    for (let key in inputs) {
-      if (key !== 'numCivs') {
-        values.push(inputs[key])
-      }
-    }
-
-    const result = Math.round(values.reduce((acc, val) => acc * val))
-
-    this.setState({
-      numCivs: result,
-    })
+  componentDidMount() {
+    console.log('Equation props: ', this.props)
   }
 
+  // calculateCivs() {
+  //   const values = Object.values(this.props.inputs)
+
+  //   const numCivs = Math.round(values.reduce((acc, val) => acc * val))
+
+  //   this.props.updateNumCivs(numCivs)
+  // }
+
   changeValue(inputId, value) {
-    this.setState({
-      [inputId]: value,
-    }, this.calculateCivs)
+    const inputs = { ...this.props.inputs, [inputId]: value }
+    console.log('value: ', value)
+    console.log('inputs: ', inputs)
+
+    this.props.updateInputs(inputs)
+
+    const values = Object.values(inputs)
+    const numCivs = Math.round(values.reduce((acc, val) => acc * val))
+
+    this.props.updateNumCivs(numCivs)
   }
 
   render() {
+    const { rStar, fPlanets, nEarthLike, fLife, fIntelligent, fComm, lComm } = this.props.inputs
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Result numCivs={this.state.numCivs} />
+          <Result numCivs={this.props.numCivs} />
           <View style={styles.equation}>
-            {
-              initialValues.map(val => (
-                <DrakeInput
-                  inputId={val.inputId}
-                  changeValue={this.changeValue}
-                  min={val.min}
-                  max={val.max}
-                  step={val.step}
-                  inputValue={val.startValue}
-                  descriptionText={val.descriptionText}
-                  key={val.inputId}
-                />
-              ))
-            }
+
+            <DrakeInput
+              inputId={'rStar'}
+              changeValue={this.changeValue}
+              min={1}
+              max={15}
+              step={1}
+              inputValue={rStar}
+              descriptionText={'Rate of star formation: '}
+              key={'rStar'}
+            />
+
+            <DrakeInput
+              inputId={'fPlanets'}
+              changeValue={this.changeValue}
+              min={0}
+              max={1}
+              step={0.01}
+              inputValue={fPlanets}
+              descriptionText={'Fraction of stars with planets: '}
+              key={'fPlanets'}
+            />
+
+            <DrakeInput
+              inputId={'nEarthLike'}
+              changeValue={this.changeValue}
+              min={0}
+              max={10}
+              step={0.1}
+              inputValue={nEarthLike}
+              descriptionText={'Number of Earth-like planets per star: '}
+              key={'nEarthLike'}
+            />
+
+            <DrakeInput
+              inputId={'fLife'}
+              changeValue={this.changeValue}
+              min={0}
+              max={1}
+              step={0.01}
+              inputValue={fLife}
+              descriptionText={'Fraction of stars with life: '}
+              key={'fLife'}
+            />
+
+            <DrakeInput
+              inputId={'fIntelligent'}
+              changeValue={this.changeValue}
+              min={0}
+              max={1}
+              step={0.01}
+              inputValue={fIntelligent}
+              descriptionText={'Fraction in which intelligence arises: '}
+              key={'fIntelligent'}
+            />
+
+            <DrakeInput
+              inputId={'fComm'}
+              changeValue={this.changeValue}
+              min={0}
+              max={1}
+              step={0.01}
+              inputValue={0.1}
+              descriptionText={'Fraction that are communicative: '}
+              key={'fComm'}
+            />
+
+            <DrakeInput
+              inputId={'lComm'}
+              changeValue={this.changeValue}
+              min={1000}
+              max={1000000}
+              step={1000}
+              inputValue={lComm}
+              descriptionText={'Number of years communicative: '}
+              key={'lComm'}
+            />
+
           </View>
         </ScrollView>
       </View>
     )
   }
 }
+
+Equation.propTypes = {
+  updateNumCivs: PropTypes.func.isRequired,
+  updateInputs: PropTypes.func.isRequired,
+  numCivs: PropTypes.number.isRequired,
+  inputs: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+  numCivs: state.equation.numCivs,
+  inputs: state.equation.inputs,
+})
+
+const MapDispatchToProps = dispatch => ({
+  updateNumCivs(numCivs) {
+    dispatch(updateNumCivs(numCivs))
+  },
+  updateInputs(values) {
+    dispatch(updateInputs(values))
+  },
+})
+
+export default connect(mapStateToProps, MapDispatchToProps)(Equation)

@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
   },
   flexRow: {
     flexDirection: 'row',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
   },
   equation: {
     backgroundColor: '#d7d7d7',
     padding: 20,
-    width: width
+    width: width,
   },
   result: {
     alignItems: 'center',
@@ -36,10 +36,14 @@ const styles = StyleSheet.create({
   },
   apod: {
     width: width,
-    height: width
+    height: width,
   },
   apodText: {
-    padding: 15
+    padding: 15,
+  },
+  apodVideo: {
+    height: Dimensions.get('window').width * 0.5625,
+    width: Dimensions.get('window').width,
   },
   infoContainer: {
     flex: 1,
@@ -47,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#222',
     width: width,
-  }
+  },
 })
 
 export default styles

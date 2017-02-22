@@ -37,7 +37,7 @@ class APOD extends Component {
             refreshControl={
               <RefreshControl
                 refreshing={fetching}
-                onRefresh={this.props.getAPOD()}
+                onRefresh={this.props.getAPOD}
               />
             }
           >

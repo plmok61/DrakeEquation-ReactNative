@@ -18,7 +18,6 @@ class Equation extends Component {
       fComm: 0.1,
       lComm: 10000,
     }
-    //this.calculateCivs = this.calculateCivs.bind(this)
     this.changeValue = this.changeValue.bind(this)
   }
 
@@ -26,24 +25,14 @@ class Equation extends Component {
     console.log('Equation props: ', this.props)
   }
 
-  // calculateCivs() {
-  //   const values = Object.values(this.props.inputs)
-
-  //   const numCivs = Math.round(values.reduce((acc, val) => acc * val))
-
-  //   this.props.updateNumCivs(numCivs)
-  // }
-
   changeValue(inputId, value) {
+    // Create a new inputs object and set to Redux state
     const inputs = { ...this.props.inputs, [inputId]: value }
-    console.log('value: ', value)
-    console.log('inputs: ', inputs)
-
     this.props.updateInputs(inputs)
 
+    // Update the Drake Equation result in Redux state
     const values = Object.values(inputs)
     const numCivs = Math.round(values.reduce((acc, val) => acc * val))
-
     this.props.updateNumCivs(numCivs)
   }
 
@@ -116,7 +105,7 @@ class Equation extends Component {
               min={0}
               max={1}
               step={0.01}
-              inputValue={0.1}
+              inputValue={fComm}
               descriptionText={'Fraction that are communicative: '}
               key={'fComm'}
             />

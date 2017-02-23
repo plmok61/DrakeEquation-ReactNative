@@ -25,7 +25,10 @@ export default class DrakeInput extends Component {
           </View>
         </View>
         <Slider
-          onValueChange={value => this.setState({ inputValue: value })}
+          onValueChange={(value) => {
+            const rounded = Math.round(value * 100) / 100
+            this.setState({ inputValue: rounded })
+          }}
           onSlidingComplete={value => changeValue(inputId, value)}
           minimumValue={min}
           maximumValue={max}
@@ -46,4 +49,5 @@ DrakeInput.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
+  inputInfo: PropTypes.string.isRequired,
 }

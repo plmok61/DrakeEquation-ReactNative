@@ -10,20 +10,19 @@ import inputInfo from '../inputInfo'
 class Equation extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      rStar: 7,
-      fPlanets: 1,
-      nEarthLike: 1,
-      fLife: 0.1,
-      fIntelligent: 0.1,
-      fComm: 0.1,
-      lComm: 10000,
-    }
     this.changeValue = this.changeValue.bind(this)
+    this.calculateNumCivs = this.calculateNumCivs.bind(this)
   }
 
   componentDidMount() {
-    console.log('Equation props: ', this.props)
+    // Calculate the numCivs based on the initial values
+    const values = Object.values(this.props.inputs)
+    this.calculateNumCivs(values)
+  }
+
+  calculateNumCivs(values) {
+    const numCivs = Math.round(values.reduce((acc, val) => acc * val))
+    this.props.updateNumCivs(numCivs)
   }
 
   changeValue(inputId, value) {
@@ -33,8 +32,7 @@ class Equation extends Component {
 
     // Update the Drake Equation result in Redux state
     const values = Object.values(inputs)
-    const numCivs = Math.round(values.reduce((acc, val) => acc * val))
-    this.props.updateNumCivs(numCivs)
+    this.calculateNumCivs(values)
   }
 
   render() {
@@ -114,7 +112,7 @@ class Equation extends Component {
               inputId={'lComm'}
               changeValue={this.changeValue}
               min={1000}
-              max={1000000}
+              max={1000000000}
               step={1000}
               inputValue={lComm}
               descriptionText={'Number of years communicative: '}

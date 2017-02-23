@@ -10,7 +10,7 @@ import APOD from './APOD'
 const RouterWithRedux = connect()(Router)
 
 const TabIcon = ({ selected, iconName }) => (
-  <Icon name={iconName} size={30} color={selected ? '#222' : 'darkslateblue'} />
+  <Icon name={iconName} size={30} color={selected ? 'darkslateblue' : '#222'} />
 )
 
 TabIcon.propTypes = {

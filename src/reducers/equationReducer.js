@@ -1,10 +1,10 @@
 const initialState = {
-  numCivs: 70,
+  numCivs: 0,
   inputs: {
-    rStar: 7,
+    rStar: 3,
     fPlanets: 1,
-    nEarthLike: 1,
-    fLife: 0.1,
+    nEarthLike: 0.4,
+    fLife: 0.01,
     fIntelligent: 0.1,
     fComm: 0.1,
     lComm: 10000,

@@ -8,6 +8,8 @@ const Result = ({ numCivs }) => {
 
   if (numCivs === 0) {
     resultText = 'What a lonely galaxy'
+  } else if (numCivs === 1) {
+    resultText = 'Only us'
   } else if (numCivs < 100) {
     resultText = 'Likely too far away to reach'
   } else if (numCivs >= 100 && numCivs < 1000) {

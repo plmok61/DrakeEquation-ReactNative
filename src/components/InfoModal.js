@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, View, TouchableHighlight, Text, ScrollView } from 'react-native'
+import { Modal, View, TouchableHighlight, Text, ScrollView, WebView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
@@ -27,17 +27,18 @@ export default class InfoModal extends Component {
           visible={this.state.visible}
         >
           <View style={styles.infoContainer}>
-            <ScrollView>
-              <TextPrimary>
-                Title
-              </TextPrimary>
-              <TextSecondary>
-                Explanation text. Explanation text. Explanation text. Explanation text. v
-              </TextSecondary>
-              <TouchableHighlight onPress={this.toggleModal}>
-                <Text style={{ color: 'white' }}>Close</Text>
-              </TouchableHighlight>
+            <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
+              <WebView
+                style={styles.infoWebView}
+                source={{ uri: this.props.inputInfo }}
+              />
             </ScrollView>
+            <TouchableHighlight
+              onPress={this.toggleModal}
+              style={styles.closeButton}
+            >
+              <Text style={{ color: 'darkslateblue', fontFamily: 'Audiowide' }}>Close</Text>
+            </TouchableHighlight>
           </View>
         </Modal>
         <TouchableHighlight

@@ -49,8 +49,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#222',
+    backgroundColor: '#d7d7d7',
     width: width,
+    paddingTop: 30,
+  },
+  infoWebView: {
+    height: height - 50,
+    width: width,
+  },
+  closeButton: {
+    backgroundColor: '#d7d7d7',
+    width: width,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 

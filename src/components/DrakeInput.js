@@ -13,7 +13,7 @@ export default class DrakeInput extends Component {
   }
 
   render() {
-    const { descriptionText, changeValue, inputId, min, max, step, inputValue } = this.props
+    const { descriptionText, changeValue, inputId, min, max, step, inputValue, inputInfo } = this.props
     return (
       <View>
         <View style={styles.flexRow}>
@@ -21,7 +21,7 @@ export default class DrakeInput extends Component {
             {descriptionText} {this.state.inputValue}
           </TextSecondary>
           <View style={{ justifyContent: 'center' }}>
-            <InfoModal />
+            <InfoModal inputInfo={inputInfo} />
           </View>
         </View>
         <Slider

@@ -4,7 +4,7 @@ import InfoModal from './InfoModal'
 import TextSecondary from './TextSecondary'
 import styles from '../styles'
 
-export default class DrakeInput extends Component {
+class DrakeInput extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -51,3 +51,5 @@ DrakeInput.propTypes = {
   step: PropTypes.number.isRequired,
   inputInfo: PropTypes.string.isRequired,
 }
+
+export default DrakeInput

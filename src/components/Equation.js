@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { View, ScrollView } from 'react-native'
-import { connect } from 'react-redux'
 import Result from './Result'
 import DrakeInput from './DrakeInput'
-import { updateNumCivs, updateInputs } from '../actions/equationActions'
 import styles from '../styles'
 import inputInfo from '../inputInfo'
 
@@ -133,18 +131,20 @@ Equation.propTypes = {
   inputs: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = state => ({
-  numCivs: state.equation.numCivs,
-  inputs: state.equation.inputs,
-})
+export default Equation
 
-const MapDispatchToProps = dispatch => ({
-  updateNumCivs(numCivs) {
-    dispatch(updateNumCivs(numCivs))
-  },
-  updateInputs(values) {
-    dispatch(updateInputs(values))
-  },
-})
+// const mapStateToProps = state => ({
+//   numCivs: state.equation.numCivs,
+//   inputs: state.equation.inputs,
+// })
 
-export default connect(mapStateToProps, MapDispatchToProps)(Equation)
+// const MapDispatchToProps = dispatch => ({
+//   updateNumCivs(numCivs) {
+//     dispatch(updateNumCivs(numCivs))
+//   },
+//   updateInputs(values) {
+//     dispatch(updateInputs(values))
+//   },
+// })
+
+// export default connect(mapStateToProps, MapDispatchToProps)(Equation)

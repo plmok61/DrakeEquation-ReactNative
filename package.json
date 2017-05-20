@@ -31,6 +31,12 @@
     "react-test-renderer": "~15.4.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testRegex": "./__tests__/[^setup].*.js$",
+    "mocksPattern": "./__tests__/mocks/.*.js$",
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element)"],
+    "setupFiles": [
+        "./__tests__/setup"
+    ]
   }
 }

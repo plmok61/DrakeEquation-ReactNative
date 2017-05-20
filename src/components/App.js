@@ -4,7 +4,7 @@ import { Actions, Router, Scene, Modal } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import store from '../store'
 import styles from '../styles'
-import Equation from './Equation'
+import EquationContainer from '../containers/EquationContainer'
 import APOD from './APOD'
 
 const RouterWithRedux = connect()(Router)
@@ -14,7 +14,7 @@ const TabIcon = ({ selected, iconName }) => (
 )
 
 TabIcon.propTypes = {
-  selected: PropTypes.bool,
+  selected: PropTypes.bool.isRequired,
   iconName: PropTypes.string.isRequired,
 }
 
@@ -22,11 +22,14 @@ const Scenes = Actions.create(
   <Scene key="modal" component={Modal}>
     <Scene key="root">
       <Scene key="tabbar" tabs tabBarStyle={styles.tabBarStyle}>
-        <Scene key="tab1" title="Drake Equation" icon={TabIcon} iconName="plus">
-          <Scene key="equation" component={Equation} title="Drake Equation" initial />
+        <Scene key="tab2" title="Drake Equation" icon={TabIcon} iconName="plus">
+          <Scene key="equation" component={EquationContainer} title="Drake Equation" initial />
         </Scene>
-        <Scene key="tab2" title="APOD" icon={TabIcon} iconName="star">
+        <Scene key="tab1" title="APOD" icon={TabIcon} iconName="star">
           <Scene key="apod" component={APOD} title="APOD" />
+        </Scene>
+        <Scene key="tab3" title="NEO" icon={TabIcon} iconName="globe">
+          <Scene key="equation" component={EquationContainer} title="Near Earth Objects" />
         </Scene>
       </Scene>
     </Scene>

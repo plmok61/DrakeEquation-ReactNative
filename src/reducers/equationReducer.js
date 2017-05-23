@@ -17,6 +17,14 @@ export default function equationReducer(state = initialState, action) {
       return { ...state, numCivs: action.payload }
     case 'UPDATE_INPUTS':
       return { ...state, inputs: action.payload }
+    case 'UPDATE_INPUT':
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.inputId]: action.value,
+        },
+      }
     default:
       return state
   }

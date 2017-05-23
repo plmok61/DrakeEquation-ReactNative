@@ -1,11 +1,39 @@
 import React, { Component, PropTypes } from 'react'
-import { Image } from 'react-native'
+import { Image, View, StyleSheet, Dimensions } from 'react-native'
+import TextSecondary from './TextSecondary'
+
+const { height, width } = Dimensions.get('window')
+
+const styles = StyleSheet.create({
+  progress: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+    position: 'absolute',
+    width,
+    height: 200,
+  },
+  progressBar: {
+    width: 100,
+    height: 10,
+    backgroundColor: '#222',
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  progressFill: {
+    backgroundColor: '#fff',
+    height: 8,
+  },
+})
 
 export default class ScaledImage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      source: { uri: this.props.uri },
+      loading: true,
+      progress: 0,
+      width: this.props.width,
+      height: 200,
     }
   }
 
@@ -23,13 +51,34 @@ export default class ScaledImage extends Component {
 
   render() {
     return (
-      <Image source={this.state.source} style={{ height: this.state.height, width: this.state.width }} />
+      <View>
+        <Image
+          source={{ uri: this.props.uri }}
+          style={{ height: this.state.height, width: this.state.width }}
+          onLoadStart={() => this.setState({ loading: true })}
+          onLoad={() => this.setState({ loading: false })}
+          onProgress={(e) => {
+            this.setState({
+              progress: Math.round((100 * e.nativeEvent.loaded) / e.nativeEvent.total),
+            })
+          }}
+        />
+        {
+          this.state.loading ?
+            (<View style={styles.progress}>
+              <TextSecondary>{this.state.progress}%</TextSecondary>
+              <View style={styles.progressBar}>
+                <View style={[styles.progressFill, { width: this.state.progress }]}></View>
+              </View>
+            </View>) : null
+        }
+      </View>
     )
   }
 }
 
 ScaledImage.propTypes = {
   uri: PropTypes.string.isRequired,
-  width: PropTypes.number,
+  width: PropTypes.number.isRequired,
   height: PropTypes.number,
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../actions/equationActions'
 import Equation from '../components/Equation'
 
-const EquationContainer = (props) => (
+const EquationContainer = props => (
   <Equation {...props} />
 )
 

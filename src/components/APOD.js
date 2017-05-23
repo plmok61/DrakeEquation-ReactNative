@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { View, ActivityIndicator, ScrollView, Dimensions, WebView, RefreshControl } from 'react-native'
-import { getAPOD } from '../actions/apodActions'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'
 import ScaledImage from './ScaledImage'
@@ -95,14 +93,4 @@ APOD.propTypes = {
   apod: PropTypes.object,
 }
 
-const mapStateToProps = state => ({
-  apod: state.apod,
-})
-
-const mapDispatchToProps = dispatch => ({
-  getAPOD() {
-    dispatch(getAPOD())
-  },
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(APOD)
+export default APOD

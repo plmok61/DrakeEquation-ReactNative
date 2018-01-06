@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import { Modal, View, TouchableHighlight, Text, ScrollView, WebView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import TextPrimary from './TextPrimary'

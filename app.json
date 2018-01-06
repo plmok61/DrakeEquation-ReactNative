@@ -1,4 +1,5 @@
 {
-  "name": "DrakeEquation",
-  "displayName": "DrakeEquation"
+  "expo": {
+    "sdkVersion": "23.0.0"
+  }
 }

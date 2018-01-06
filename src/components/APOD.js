@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import { View, ActivityIndicator, ScrollView, Dimensions, WebView, RefreshControl } from 'react-native'
 import TextPrimary from './TextPrimary'
 import TextSecondary from './TextSecondary'

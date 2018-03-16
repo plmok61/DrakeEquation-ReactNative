@@ -7,7 +7,15 @@ import styles from '../styles';
 
 const DrakeInput = (props) => {
   const {
-    descriptionText, updateNumCivs, updateInput, inputId, min, max, step, inputValue, inputInfo,
+    descriptionText,
+    updateNumCivs,
+    updateInput,
+    inputId,
+    min,
+    max,
+    step,
+    inputValue,
+    inputInfo,
   } = props;
   return (
     <View>
@@ -20,8 +28,11 @@ const DrakeInput = (props) => {
         </View>
       </View>
       <Slider
-        onValueChange={value => updateInput(inputId, value)}
-        onSlidingComplete={value => updateNumCivs()}
+        onValueChange={(value) => {
+          updateInput(inputId, value);
+          updateNumCivs();
+        }}
+        onSlidingComplete={() => updateNumCivs()}
         minimumValue={min}
         maximumValue={max}
         step={step}

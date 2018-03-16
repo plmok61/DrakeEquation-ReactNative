@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-native';
+import { lightBlue } from '../styles';
 
 export default class AppText extends Component {
   constructor(props) {
     super(props);
     this.style = [{
-      color: 'white',
+      color: lightBlue,
       fontFamily: 'Exo-2',
     }];
     if (props.style) {

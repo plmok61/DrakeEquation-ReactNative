@@ -1,25 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, ScrollView } from 'react-native';
+import { View, Animated } from 'react-native';
 import Result from './Result';
 import DrakeInput from './DrakeInput';
 import styles from '../styles';
 import inputInfo from '../inputInfo';
 
 class Equation extends Component {
+  constructor(props) {
+    super(props);
+    this.animatedOpacity = new Animated.Value(0);
+  }
+
   // Calculate the numCivs based on the initial values
   componentDidMount() {
+    console.log(this.props);
     this.props.updateNumCivs(this.props.inputs);
+    this.fadeIn();
+  }
+
+  fadeIn() {
+    Animated.timing(
+      this.animatedOpacity,
+      {
+        toValue: 1,
+        duration: 1000,
+      },
+    ).start();
   }
 
   render() {
     const { props } = this;
-    const {
-      rStar, fPlanets, nEarthLike, fLife, fIntelligent, fComm, lComm,
-    } = this.props.inputs;
     return (
       <View style={styles.container}>
-        <ScrollView bounces={false} style={styles.equationContainer}>
+        { /* show quote here when the user tries to scroll down */}
+        <Animated.ScrollView bounces={false} style={[styles.equationContainer, { opacity: this.animatedOpacity }]}>
           <Result numCivs={props.numCivs} />
           <View style={styles.equation}>
             <DrakeInput
@@ -28,7 +43,7 @@ class Equation extends Component {
               min={1}
               max={15}
               step={1}
-              inputValue={rStar}
+              inputValue={props.inputs.rStar}
               descriptionText="Rate of star formation: "
               key="rStar"
               inputInfo={inputInfo.rStar}
@@ -40,7 +55,7 @@ class Equation extends Component {
               min={0}
               max={1}
               step={0.01}
-              inputValue={fPlanets}
+              inputValue={props.inputs.fPlanets}
               descriptionText="Fraction of stars with planets: "
               key="fPlanets"
               inputInfo={inputInfo.fPlanets}
@@ -52,7 +67,7 @@ class Equation extends Component {
               min={0}
               max={10}
               step={0.1}
-              inputValue={nEarthLike}
+              inputValue={props.inputs.nEarthLike}
               descriptionText="Number of Earth-like planets per star: "
               key="nEarthLike"
               inputInfo={inputInfo.nEarthLike}
@@ -64,7 +79,7 @@ class Equation extends Component {
               min={0}
               max={1}
               step={0.01}
-              inputValue={fLife}
+              inputValue={props.inputs.fLife}
               descriptionText="Fraction of stars with life: "
               key="fLife"
               inputInfo={inputInfo.fLife}
@@ -76,7 +91,7 @@ class Equation extends Component {
               min={0}
               max={1}
               step={0.01}
-              inputValue={fIntelligent}
+              inputValue={props.inputs.fIntelligent}
               descriptionText="Fraction in which intelligence arises: "
               key="fIntelligent"
               inputInfo={inputInfo.fIntelligent}
@@ -88,7 +103,7 @@ class Equation extends Component {
               min={0}
               max={1}
               step={0.01}
-              inputValue={fComm}
+              inputValue={props.inputs.fComm}
               descriptionText="Fraction that are communicative: "
               key="fComm"
               inputInfo={inputInfo.fComm}
@@ -100,14 +115,14 @@ class Equation extends Component {
               min={1000}
               max={1000000000}
               step={10000}
-              inputValue={lComm}
+              inputValue={props.inputs.lComm}
               descriptionText="Number of years communicative: "
               key="lComm"
               inputInfo={inputInfo.lComm}
               updateInput={props.updateInput}
             />
           </View>
-        </ScrollView>
+        </Animated.ScrollView>
       </View>
     );
   }

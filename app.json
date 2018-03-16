@@ -5,5 +5,12 @@
     "description": "Calculate the number of civilizations in our galaxy.",
     "slug": "drake-equation",
     "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "backgroundColor": "#222222",
+      "hideExponentText": true,
+      "resizeMode": "cover"
+    },
   }
 }

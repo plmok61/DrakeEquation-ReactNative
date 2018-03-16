@@ -3,7 +3,10 @@ import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 const { height, width } = Dimensions.get('window');
 
-export const darkGrey = '#222';
+export const black = '#222';
+export const purple = '#483d8b';
+export const lightBlue = '#d9eaee';
+export const red = '#850d14';
 export const iPhoneXPadding = ifIphoneX(58, 0);
 
 const styles = StyleSheet.create({
@@ -11,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: darkGrey,
+    backgroundColor: black,
   },
   centering: {
     alignItems: 'center',
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
     marginBottom: iPhoneXPadding,
   },
   equation: {
-    backgroundColor: '#d7d7d7',
+    backgroundColor: lightBlue,
     padding: 20,
     width,
   },
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#d7d7d7',
+    backgroundColor: lightBlue,
     width,
     paddingTop: 30,
   },
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     width,
   },
   closeButton: {
-    backgroundColor: '#d7d7d7',
+    backgroundColor: lightBlue,
     width,
     height: 50,
     justifyContent: 'center',

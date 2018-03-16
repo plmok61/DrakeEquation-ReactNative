@@ -14,9 +14,7 @@ const initialState = {
 export default function equationReducer(state = initialState, action) {
   switch (action.type) {
     case 'UPDATE_NUM_CIVS':
-      return { ...state, numCivs: action.payload };
-    case 'UPDATE_INPUTS':
-      return { ...state, inputs: action.payload };
+      return { ...state, numCivs: action.numCivs };
     case 'UPDATE_INPUT':
       return {
         ...state,

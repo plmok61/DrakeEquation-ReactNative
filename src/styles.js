@@ -1,20 +1,19 @@
 import  { StyleSheet, Dimensions } from 'react-native'
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window');
+
+export const darkGrey = '#222';
+export const iPhoneXPadding = ifIphoneX(58, 0);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
-    marginTop: 64,
-    marginBottom: 50,
-  },
-  tabBarStyle: {
-    backgroundColor: '#d7d7d7',
-    borderTopColor: 'darkslateblue',
-    borderTopWidth: 1,
+    backgroundColor: darkGrey,
+    marginTop: 44,
+    marginBottom: iPhoneXPadding,
   },
   centering: {
     alignItems: 'center',
@@ -33,17 +32,6 @@ const styles = StyleSheet.create({
   result: {
     alignItems: 'center',
     marginBottom: 10,
-  },
-  apod: {
-    width: width,
-    height: width,
-  },
-  apodText: {
-    padding: 15,
-  },
-  apodVideo: {
-    height: Dimensions.get('window').width * 0.5625,
-    width: Dimensions.get('window').width,
   },
   infoContainer: {
     flex: 1,

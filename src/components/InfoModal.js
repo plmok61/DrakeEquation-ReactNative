@@ -1,28 +1,29 @@
-import React, { Component } from 'react'
-import { Modal, View, TouchableHighlight, Text, ScrollView, WebView } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import TextPrimary from './TextPrimary'
-import TextSecondary from './TextSecondary'
-import styles from '../styles'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Modal, View, TouchableHighlight, Text, ScrollView, WebView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import TextPrimary from './TextPrimary';
+import TextSecondary from './TextSecondary';
+import styles from '../styles';
 
 export default class InfoModal extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       visible: false,
-    }
-    this.toggleModal = this.toggleModal.bind(this)
+    };
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   toggleModal() {
-    this.setState({ visible: !this.state.visible })
+    this.setState({ visible: !this.state.visible });
   }
 
   render() {
     return (
       <View>
         <Modal
-          animationType={'slide'}
+          animationType="slide"
           transparent={false}
           visible={this.state.visible}
         >
@@ -43,12 +44,12 @@ export default class InfoModal extends Component {
         </Modal>
         <TouchableHighlight
           onPress={() => {
-            this.toggleModal()
+            this.toggleModal();
           }}
         >
           <Icon name="info-circle" size={15} color="darkslateblue" />
         </TouchableHighlight>
       </View>
-    )
+    );
   }
 }

@@ -1,4 +1,9 @@
 {
-  "name": "DrakeEquation",
-  "displayName": "DrakeEquation"
+  "expo": {
+    "sdkVersion": "25.0.0",
+    "name": "Drake Equation",
+    "description": "Calculate the number of civilizations in our galaxy.",
+    "slug": "drake-equation",
+    "orientation": "portrait",
+  }
 }

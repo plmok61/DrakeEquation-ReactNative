@@ -15,9 +15,9 @@ export default class App extends React.Component {
 
   async componentWillMount() {
     await Font.loadAsync({
-      'Audiowide': require('./assets/fonts/Audiowide-Regular.ttf'),
+      Audiowide: require('./assets/fonts/Audiowide-Regular.ttf'),
       'Exo-2': require('./assets/fonts/Exo2-Regular.ttf'),
-    })
+    });
     this.setState({ fontsLoaded: true });
   }
 
@@ -28,12 +28,11 @@ export default class App extends React.Component {
           <EquationContainer />
         </Provider>
       );
-    } else {
-      return (
-        <View>
-          <ActivityIndicator size="large" color="darkslateblue" />
-        </View>
-      )
     }
+    return (
+      <View style={{ backgroundColor: '#222', flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="darkslateblue" />
+      </View>
+    );
   }
 }

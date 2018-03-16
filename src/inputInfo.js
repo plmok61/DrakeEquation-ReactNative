@@ -6,6 +6,6 @@ const inputInfo = {
   fIntelligent: 'https://en.wikipedia.org/wiki/Drake_equation#Fraction_of_the_above_that_develops_intelligent_life.2C_fi',
   fComm: 'https://en.wikipedia.org/wiki/Drake_equation#Fraction_of_the_above_revealing_their_existence_via_signal_release_into_space.2C_fc',
   lComm: 'https://en.wikipedia.org/wiki/Drake_equation#Lifetime_of_such_a_civilization_wherein_it_communicates_its_signals_into_space.2C_L',
-}
+};
 
-export default inputInfo
+export default inputInfo;

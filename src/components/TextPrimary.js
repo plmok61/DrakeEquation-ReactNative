@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 
 export default class AppText extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.style = [{
       color: 'white',
-     fontFamily: 'Audiowide',
-   }];
+      fontFamily: 'Audiowide',
+    }];
     if (props.style) {
       if (Array.isArray(props.style)) {
         this.style = this.style.concat(props.style);

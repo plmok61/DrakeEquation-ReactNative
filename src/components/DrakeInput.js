@@ -1,12 +1,14 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Slider } from 'react-native'
-import InfoModal from './InfoModal'
-import TextSecondary from './TextSecondary'
-import styles from '../styles'
+import { View, Slider } from 'react-native';
+import InfoModal from './InfoModal';
+import TextSecondary from './TextSecondary';
+import styles from '../styles';
 
 const DrakeInput = (props) => {
-  const { descriptionText, updateNumCivs, updateInput, inputId, min, max, step, inputValue, inputInfo } = props
+  const {
+    descriptionText, updateNumCivs, updateInput, inputId, min, max, step, inputValue, inputInfo,
+  } = props;
   return (
     <View>
       <View style={styles.flexRow}>
@@ -27,8 +29,8 @@ const DrakeInput = (props) => {
         minimumTrackTintColor="darkslateblue"
       />
     </View>
-  )
-}
+  );
+};
 
 
 DrakeInput.propTypes = {
@@ -41,6 +43,6 @@ DrakeInput.propTypes = {
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
   inputInfo: PropTypes.string.isRequired,
-}
+};
 
-export default DrakeInput
+export default DrakeInput;

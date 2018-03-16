@@ -13,13 +13,13 @@ class Equation extends Component {
   }
 
   render() {
-    const props = this.props;
+    const { props } = this;
     const {
       rStar, fPlanets, nEarthLike, fLife, fIntelligent, fComm, lComm,
     } = this.props.inputs;
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView bounces={false} style={styles.equationContainer}>
           <Result numCivs={props.numCivs} />
           <View style={styles.equation}>
             <DrakeInput

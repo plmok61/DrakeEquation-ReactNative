@@ -9,14 +9,14 @@ const initialState = {
     fComm: 0.1,
     lComm: 10000,
   },
-}
+};
 
 export default function equationReducer(state = initialState, action) {
   switch (action.type) {
     case 'UPDATE_NUM_CIVS':
-      return { ...state, numCivs: action.payload }
+      return { ...state, numCivs: action.payload };
     case 'UPDATE_INPUTS':
-      return { ...state, inputs: action.payload }
+      return { ...state, inputs: action.payload };
     case 'UPDATE_INPUT':
       return {
         ...state,
@@ -24,8 +24,8 @@ export default function equationReducer(state = initialState, action) {
           ...state.inputs,
           [action.inputId]: action.value,
         },
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

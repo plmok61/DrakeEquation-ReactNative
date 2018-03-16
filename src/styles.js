@@ -1,4 +1,4 @@
-import  { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 const { height, width } = Dimensions.get('window');
@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: darkGrey,
-    marginTop: 44,
-    marginBottom: iPhoneXPadding,
   },
   centering: {
     alignItems: 'center',
@@ -22,12 +20,16 @@ const styles = StyleSheet.create({
   },
   flexRow: {
     flexDirection: 'row',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
+  },
+  equationContainer: {
+    marginTop: 44,
+    marginBottom: iPhoneXPadding,
   },
   equation: {
     backgroundColor: '#d7d7d7',
     padding: 20,
-    width: width,
+    width,
   },
   result: {
     alignItems: 'center',
@@ -38,20 +40,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#d7d7d7',
-    width: width,
+    width,
     paddingTop: 30,
   },
   infoWebView: {
     height: height - 50,
-    width: width,
+    width,
   },
   closeButton: {
     backgroundColor: '#d7d7d7',
-    width: width,
+    width,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
-export default styles
+export default styles;

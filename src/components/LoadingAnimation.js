@@ -54,7 +54,6 @@ class LoadingAnimation extends Component {
 
   componentDidUpdate() {
     if (!this.props.animating) {
-      console.log('updated');
       this.topAnimation();
     }
   }

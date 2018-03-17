@@ -114,7 +114,7 @@ class Equation extends Component {
               updateNumCivs={props.updateNumCivs}
               min={1000}
               max={1000000000}
-              step={10000}
+              step={100000}
               inputValue={props.inputs.lComm}
               descriptionText="Number of years communicative: "
               key="lComm"

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal, View, TouchableHighlight, Text, ScrollView, WebView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TextPrimary from './TextPrimary';
-import TextSecondary from './TextSecondary';
-import styles from '../styles';
+import styles, { purple } from '../styles';
 
 export default class InfoModal extends Component {
   constructor(props) {
@@ -38,7 +37,7 @@ export default class InfoModal extends Component {
               onPress={this.toggleModal}
               style={styles.closeButton}
             >
-              <Text style={{ color: 'darkslateblue', fontFamily: 'Audiowide' }}>Close</Text>
+              <TextPrimary style={{ color: purple }}>Close</TextPrimary>
             </TouchableHighlight>
           </View>
         </Modal>

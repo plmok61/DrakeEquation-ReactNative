@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   equationContainer: {
-    marginTop: 44,
+    marginTop: 60,
     marginBottom: iPhoneXPadding,
   },
   equation: {

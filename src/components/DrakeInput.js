@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Slider } from 'react-native';
 import InfoModal from './InfoModal';
 import TextSecondary from './TextSecondary';
-import styles from '../styles';
+import styles, { black, purple } from '../styles';
 
 const DrakeInput = (props) => {
   const {
@@ -20,7 +20,7 @@ const DrakeInput = (props) => {
   return (
     <View>
       <View style={styles.flexRow}>
-        <TextSecondary style={{ color: 'black', fontSize: 15 }}>
+        <TextSecondary style={{ color: black, fontSize: 15 }}>
           {descriptionText} {inputValue}
         </TextSecondary>
         <View style={{ justifyContent: 'center' }}>
@@ -37,7 +37,7 @@ const DrakeInput = (props) => {
         maximumValue={max}
         step={step}
         value={inputValue}
-        minimumTrackTintColor="darkslateblue"
+        minimumTrackTintColor={purple}
       />
     </View>
   );

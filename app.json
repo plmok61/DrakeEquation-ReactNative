@@ -12,5 +12,15 @@
       "hideExponentText": true,
       "resizeMode": "cover"
     },
+    "ios": {
+      "bundleIdentifier": "space.drakeequation.DrakeEquationCalculator",
+      "icon": "./assets/images/icon.png",
+      "supportsTablet": false,
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "backgroundColor": "#222222",
+        "resizeMode": "cover"
+      }
+    }
   }
 }

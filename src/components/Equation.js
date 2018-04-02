@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Animated, KeyboardAvoidingView } from 'react-native';
 import FlipComponent from 'react-native-flip-component';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 import Result from './Result';
 import Inputs from './Inputs';
-import TextSecondary from './TextSecondary';
 import InfoWebView from './InfoWebView';
-import styles, { purple } from '../styles';
+import styles from '../styles';
 
 class Equation extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showBack: false,
-      flipButtonText: 'Learn More',
     };
     this.animatedOpacity = new Animated.Value(0);
     this.flip = this.flip.bind(this);
@@ -27,7 +25,6 @@ class Equation extends Component {
   }
 
   flip() {
-    const text = !this.state.showBack ? 'Back to Calculator' : 'Learn More';
     this.setState({
       showBack: !this.state.showBack,
     });

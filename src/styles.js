@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export const black = '#222';
 export const purple = '#483d8b';

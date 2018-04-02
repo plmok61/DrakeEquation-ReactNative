@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, WebView, TouchableOpacity } from 'react-native';
 import TextSecondary from './TextSecondary';
-import styles, { purple, lightBlue } from '../styles';
+import styles, { purple } from '../styles';
 
 function InfoWebView(props) {
   return (
@@ -25,6 +25,7 @@ function InfoWebView(props) {
 
 InfoWebView.propTypes = {
   height: PropTypes.number.isRequired,
+  flip: PropTypes.func.isRequired,
 };
 
 export default InfoWebView;

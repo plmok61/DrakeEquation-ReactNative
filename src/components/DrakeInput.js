@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Slider, TextInput, TouchableOpacity } from 'react-native';
+import { View, Slider, TextInput } from 'react-native';
 import TextSecondary from './TextSecondary';
-import styles, { black, purple, teal } from '../styles';
+import styles, { purple } from '../styles';
 
 class DrakeInput extends Component {
   render() {

@@ -26,7 +26,7 @@ const Result = ({ numCivs }) => {
   return (
     <View style={styles.result}>
       <TextSecondary style={{ fontSize: 20, textAlign: 'center' }}>
-        Alien civilizations in our galaxy:
+        Civilizations in our galaxy:
       </TextSecondary>
       <TextSecondary style={{ fontSize: 40 }}>
         {numCivs}

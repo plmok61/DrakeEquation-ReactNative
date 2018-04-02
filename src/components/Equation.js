@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated } from 'react-native';
+import { Animated, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import FlipComponent from 'react-native-flip-component';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 import Result from './Result';
-import DrakeInput from './DrakeInput';
-import styles from '../styles';
-import inputInfo from '../inputInfo';
+import Inputs from './Inputs';
+import TextSecondary from './TextSecondary';
+import InfoWebView from './InfoWebView';
+import styles, { purple } from '../styles';
 
 class Equation extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showBack: false,
+      flipButtonText: 'Learn More',
+    };
     this.animatedOpacity = new Animated.Value(0);
+    this.flip = this.flip.bind(this);
   }
 
   // Calculate the numCivs based on the initial values
   componentDidMount() {
-    console.log(this.props);
     this.props.updateNumCivs(this.props.inputs);
     this.fadeIn();
+  }
+
+  flip() {
+    const text = !this.state.showBack ? 'Back to Calculator' : 'Learn More';
+    this.setState({
+      showBack: !this.state.showBack,
+    });
   }
 
   fadeIn() {
@@ -32,98 +46,30 @@ class Equation extends Component {
   render() {
     const { props } = this;
     return (
-      <View style={styles.container}>
-        { /* show quote here when the user tries to scroll down */}
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={styles.container}
+        keyboardVerticalOffset={ifIphoneX(-58, 0)}
+      >
         <Animated.ScrollView bounces={false} style={[styles.equationContainer, { opacity: this.animatedOpacity }]}>
           <Result numCivs={props.numCivs} />
-          <View style={styles.equation}>
-            <DrakeInput
-              inputId="rStar"
-              updateNumCivs={props.updateNumCivs}
-              min={1}
-              max={15}
-              step={1}
-              inputValue={props.inputs.rStar}
-              descriptionText="Rate of star formation: "
-              key="rStar"
-              inputInfo={inputInfo.rStar}
-              updateInput={props.updateInput}
-            />
-            <DrakeInput
-              inputId="fPlanets"
-              updateNumCivs={props.updateNumCivs}
-              min={0}
-              max={1}
-              step={0.01}
-              inputValue={props.inputs.fPlanets}
-              descriptionText="Fraction of stars with planets: "
-              key="fPlanets"
-              inputInfo={inputInfo.fPlanets}
-              updateInput={props.updateInput}
-            />
-            <DrakeInput
-              inputId="nEarthLike"
-              updateNumCivs={props.updateNumCivs}
-              min={0}
-              max={10}
-              step={0.1}
-              inputValue={props.inputs.nEarthLike}
-              descriptionText="Number of Earth-like planets per star: "
-              key="nEarthLike"
-              inputInfo={inputInfo.nEarthLike}
-              updateInput={props.updateInput}
-            />
-            <DrakeInput
-              inputId="fLife"
-              updateNumCivs={props.updateNumCivs}
-              min={0}
-              max={1}
-              step={0.01}
-              inputValue={props.inputs.fLife}
-              descriptionText="Fraction of stars with life: "
-              key="fLife"
-              inputInfo={inputInfo.fLife}
-              updateInput={props.updateInput}
-            />
-            <DrakeInput
-              inputId="fIntelligent"
-              updateNumCivs={props.updateNumCivs}
-              min={0}
-              max={1}
-              step={0.01}
-              inputValue={props.inputs.fIntelligent}
-              descriptionText="Fraction in which intelligence arises: "
-              key="fIntelligent"
-              inputInfo={inputInfo.fIntelligent}
-              updateInput={props.updateInput}
-            />
-            <DrakeInput
-              inputId="fComm"
-              updateNumCivs={props.updateNumCivs}
-              min={0}
-              max={1}
-              step={0.01}
-              inputValue={props.inputs.fComm}
-              descriptionText="Fraction that are communicative: "
-              key="fComm"
-              inputInfo={inputInfo.fComm}
-              updateInput={props.updateInput}
-            />
-            <DrakeInput
-              inputId="lComm"
-              updateNumCivs={props.updateNumCivs}
-              min={1000}
-              max={1000000000}
-              step={100000}
-              inputValue={props.inputs.lComm}
-              descriptionText="Number of years communicative: "
-              key="lComm"
-              inputInfo={inputInfo.lComm}
-              updateInput={props.updateInput}
-            />
-          </View>
+          <FlipComponent
+            isFlipped={this.state.showBack}
+            frontView={
+              <Inputs
+                {...props}
+                flip={this.flip}
+              />
+            }
+            backView={
+              <InfoWebView
+                height={this.props.inputsHeight}
+                flip={this.flip}
+              />
+            }
+          />
         </Animated.ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -131,6 +77,7 @@ class Equation extends Component {
 Equation.propTypes = {
   updateNumCivs: PropTypes.func.isRequired,
   inputs: PropTypes.object.isRequired,
+  inputsHeight: PropTypes.number.isRequired,
 };
 
 export default Equation;

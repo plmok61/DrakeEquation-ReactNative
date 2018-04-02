@@ -22,3 +22,13 @@ export function updateNumCivs() {
     });
   };
 }
+
+// Set the height to state so the info component can be the same height
+export function setInputsHeight(inputsHeight) {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_INPUTS_HEIGHT',
+      inputsHeight,
+    });
+  };
+}

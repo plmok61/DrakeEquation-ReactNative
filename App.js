@@ -12,13 +12,14 @@ export default class App extends React.Component {
       fontsLoaded: false,
       animationComplete: false,
     };
-    this.animationTime = 2000;
+    this.animationTime = 20;
   }
 
   async componentWillMount() {
     await Font.loadAsync({
       Audiowide: require('./assets/fonts/Audiowide-Regular.ttf'),
       'Exo-2': require('./assets/fonts/Exo2-Regular.ttf'),
+      'Exo-2-Bold': require('./assets/fonts/Exo2-Bold.ttf'),
     });
     // First setTimeout so the user can see the loading animation
     // Second setTimeout so the transition animation can complete
@@ -27,7 +28,7 @@ export default class App extends React.Component {
       setTimeout(() => {
         this.setState({ animationComplete: true });
       }, this.animationTime);
-    }, 2000);
+    }, this.animationTime);
   }
 
   render() {

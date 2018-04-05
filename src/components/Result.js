@@ -16,35 +16,40 @@ class Result extends Component {
     this.state = {
       orbiters: [],
     };
-    this.createOrbit = this.createOrbit.bind(this);
+    this.createOrbiters = this.createOrbiters.bind(this);
     this.orbit = this.orbit.bind(this);
+    this.orbiters = [];
   }
 
-  componentWillMount() {
-    this.createOrbit();
-  }
+  // componentWillMount() {
+  //   this.createOrbiters();
+  // }
 
   componentDidMount() {
-    this.state.orbiters.map((orbiter, i) => this.orbit(i, orbiter.duration));
+    this.createOrbiters();
+    // this.orbiters.map((orbiter, i) => this.orbit(i, orbiter.duration));
   }
 
   // componentDidUpdate(prevProps) {
   //   if (prevProps.numCivs !== this.props.numCivs) {
   //     console.log('got here');
-  //     this.state.orbiters.map((orbiter, i) => this.orbit(i, orbiter.duration));
+  //     this.createOrbiters();
+  //     console.log(this.orbiters);
   //   }
   // }
 
-  createOrbit() {
+  createOrbiters() {
     const orbiters = [];
-    const orbitersCount = this.props.numCivs ? Math.ceil(this.props.numCivs / 1000000) : 0;
+    const orbitersCount = this.props.numCivs ? Math.ceil(this.props.numCivs / 100000) : 0;
     for (let j = 0; j <= orbitersCount; j += 1) {
       const orbiter = {};
+      // scale shrinks when the orbiter is 'further' away
       this[`animatedScale${j}`] = new Animated.Value(0);
       orbiter.transformScale = this[`animatedScale${j}`].interpolate({
         inputRange: [0, 0.5, 1],
         outputRange: [1, 0.5, 1],
       });
+
       this[`animatedOrbit${j}`] = new Animated.Value(0);
       const snapshot = 50;
       const radius = 100;
@@ -79,7 +84,8 @@ class Result extends Component {
       orbiter.size = getRandomInt(5, 30);
       orbiters.push(orbiter);
     }
-    this.setState({ orbiters });
+    this.orbiters = orbiters;
+    this.orbiters.map((orbiter, i) => this.orbit(i, orbiter.duration));
   }
 
   orbit(index, duration) {
@@ -114,20 +120,20 @@ class Result extends Component {
           Civilizations in our galaxy:
         </TextSecondary>
         {
-          this.state.orbiters.map((orbiter, i) => (
+          this.orbiters.map((orbiter, i) => (
             <Animated.View
               key={`${i}`}
               style={{
                 position: 'absolute',
                 top: 90,
-                height: this.state.orbiters[i].size,
-                width: this.state.orbiters[i].size,
+                height: this.orbiters[i].size,
+                width: this.orbiters[i].size,
                 backgroundColor: teal,
-                borderRadius: this.state.orbiters[i].size / 2,
+                borderRadius: this.orbiters[i].size / 2,
                 transform: [
-                  { scale: this.state.orbiters[i].transformScale },
-                  { translateY: this.state.orbiters[i].translateY },
-                  { translateX: this.state.orbiters[i].translateX },
+                  { scale: this.orbiters[i].transformScale },
+                  { translateY: this.orbiters[i].translateY },
+                  { translateX: this.orbiters[i].translateX },
                 ],
               }}
             />

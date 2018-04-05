@@ -14,9 +14,9 @@ function Inputs(props) {
       <DrakeInput
         inputId="rStar"
         updateNumCivs={props.updateNumCivs}
-        min={1}
+        min={0}
         max={15}
-        step={1}
+        step={0.1}
         inputValue={props.inputs.rStar}
         descriptionText="Rate of star formation: "
         key="rStar"

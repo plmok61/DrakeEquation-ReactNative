@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Animated, Dimensions, Easing } from 'react-native';
+import { PropTypes } from 'prop-types';
 import { LinearGradient } from 'expo';
 import { lightBlue, black } from '../styles';
 
@@ -8,6 +9,9 @@ const { height, width } = Dimensions.get('window');
 class LoadingAnimation extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      orbitCount: 0,
+    };
     this.animatedOrbit = new Animated.Value(0);
     this.interpolateScale = this.animatedOrbit.interpolate({
       inputRange: [0, 0.5, 1],
@@ -53,7 +57,8 @@ class LoadingAnimation extends Component {
   }
 
   componentDidUpdate() {
-    if (!this.props.animating) {
+    // loop orbit animation twice before starting topAnimation
+    if (!this.props.animating && this.state.orbitCount >= 2) {
       this.topAnimation();
     }
   }
@@ -78,7 +83,14 @@ class LoadingAnimation extends Component {
           easing: Easing.linear,
         },
       ),
-    ]).start(() => this.orbit());
+    ]).start(() => {
+      this.orbit();
+      // check the viewRef to make sure we don't call setState
+      // on an unmounted component
+      if (this.viewRef) {
+        this.setState({ orbitCount: this.state.orbitCount + 1 });
+      }
+    });
   }
 
   topAnimation() {
@@ -86,15 +98,15 @@ class LoadingAnimation extends Component {
       this.animatedValueTop,
       {
         toValue: height,
-        duration: this.props.animationTime,
+        duration: 2000,
         easing: Easing.linear,
       },
-    ).start();
+    ).start(this.props.animationComplete);
   }
 
   render() {
     return (
-      <View style={{ backgroundColor: black, flex: 1 }}>
+      <View ref={(view) => { this.viewRef = view; }} style={{ backgroundColor: black, flex: 1 }}>
         <Animated.View
           style={{
             position: 'absolute',
@@ -129,5 +141,10 @@ class LoadingAnimation extends Component {
     );
   }
 }
+
+LoadingAnimation.propTypes = {
+  animating: PropTypes.bool.isRequired,
+  animationComplete: PropTypes.func.isRequired,
+};
 
 export default LoadingAnimation;

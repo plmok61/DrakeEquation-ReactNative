@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import { lightBlue } from '../styles';
 
-export default class AppText extends Component {
+class TextPrimary extends Component {
   constructor(props) {
     super(props);
     this.style = [{
@@ -27,3 +26,5 @@ export default class AppText extends Component {
     );
   }
 }
+
+export default TextPrimary;

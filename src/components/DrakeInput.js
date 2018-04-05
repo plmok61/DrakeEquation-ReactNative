@@ -35,6 +35,9 @@ class DrakeInput extends Component {
                 numVal = max;
               } else if (numVal < min) {
                 numVal = min;
+              } else if (Number.isNaN(numVal)) {
+                // if the user enters something like '0.32..3.9'
+                numVal = 0;
               }
               updateInput(inputId, numVal);
               updateNumCivs();

@@ -10,9 +10,10 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       fontsLoaded: false,
-      animationComplete: false,
+      animationDone: false,
     };
-    this.animationTime = 20;
+    this.fontsLoadingComplete = this.fontsLoadingComplete.bind(this);
+    this.animationComplete = this.animationComplete.bind(this);
   }
 
   async componentWillMount() {
@@ -21,28 +22,29 @@ export default class App extends React.Component {
       'Exo-2': require('./assets/fonts/Exo2-Regular.ttf'),
       'Exo-2-Bold': require('./assets/fonts/Exo2-Bold.ttf'),
     });
-    // First setTimeout so the user can see the loading animation
-    // Second setTimeout so the transition animation can complete
-    setTimeout(() => {
-      this.setState({ fontsLoaded: true });
-      setTimeout(() => {
-        this.setState({ animationComplete: true });
-      }, this.animationTime);
-    }, this.animationTime);
+    this.setState({ fontsLoaded: true });
+  }
+
+  fontsLoadingComplete() {
+    this.setState({ fontsLoaded: true });
+  }
+
+  animationComplete() {
+    this.setState({ animationDone: true });
   }
 
   render() {
-    if (this.state.fontsLoaded && this.state.animationComplete) {
+    if (this.state.fontsLoaded && this.state.animationDone) {
       return (
         <Provider store={store}>
-          <EquationContainer />
+          <EquationContainer animationComplete={this.animationComplete} />
         </Provider>
       );
     }
     return (
       <LoadingAnimation
         animating={!this.state.fontsLoaded}
-        animationTime={this.animationTime}
+        animationComplete={this.animationComplete}
       />
     );
   }

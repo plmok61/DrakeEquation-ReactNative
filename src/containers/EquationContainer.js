@@ -9,9 +9,6 @@ function EquationContainer(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  numCivs: state.equation.numCivs,
-  inputs: state.equation.inputs,
-});
+const mapStateToProps = state => ({ ...state.equation });
 
 export default connect(mapStateToProps, actions)(EquationContainer);

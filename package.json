@@ -25,13 +25,16 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/vector-icons": "^6.3.1",
     "expo": "^25.0.0",
     "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-flip-component": "^1.0.5",
     "react-native-iphone-x-helper": "^1.0.2",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   }
 }

@@ -1,47 +1,65 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Slider } from 'react-native';
-import InfoModal from './InfoModal';
+import { View, Slider, TextInput } from 'react-native';
 import TextSecondary from './TextSecondary';
-import styles, { black, purple } from '../styles';
+import styles, { purple } from '../styles';
 
-const DrakeInput = (props) => {
-  const {
-    descriptionText,
-    updateNumCivs,
-    updateInput,
-    inputId,
-    min,
-    max,
-    step,
-    inputValue,
-    inputInfo,
-  } = props;
-  return (
-    <View>
-      <View style={styles.flexRow}>
-        <TextSecondary style={{ color: black, fontSize: 15 }}>
-          {descriptionText} {inputValue}
-        </TextSecondary>
-        <View style={{ justifyContent: 'center' }}>
-          <InfoModal inputInfo={inputInfo} />
+class DrakeInput extends Component {
+  render() {
+    const {
+      descriptionText,
+      updateNumCivs,
+      updateInput,
+      inputId,
+      min,
+      max,
+      step,
+      inputValue,
+    } = this.props;
+
+    return (
+      <View>
+        <View style={[styles.flexRow]}>
+          <TextSecondary style={styles.drakeInput}>
+            {descriptionText}
+          </TextSecondary>
+          <TextInput
+            keyboardType="numeric"
+            returnKeyType="done"
+            keyboardAppearance="dark"
+            ref={(input) => { this.inputField = input; }}
+            defaultValue={`${inputValue}`}
+            onEndEditing={(event) => {
+              let numVal = +event.nativeEvent.text;
+              if (numVal > max) {
+                numVal = max;
+              } else if (numVal < min) {
+                numVal = min;
+              } else if (Number.isNaN(numVal)) {
+                // if the user enters something like '0.32..3.9'
+                numVal = 0;
+              }
+              updateInput(inputId, numVal);
+              updateNumCivs();
+            }}
+            style={styles.drakeTextInput}
+          />
         </View>
+        <Slider
+          onValueChange={(value) => {
+            updateInput(inputId, value);
+            updateNumCivs();
+          }}
+          minimumValue={min}
+          maximumValue={max}
+          step={step}
+          value={inputValue}
+          minimumTrackTintColor={purple}
+        />
       </View>
-      <Slider
-        onValueChange={(value) => {
-          updateInput(inputId, value);
-          updateNumCivs();
-        }}
-        onSlidingComplete={() => updateNumCivs()}
-        minimumValue={min}
-        maximumValue={max}
-        step={step}
-        value={inputValue}
-        minimumTrackTintColor={purple}
-      />
-    </View>
-  );
-};
+    );
+  }
+}
 
 
 DrakeInput.propTypes = {
@@ -53,7 +71,6 @@ DrakeInput.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  inputInfo: PropTypes.string.isRequired,
 };
 
 export default DrakeInput;

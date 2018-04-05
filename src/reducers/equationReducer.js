@@ -9,6 +9,7 @@ const initialState = {
     fComm: 0.1,
     lComm: 10000,
   },
+  inputsHeight: 0,
 };
 
 export default function equationReducer(state = initialState, action) {
@@ -23,6 +24,8 @@ export default function equationReducer(state = initialState, action) {
           [action.inputId]: action.value,
         },
       };
+    case 'SET_INPUTS_HEIGHT':
+      return { ...state, inputsHeight: action.inputsHeight };
     default:
       return state;
   }

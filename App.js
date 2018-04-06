@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Font } from 'expo';
 import EquationContainer from './src/containers/EquationContainer';
-import LoadingAnimation from './src/components/LoadingAnimation';
+import LoadingScreen from './src/components/LoadingScreen';
 import store from './src/store';
 
 export default class App extends React.Component {
@@ -42,7 +42,7 @@ export default class App extends React.Component {
       );
     }
     return (
-      <LoadingAnimation
+      <LoadingScreen
         animating={!this.state.fontsLoaded}
         animationComplete={this.animationComplete}
       />

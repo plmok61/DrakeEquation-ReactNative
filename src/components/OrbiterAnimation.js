@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated, Easing, Dimensions } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { lightBlue } from '../styles';
+
+function getRandomInt(mini, maxi) {
+  const min = Math.ceil(mini);
+  const max = Math.floor(maxi);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+const { width } = Dimensions.get('window');
 
 class OrbiterAnimation extends Component {
   constructor(props) {
@@ -11,9 +19,11 @@ class OrbiterAnimation extends Component {
       inputRange: [0, 0.5, 1],
       outputRange: [1, 0.5, 1],
     });
-
+    this.size = this.props.size || getRandomInt(1, 10);
+    this.radius = this.props.radius || getRandomInt(1, width / 2);
+    const { radius } = this;
+    this.duration = this.props.duration || 5000 + (radius * 50);
     const snapshot = 50;
-    const { radius } = this.props;
 
     // / translateX
     const inputRangeX = [];
@@ -45,8 +55,14 @@ class OrbiterAnimation extends Component {
     });
   }
 
+
   componentDidMount() {
     this.orbit();
+  }
+
+  // avoid uneeded rerenders when input slider moves
+  shouldComponentUpdate(nextProps) {
+    return nextProps.index !== this.props.index;
   }
 
   orbit() {
@@ -56,7 +72,7 @@ class OrbiterAnimation extends Component {
         this.animatedOrbit,
         {
           toValue: 1,
-          duration: this.props.duration,
+          duration: this.duration,
           easing: Easing.linear,
           useNativeDriver: true,
         },
@@ -65,7 +81,7 @@ class OrbiterAnimation extends Component {
         this.animatedOrbit,
         {
           toValue: 1,
-          duration: this.props.duration,
+          duration: this.duration,
           easing: Easing.linear,
           useNativeDriver: true,
         },
@@ -83,10 +99,10 @@ class OrbiterAnimation extends Component {
       <Animated.View
         style={{
           ...this.props.customStyle,
-          height: this.props.size,
-          width: this.props.size,
+          height: this.size,
+          width: this.size,
           backgroundColor: this.props.color,
-          borderRadius: this.props.size / 2,
+          borderRadius: this.size / 2,
           transform: [
             { scale: this.interpolateScale },
             { translateY: this.translateY },
@@ -103,6 +119,7 @@ OrbiterAnimation.propTypes = {
   duration: PropTypes.number,
   radius: PropTypes.number,
   color: PropTypes.string,
+  index: PropTypes.number,
   orbitCallback: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool,
@@ -110,11 +127,12 @@ OrbiterAnimation.propTypes = {
 };
 
 OrbiterAnimation.defaultProps = {
-  size: 30,
-  duration: 1000,
-  radius: 100,
+  size: 0,
+  duration: 0,
+  radius: 0,
   color: lightBlue,
   orbitCallback: false,
+  index: 0,
 };
 
 export default OrbiterAnimation;

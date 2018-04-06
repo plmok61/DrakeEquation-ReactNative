@@ -64,6 +64,9 @@ class LoadingScreen extends Component {
             <OrbiterAnimation
               ref={(component) => { this.animationRef = component; }}
               orbitCallback={this.countOrbits}
+              radius={100}
+              size={30}
+              duration={1000}
             />
           </LinearGradient>
         </Animated.View>

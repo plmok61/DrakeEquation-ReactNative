@@ -23,7 +23,6 @@ export default class App extends React.Component {
       'Exo-2-Bold': require('./assets/fonts/Exo2-Bold.ttf'),
     });
     this.setState({ fontsLoaded: true });
-    console.log(this.state);
   }
 
   fontsLoadingComplete() {

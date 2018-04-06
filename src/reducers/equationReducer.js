@@ -10,6 +10,7 @@ const initialState = {
     lComm: 10000,
   },
   inputsHeight: 0,
+  orbiters: [0],
 };
 
 export default function equationReducer(state = initialState, action) {
@@ -26,6 +27,8 @@ export default function equationReducer(state = initialState, action) {
       };
     case 'SET_INPUTS_HEIGHT':
       return { ...state, inputsHeight: action.inputsHeight };
+    case 'UPDATE_ORBITERS':
+      return { ...state, orbiters: action.orbiters };
     default:
       return state;
   }

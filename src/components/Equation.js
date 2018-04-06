@@ -49,7 +49,10 @@ class Equation extends Component {
         keyboardVerticalOffset={ifIphoneX(-58, 0)}
       >
         <Animated.ScrollView bounces={false} style={[styles.equationContainer, { opacity: this.animatedOpacity }]}>
-          <Result numCivs={props.numCivs} />
+          <Result
+            numCivs={props.numCivs}
+            orbiters={props.orbiters}
+          />
           <FlipComponent
             isFlipped={this.state.showBack}
             frontView={

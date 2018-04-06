@@ -38,6 +38,7 @@ class OrbiterAnimation extends Component {
       inputRangeY.push(value);
       outputRangeY.push(move);
     }
+
     this.translateY = this.animatedOrbit.interpolate({
       inputRange: inputRangeY,
       outputRange: outputRangeY,

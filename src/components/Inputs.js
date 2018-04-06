@@ -21,6 +21,7 @@ function Inputs(props) {
         descriptionText="Rate of star formation: "
         key="rStar"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <DrakeInput
         inputId="fPlanets"
@@ -32,6 +33,7 @@ function Inputs(props) {
         descriptionText="Fraction of stars with planets: "
         key="fPlanets"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <DrakeInput
         inputId="nEarthLike"
@@ -43,6 +45,7 @@ function Inputs(props) {
         descriptionText="Earth-like planets per star: "
         key="nEarthLike"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <DrakeInput
         inputId="fLife"
@@ -54,6 +57,7 @@ function Inputs(props) {
         descriptionText="Fraction of stars with life: "
         key="fLife"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <DrakeInput
         inputId="fIntelligent"
@@ -65,6 +69,7 @@ function Inputs(props) {
         descriptionText="Fraction with intelligence life: "
         key="fIntelligent"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <DrakeInput
         inputId="fComm"
@@ -76,6 +81,7 @@ function Inputs(props) {
         descriptionText="Fraction that are communicative: "
         key="fComm"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <DrakeInput
         inputId="lComm"
@@ -87,6 +93,7 @@ function Inputs(props) {
         descriptionText="Years communicative: "
         key="lComm"
         updateInput={props.updateInput}
+        createOrbiters={props.createOrbiters}
       />
       <TouchableOpacity onPress={props.flip}>
         <TextSecondary style={{ textAlign: 'center', color: purple }}>

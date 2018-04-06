@@ -15,6 +15,7 @@ class DrakeInput extends Component {
       max,
       step,
       inputValue,
+      createOrbiters,
     } = this.props;
 
     return (
@@ -41,6 +42,7 @@ class DrakeInput extends Component {
               }
               updateInput(inputId, numVal);
               updateNumCivs();
+              createOrbiters();
             }}
             style={styles.drakeTextInput}
           />
@@ -50,6 +52,7 @@ class DrakeInput extends Component {
             updateInput(inputId, value);
             updateNumCivs();
           }}
+          onSlidingComplete={createOrbiters}
           minimumValue={min}
           maximumValue={max}
           step={step}
@@ -71,6 +74,7 @@ DrakeInput.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
+  createOrbiters: PropTypes.func.isRequired,
 };
 
 export default DrakeInput;

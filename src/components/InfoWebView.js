@@ -1,18 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { View, WebView, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
+import { func } from 'prop-types';
+import { View, TouchableOpacity } from 'react-native';
+import { WebView } from 'react-native-webview';
 import TextSecondary from './TextSecondary';
 import styles, { purple } from '../styles';
 
-function InfoWebView(props) {
+function InfoWebView({ toggleFlip }) {
+  const inputsHeight = useSelector((state) => state.equationState.inputsHeight);
+
   return (
-    <View style={[styles.infoContainer, { height: props.height }]}>
+    <View style={[styles.infoContainer, { height: inputsHeight }]}>
       <WebView
-        style={[styles.infoWebView, { height: props.height }]}
+        style={[styles.infoWebView, { height: inputsHeight }]}
         source={{ uri: 'https://en.wikipedia.org/wiki/Drake_equation' }}
       />
       <TouchableOpacity
-        onPress={props.flip}
+        onPress={toggleFlip}
         style={styles.backButton}
       >
         <TextSecondary style={{ textAlign: 'center', color: purple }}>
@@ -24,8 +28,7 @@ function InfoWebView(props) {
 }
 
 InfoWebView.propTypes = {
-  height: PropTypes.number.isRequired,
-  flip: PropTypes.func.isRequired,
+  toggleFlip: func.isRequired,
 };
 
 export default InfoWebView;

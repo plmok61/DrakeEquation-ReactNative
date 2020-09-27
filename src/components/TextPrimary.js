@@ -7,7 +7,7 @@ class TextPrimary extends Component {
     super(props);
     this.style = [{
       color: lightBlue,
-      fontFamily: 'Audiowide',
+      fontFamily: 'Audiowide_400Regular',
     }];
     if (props.style) {
       if (Array.isArray(props.style)) {

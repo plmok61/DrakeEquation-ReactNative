@@ -1,80 +1,73 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View, Slider, TextInput } from 'react-native';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { number, string } from 'prop-types';
+import { View, TextInput } from 'react-native';
+import Slider from '@react-native-community/slider';
 import TextSecondary from './TextSecondary';
 import styles, { purple } from '../styles';
+import { updateNumCivs, updateInput, createOrbiters } from '../actions/equationActions';
 
-class DrakeInput extends Component {
-  render() {
-    const {
-      descriptionText,
-      updateNumCivs,
-      updateInput,
-      inputId,
-      min,
-      max,
-      step,
-      inputValue,
-      createOrbiters,
-    } = this.props;
+function DrakeInput({
+  inputId,
+  min,
+  max,
+  step,
+  descriptionText
+}) {
+  const dispatch = useDispatch();
+  const inputValue = useSelector((state) => state.equationState.inputs[inputId]);
 
-    return (
-      <View>
-        <View style={[styles.flexRow]}>
-          <TextSecondary style={styles.drakeInput}>
-            {descriptionText}
-          </TextSecondary>
-          <TextInput
-            keyboardType="numeric"
-            returnKeyType="done"
-            keyboardAppearance="dark"
-            ref={(input) => { this.inputField = input; }}
-            defaultValue={`${inputValue}`}
-            onEndEditing={(event) => {
-              let numVal = +event.nativeEvent.text;
-              if (numVal > max) {
-                numVal = max;
-              } else if (numVal < min) {
-                numVal = min;
-              } else if (Number.isNaN(numVal)) {
-                // if the user enters something like '0.32..3.9'
-                numVal = 0;
-              }
-              updateInput(inputId, numVal);
-              updateNumCivs();
-              createOrbiters();
-            }}
-            style={styles.drakeTextInput}
-          />
-        </View>
-        <Slider
-          onValueChange={(value) => {
-            updateInput(inputId, value);
-            updateNumCivs();
+  return (
+    <View>
+      <View style={styles.flexRow}>
+        <TextSecondary style={styles.drakeInput}>
+          {descriptionText}
+        </TextSecondary>
+        <TextInput
+          keyboardType="numeric"
+          returnKeyType="done"
+          keyboardAppearance="dark"
+          defaultValue={`${inputValue}`}
+          onEndEditing={(event) => {
+            let numVal = +event.nativeEvent.text;
+            if (numVal > max) {
+              numVal = max;
+            } else if (numVal < min) {
+              numVal = min;
+            } else if (Number.isNaN(numVal)) {
+              // if the user enters something like '0.32..3.9'
+              numVal = 0;
+            }
+            dispatch(updateInput(inputId, numVal));
+            dispatch(updateNumCivs());
+            dispatch(createOrbiters());
           }}
-          onSlidingComplete={createOrbiters}
-          minimumValue={min}
-          maximumValue={max}
-          step={step}
-          value={inputValue}
-          minimumTrackTintColor={purple}
+          style={styles.drakeTextInput}
         />
       </View>
-    );
-  }
+      <Slider
+        onValueChange={(value) => {
+          dispatch(updateInput(inputId, value));
+          dispatch(updateNumCivs());
+        }}
+        onSlidingComplete={() => dispatch(createOrbiters())}
+        minimumValue={min}
+        maximumValue={max}
+        step={step}
+        value={inputValue}
+        minimumTrackTintColor={purple}
+      />
+    </View>
+  );
 }
 
 
 DrakeInput.propTypes = {
-  inputValue: PropTypes.number.isRequired,
-  descriptionText: PropTypes.string.isRequired,
-  updateNumCivs: PropTypes.func.isRequired,
-  updateInput: PropTypes.func.isRequired,
-  inputId: PropTypes.string.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
-  createOrbiters: PropTypes.func.isRequired,
+  descriptionText: string.isRequired,
+  inputId: string.isRequired,
+  min: number.isRequired,
+  max: number.isRequired,
+  step: number.isRequired,
 };
 
 export default DrakeInput;

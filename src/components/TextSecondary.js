@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { lightBlue } from '../styles';
 
-export default class AppText extends Component {
+export default class TextSecondary extends Component {
   constructor(props) {
     super(props);
     this.style = [{
       color: lightBlue,
-      fontFamily: 'Exo-2',
+      fontFamily: 'Exo2_400Regular',
     }];
     if (props.style) {
       if (Array.isArray(props.style)) {

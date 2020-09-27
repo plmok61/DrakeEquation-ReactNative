@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   drakeTextInput: {
     fontSize: 19,
     color: purple,
-    fontFamily: 'Exo-2-Bold',
+    fontFamily: 'Exo2_700Bold',
     textAlign: 'right',
     flex: 1,
   },

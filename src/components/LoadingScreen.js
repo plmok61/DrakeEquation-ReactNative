@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Animated, Dimensions, Easing } from 'react-native';
-import { PropTypes } from 'prop-types';
-import { LinearGradient } from 'expo';
+import { bool, func, number } from 'prop-types';
+import { LinearGradient } from 'expo-linear-gradient';
 import OrbiterAnimation from './OrbiterAnimation';
 import { black } from '../styles';
 
@@ -76,14 +76,8 @@ class LoadingScreen extends Component {
 }
 
 LoadingScreen.propTypes = {
-  animating: PropTypes.bool.isRequired,
-  animationComplete: PropTypes.func.isRequired,
-};
-
-LoadingScreen.defatulProps = {
-  size: 30,
-  index: 0,
-  duration: 1000,
+  animating: bool.isRequired,
+  animationComplete: func.isRequired,
 };
 
 export default LoadingScreen;

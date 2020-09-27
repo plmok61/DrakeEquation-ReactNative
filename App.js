@@ -1,51 +1,38 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Provider } from 'react-redux';
-import { Font } from 'expo';
-import EquationContainer from './src/containers/EquationContainer';
+import { useFonts, Exo2_400Regular, Exo2_700Bold } from '@expo-google-fonts/exo-2';
+import { Audiowide_400Regular } from '@expo-google-fonts/audiowide';
+import Equation from './src/components/Equation';
 import LoadingScreen from './src/components/LoadingScreen';
 import store from './src/store';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fontsLoaded: false,
-      animationDone: false,
-    };
-    this.fontsLoadingComplete = this.fontsLoadingComplete.bind(this);
-    this.animationComplete = this.animationComplete.bind(this);
-  }
+function App() {
+  const [fontsLoaded] = useFonts({
+    Audiowide_400Regular,
+    Exo2_400Regular,
+    Exo2_700Bold,
+  });
+  const [animationDone, setAnimationDone] = useState(false);
 
-  async componentWillMount() {
-    await Font.loadAsync({
-      Audiowide: require('./assets/fonts/Audiowide-Regular.ttf'),
-      'Exo-2': require('./assets/fonts/Exo2-Regular.ttf'),
-      'Exo-2-Bold': require('./assets/fonts/Exo2-Bold.ttf'),
-    });
-    this.setState({ fontsLoaded: true });
-  }
+  const animationComplete = useCallback(() => {
+    setAnimationDone(true);
+  });
 
-  fontsLoadingComplete() {
-    this.setState({ fontsLoaded: true });
-  }
-
-  animationComplete() {
-    this.setState({ animationDone: true });
-  }
-
-  render() {
-    if (this.state.fontsLoaded && this.state.animationDone) {
-      return (
-        <Provider store={store}>
-          <EquationContainer animationComplete={this.animationComplete} />
-        </Provider>
-      );
-    }
+  
+  if (fontsLoaded && animationDone) {
     return (
-      <LoadingScreen
-        animating={!this.state.fontsLoaded}
-        animationComplete={this.animationComplete}
-      />
+      <Provider store={store}>
+        <Equation />
+      </Provider>
     );
   }
+
+  return (
+    <LoadingScreen
+      animating={!fontsLoaded}
+      animationComplete={animationComplete}
+    />
+  );
 }
+
+export default App;

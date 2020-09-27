@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing, Dimensions } from 'react-native';
-import { PropTypes } from 'prop-types';
+import { number, string, func, bool, oneOfType } from 'prop-types';
 import { lightBlue } from '../styles';
 
 function getRandomInt(mini, maxi) {
@@ -115,15 +115,12 @@ class OrbiterAnimation extends Component {
 }
 
 OrbiterAnimation.propTypes = {
-  size: PropTypes.number,
-  duration: PropTypes.number,
-  radius: PropTypes.number,
-  color: PropTypes.string,
-  index: PropTypes.number,
-  orbitCallback: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.bool,
-  ]),
+  size: number,
+  duration: number,
+  radius: number,
+  color: string,
+  index: number,
+  orbitCallback: oneOfType([func, bool]),
 };
 
 OrbiterAnimation.defaultProps = {

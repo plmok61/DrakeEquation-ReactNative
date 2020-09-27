@@ -1,89 +1,86 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { View, Animated, Dimensions, Easing } from 'react-native';
-import { PropTypes } from 'prop-types';
-import { LinearGradient } from 'expo';
+import { bool, func } from 'prop-types';
+import { LinearGradient } from 'expo-linear-gradient';
 import OrbiterAnimation from './OrbiterAnimation';
 import { black } from '../styles';
 
 const { height, width } = Dimensions.get('window');
 
-class LoadingScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      orbitCount: 0,
-    };
-    this.countOrbits = this.countOrbits.bind(this);
-    this.animatedValueTop = new Animated.Value(0);
-  }
+const useTopAnimation = ({ animating, animationComplete, orbitCount }) => {
+  const animatedValueTop = useRef(new Animated.Value(0)).current;
 
-  componentDidUpdate() {
-    // loop orbit animation twice before starting topAnimation
-    if (!this.props.animating && this.state.orbitCount >= 2) {
-      this.topAnimation();
-    }
-  }
-
-  topAnimation() {
+  const topAnimation = () => {
     Animated.timing(
-      this.animatedValueTop,
+      animatedValueTop,
       {
         toValue: height,
         duration: 2000,
         easing: Easing.linear,
       },
-    ).start(this.props.animationComplete);
+    ).start(animationComplete);
   }
+  
+  useEffect(() => {
+    if (!animating && orbitCount >= 2) {
+      topAnimation();
+    }
+  }, [animating, orbitCount]);
 
-  countOrbits() {
+  return animatedValueTop;
+}
+
+function LoadingScreen({ animating, animationComplete }) {
+  const [orbitCount, setOrbitCount] = useState(0)
+  const animationRef = useRef(null);
+
+  const animatedValueTop = useTopAnimation({
+    animating,
+    animationComplete,
+    orbitCount,
+  });
+
+  const countOrbits = useCallback(() => {
     // check the animationRef to make sure we don't call setState
     // on an unmounted component
-    if (this.animationRef) {
-      this.setState({ orbitCount: this.state.orbitCount + 1 });
+    if (animationRef.current) {
+      setOrbitCount(orbitCount + 1)
     }
-  }
+  }, [orbitCount]);
 
-  render() {
-    return (
-      <View ref={(view) => { this.viewRef = view; }} style={{ backgroundColor: black, flex: 1 }}>
-        <Animated.View
+  return (
+    <View style={{ backgroundColor: black, flex: 1 }}>
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: animatedValueTop,
+        }}
+      >
+        <LinearGradient
+          colors={['#222', '#483d8b']}
           style={{
-            position: 'absolute',
-            top: this.animatedValueTop,
+            height,
+            width,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <LinearGradient
-            colors={['#222', '#483d8b']}
-            style={{
-              height,
-              width,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <OrbiterAnimation
-              ref={(component) => { this.animationRef = component; }}
-              orbitCallback={this.countOrbits}
-              radius={100}
-              size={30}
-              duration={1000}
-            />
-          </LinearGradient>
-        </Animated.View>
-      </View>
-    );
-  }
+          <OrbiterAnimation
+            ref={animationRef}
+            orbitCallback={countOrbits}
+            radius={100}
+            size={30}
+            duration={1000}
+          />
+        </LinearGradient>
+      </Animated.View>
+    </View>
+  );
 }
 
 LoadingScreen.propTypes = {
-  animating: PropTypes.bool.isRequired,
-  animationComplete: PropTypes.func.isRequired,
-};
-
-LoadingScreen.defatulProps = {
-  size: 30,
-  index: 0,
-  duration: 1000,
+  animating: bool.isRequired,
+  animationComplete: func.isRequired,
 };
 
 export default LoadingScreen;

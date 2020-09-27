@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { View } from 'react-native';
 import TextSecondary from './TextSecondary';
 import OrbiterAnimation from './OrbiterAnimation';
 import styles, { teal } from '../styles';
 
-function Result(props) {
+function Result() {
+  const numCivs = useSelector((state) => state.equationState.numCivs);
+  const orbiters = useSelector((state) => state.equationState.orbiters);
   return (
     <View style={styles.result}>
       <TextSecondary
@@ -14,7 +16,7 @@ function Result(props) {
         Civilizations in our galaxy:
       </TextSecondary>
       {
-        props.orbiters.map(i => (
+        orbiters.map(i => (
           <OrbiterAnimation
             key={`orbiter-${i}`}
             index={i}
@@ -24,16 +26,10 @@ function Result(props) {
         ))
       }
       <TextSecondary style={{ fontSize: 40, marginVertical: 20 }}>
-        {props.numCivs}
+        {numCivs}
       </TextSecondary>
     </View>
   );
 }
-
-
-Result.propTypes = {
-  numCivs: PropTypes.number.isRequired,
-  orbiters: PropTypes.array.isRequired,
-};
 
 export default Result;

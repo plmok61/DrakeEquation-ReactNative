@@ -1,3 +1,10 @@
+import {
+  UPDATE_INPUT,
+  UPDATE_NUM_CIVS,
+  SET_INPUTS_HEIGHT,
+  UPDATE_ORBITERS,
+} from '../actions/equationActions';
+
 const initialState = {
   numCivs: 0,
   inputs: {
@@ -15,9 +22,9 @@ const initialState = {
 
 export default function equationReducer(state = initialState, action) {
   switch (action.type) {
-    case 'UPDATE_NUM_CIVS':
+    case UPDATE_NUM_CIVS:
       return { ...state, numCivs: action.numCivs };
-    case 'UPDATE_INPUT':
+    case UPDATE_INPUT:
       return {
         ...state,
         inputs: {
@@ -25,9 +32,9 @@ export default function equationReducer(state = initialState, action) {
           [action.inputId]: action.value,
         },
       };
-    case 'SET_INPUTS_HEIGHT':
+    case SET_INPUTS_HEIGHT:
       return { ...state, inputsHeight: action.inputsHeight };
-    case 'UPDATE_ORBITERS':
+    case UPDATE_ORBITERS:
       return { ...state, orbiters: action.orbiters };
     default:
       return state;

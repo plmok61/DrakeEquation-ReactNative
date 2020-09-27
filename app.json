@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0",
     "name": "Drake Equation",
     "description": "Calculate the number of civilizations in our galaxy.",
     "slug": "drake-equation",
@@ -12,6 +11,12 @@
       "hideExponentText": true,
       "resizeMode": "cover"
     },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "bundleIdentifier": "space.drakeequation.DrakeEquationCalculator",
       "icon": "./assets/images/icon.png",

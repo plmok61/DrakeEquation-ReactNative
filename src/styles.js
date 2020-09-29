@@ -38,7 +38,19 @@ const styles = StyleSheet.create({
   },
   result: {
     alignItems: 'center',
+    marginTop: 20,
     marginBottom: 10,
+  },
+  civText: {
+    fontSize: 25,
+  },
+  totalText: {
+    fontSize: 40,
+    marginVertical: 20,
+  },
+  resultOrbiter: {
+    position: 'absolute',
+    top: 60,
   },
   infoContainer: {
     justifyContent: 'center',

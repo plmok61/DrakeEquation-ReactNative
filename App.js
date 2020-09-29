@@ -29,7 +29,7 @@ function App() {
 
   return (
     <LoadingScreen
-      animating={!fontsLoaded}
+      loading={!fontsLoaded}
       animationComplete={animationComplete}
     />
   );

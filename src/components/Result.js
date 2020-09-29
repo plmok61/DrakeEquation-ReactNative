@@ -8,11 +8,10 @@ import styles, { teal } from '../styles';
 function Result() {
   const numCivs = useSelector((state) => state.equationState.numCivs);
   const orbiters = useSelector((state) => state.equationState.orbiters);
+
   return (
     <View style={styles.result}>
-      <TextSecondary
-        style={{ fontSize: 25, textAlign: 'center', marginTop: 20 }}
-      >
+      <TextSecondary style={styles.civText}>
         Civilizations in our galaxy:
       </TextSecondary>
       {
@@ -20,12 +19,12 @@ function Result() {
           <OrbiterAnimation
             key={`orbiter-${i}`}
             index={i}
-            customStyle={{ position: 'absolute', top: 60 }}
+            customStyle={styles.resultOrbiter}
             color={teal}
           />
         ))
       }
-      <TextSecondary style={{ fontSize: 40, marginVertical: 20 }}>
+      <TextSecondary style={styles.totalText}>
         {numCivs}
       </TextSecondary>
     </View>

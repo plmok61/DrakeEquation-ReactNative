@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { Animated, Easing, Dimensions } from 'react-native';
 import { number, string, func, bool, oneOfType } from 'prop-types';
 import { lightBlue } from '../styles';
+
+const { width } = Dimensions.get('window');
 
 function getRandomInt(mini, maxi) {
   const min = Math.ceil(mini);
@@ -9,112 +11,113 @@ function getRandomInt(mini, maxi) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const { width } = Dimensions.get('window');
+const useOrbit = ({ radius, duration, orbitCallback }) => {
+  const animatedOrbit = useRef(new Animated.Value(0)).current;
+  const interpolateScale = animatedOrbit.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [1, 0.5, 1],
+  });
 
-class OrbiterAnimation extends Component {
-  constructor(props) {
-    super(props);
-    this.animatedOrbit = new Animated.Value(0);
-    this.interpolateScale = this.animatedOrbit.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [1, 0.5, 1],
-    });
-    this.size = this.props.size || getRandomInt(1, 10);
-    this.radius = this.props.radius || getRandomInt(1, width / 2);
-    const { radius } = this;
-    this.duration = this.props.duration || 5000 + (radius * 50);
-    const snapshot = 50;
+  const r = radius || getRandomInt(1, width / 2);
+  const d = duration || 5000 + (r * 50);
+  const frames = 50;
 
-    // / translateX
-    const inputRangeX = [];
-    const outputRangeX = [];
-    for (let i = 0; i <= snapshot; i += 1) {
-      const value = i / snapshot;
-      const move = Math.sin(value * Math.PI * 2) * radius;
-      inputRangeX.push(value);
-      outputRangeX.push(move);
-    }
-    this.translateX = this.animatedOrbit.interpolate({
-      inputRange: inputRangeX,
-      outputRange: outputRangeX,
-    });
+  // / translateX
+  const inputRangeX = [];
+  const outputRangeX = [];
+  for (let i = 0; i <= frames; i += 1) {
+    const value = i / frames;
+    const move = Math.sin(value * Math.PI * 2) * r;
+    inputRangeX.push(value);
+    outputRangeX.push(move);
+  }
+  const translateX = animatedOrbit.interpolate({
+    inputRange: inputRangeX,
+    outputRange: outputRangeX,
+  });
 
-    // / translateY
-    const inputRangeY = [];
-    const outputRangeY = [];
-    for (let i = 0; i <= snapshot; i += 1) {
-      const value = i / snapshot;
-      const move = -Math.cos(value * Math.PI * 2) * (radius * 0.5);
-      inputRangeY.push(value);
-      outputRangeY.push(move);
-    }
-
-    this.translateY = this.animatedOrbit.interpolate({
-      inputRange: inputRangeY,
-      outputRange: outputRangeY,
-    });
+  // / translateY
+  const inputRangeY = [];
+  const outputRangeY = [];
+  for (let i = 0; i <= frames; i += 1) {
+    const value = i / frames;
+    const move = -Math.cos(value * Math.PI * 2) * (r * 0.5);
+    inputRangeY.push(value);
+    outputRangeY.push(move);
   }
 
+  const translateY = animatedOrbit.interpolate({
+    inputRange: inputRangeY,
+    outputRange: outputRangeY,
+  });
 
-  componentDidMount() {
-    this.orbit();
-  }
-
-  // avoid uneeded rerenders when input slider moves
-  shouldComponentUpdate(nextProps) {
-    return nextProps.index !== this.props.index;
-  }
-
-  orbit() {
-    this.animatedOrbit.setValue(0);
+  const orbit = () => {
+    animatedOrbit.setValue(0);
     Animated.parallel([
       Animated.timing(
-        this.animatedOrbit,
+        animatedOrbit,
         {
           toValue: 1,
-          duration: this.duration,
+          duration: d,
           easing: Easing.linear,
           useNativeDriver: true,
         },
       ),
       Animated.timing(
-        this.animatedOrbit,
+        animatedOrbit,
         {
           toValue: 1,
-          duration: this.duration,
+          duration: d,
           easing: Easing.linear,
           useNativeDriver: true,
         },
       ),
     ]).start(() => {
-      this.orbit();
-      if (this.props.orbitCallback) {
-        this.props.orbitCallback();
+      orbit();
+      if (orbitCallback) {
+        orbitCallback();
       }
     });
   }
 
-  render() {
-    return (
-      <Animated.View
-        style={{
-          ...this.props.customStyle,
-          height: this.size,
-          width: this.size,
-          backgroundColor: this.props.color,
-          borderRadius: this.size / 2,
-          transform: [
-            { scale: this.interpolateScale },
-            { translateY: this.translateY },
-            { translateX: this.translateX },
-          ],
-        }}
-      />
-    );
-  }
+  useEffect(() => {
+    orbit();
+  }, []);
+
+  return [interpolateScale, translateY, translateX];
 }
 
-OrbiterAnimation.propTypes = {
+function Orbiter({
+  size,
+  radius,
+  duration,
+  orbitCallback,
+  customStyle,
+  color,
+  index,
+}) {
+  console.log('index', index)
+  const [interpolateScale, translateY, translateX] = useOrbit({ radius, duration, orbitCallback });
+  const diameter = size || getRandomInt(1, 10);
+  return (
+    <Animated.View
+      style={{
+        ...customStyle,
+        height: diameter,
+        width: diameter,
+        backgroundColor: color,
+        borderRadius: diameter / 2,
+        transform: [
+          { scale: interpolateScale },
+          { translateY: translateY },
+          { translateX: translateX },
+        ],
+      }}
+    />
+  )
+}
+
+Orbiter.propTypes = {
   size: number,
   duration: number,
   radius: number,
@@ -123,7 +126,7 @@ OrbiterAnimation.propTypes = {
   orbitCallback: oneOfType([func, bool]),
 };
 
-OrbiterAnimation.defaultProps = {
+Orbiter.defaultProps = {
   size: 0,
   duration: 0,
   radius: 0,
@@ -132,4 +135,8 @@ OrbiterAnimation.defaultProps = {
   index: 0,
 };
 
-export default OrbiterAnimation;
+const isEqual = (prevProps, nextProps) => nextProps.index === prevProps.index;
+
+const OrbiterMemo = memo(Orbiter, isEqual)
+
+export default OrbiterMemo;

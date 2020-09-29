@@ -7,7 +7,7 @@ import { black } from '../styles';
 
 const { height, width } = Dimensions.get('window');
 
-const useTopAnimation = ({ animating, animationComplete, orbitCount }) => {
+const useTopAnimation = ({ loading, animationComplete, orbitCount }) => {
   const animatedValueTop = useRef(new Animated.Value(0)).current;
 
   const topAnimation = () => {
@@ -17,36 +17,32 @@ const useTopAnimation = ({ animating, animationComplete, orbitCount }) => {
         toValue: height,
         duration: 2000,
         easing: Easing.linear,
+        useNativeDriver: false,
       },
     ).start(animationComplete);
   }
   
   useEffect(() => {
-    if (!animating && orbitCount >= 2) {
+    if (!loading && orbitCount >=2) {
       topAnimation();
     }
-  }, [animating, orbitCount]);
+  }, [loading, orbitCount]);
 
   return animatedValueTop;
 }
 
-function LoadingScreen({ animating, animationComplete }) {
+function LoadingScreen({ loading, animationComplete }) {
   const [orbitCount, setOrbitCount] = useState(0)
-  const animationRef = useRef(null);
 
   const animatedValueTop = useTopAnimation({
-    animating,
+    loading,
     animationComplete,
     orbitCount,
   });
 
-  const countOrbits = useCallback(() => {
-    // check the animationRef to make sure we don't call setState
-    // on an unmounted component
-    if (animationRef.current) {
-      setOrbitCount(orbitCount + 1)
-    }
-  }, [orbitCount]);
+  const countOrbits = () => {
+      setOrbitCount((prev) => prev + 1)
+  };
 
   return (
     <View style={{ backgroundColor: black, flex: 1 }}>
@@ -66,7 +62,6 @@ function LoadingScreen({ animating, animationComplete }) {
           }}
         >
           <OrbiterAnimation
-            ref={animationRef}
             orbitCallback={countOrbits}
             radius={100}
             size={30}
@@ -79,7 +74,7 @@ function LoadingScreen({ animating, animationComplete }) {
 }
 
 LoadingScreen.propTypes = {
-  animating: bool.isRequired,
+  loading: bool.isRequired,
   animationComplete: func.isRequired,
 };
 

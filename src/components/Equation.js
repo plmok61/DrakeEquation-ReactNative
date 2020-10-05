@@ -52,13 +52,15 @@ function Equation() {
       <Animated.ScrollView 
         bounces={false} 
         style={[
-          styles.equationContainer,
+          styles.equationScroll,
           { opacity: animatedOpacity }
         ]}
       >
         <Result />
+        {/* <Inputs toggleFlip={toggleFlip} /> */}
         <FlipComponent
           isFlipped={showBack}
+          containerStyles={styles.equationContainer}
           frontView={<Inputs toggleFlip={toggleFlip} />}
           backView={<InfoWebView toggleFlip={toggleFlip} />}
         />

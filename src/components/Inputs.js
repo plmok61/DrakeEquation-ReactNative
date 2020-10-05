@@ -11,7 +11,7 @@ function Inputs({ toggleFlip }) {
   const dispatch = useDispatch()
   return (
     <View
-      style={styles.equation}
+      style={styles.inputsContainer}
       onLayout={event => dispatch(setInputsHeight(event.nativeEvent.layout.height))}
     >
       <DrakeInput

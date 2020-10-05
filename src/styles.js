@@ -1,15 +1,18 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
+import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export const black = '#222';
 export const purple = '#483d8b';
 export const lightBlue = '#d9eaee';
 export const teal = '#39818e';
 export const red = '#850d14';
-export const iPhoneXPadding = ifIphoneX(58, 0);
-export const iPhoneXMarginTop = ifIphoneX(65, 25);
+export const marginTop = getStatusBarHeight();
+export const marginBottom = getBottomSpace();
+
+export const resultHeight = 150;
+export const equationHeight = height - resultHeight - marginTop - marginBottom;
 
 const styles = StyleSheet.create({
   container: {
@@ -18,28 +21,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: black,
   },
-  centering: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 8,
-  },
   flexRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  equationScroll: {
+    marginTop,
+    marginBottom,
+  },
   equationContainer: {
-    marginTop: iPhoneXMarginTop,
-    marginBottom: iPhoneXPadding,
+    height: equationHeight,
+    width,
+  },
+  inputsContainer: {
+    backgroundColor: lightBlue,
+    padding: 20,
+    width,
+    height: '100%',
+    justifyContent: 'space-between'
   },
   equation: {
     backgroundColor: lightBlue,
     padding: 20,
     width,
   },
-  result: {
+  resultContainer: {
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 10,
+    height: resultHeight,
   },
   civText: {
     fontSize: 25,
@@ -50,7 +60,7 @@ const styles = StyleSheet.create({
   },
   resultOrbiter: {
     position: 'absolute',
-    top: 60,
+    top: 100,
   },
   infoContainer: {
     justifyContent: 'center',
@@ -59,6 +69,7 @@ const styles = StyleSheet.create({
   },
   infoWebView: {
     width,
+    height: '100%',
   },
   backButton: {
     backgroundColor: lightBlue,

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { View } from 'react-native';
 import TextSecondary from './TextSecondary';
-import OrbiterAnimation from './OrbiterAnimation';
+import Orbiter from './Orbiter';
 import styles, { teal } from '../styles';
 
 function Result() {
@@ -10,17 +10,17 @@ function Result() {
   const orbiters = useSelector((state) => state.equationState.orbiters);
 
   return (
-    <View style={styles.result}>
+    <View style={styles.resultContainer}>
       <TextSecondary style={styles.civText}>
         Civilizations in our galaxy:
       </TextSecondary>
       {
         orbiters.map(i => (
-          <OrbiterAnimation
+          <Orbiter
             key={`orbiter-${i}`}
             index={i}
             customStyle={styles.resultOrbiter}
-            color={teal}
+            randomStart
           />
         ))
       }

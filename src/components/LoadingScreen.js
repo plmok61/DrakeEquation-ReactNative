@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Animated, Dimensions, Easing } from 'react-native';
 import { bool, func } from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
-import OrbiterAnimation from './OrbiterAnimation';
-import { black } from '../styles';
+import Orbiter from './Orbiter';
+import { black, lightBlue, purple } from '../styles';
 
 const { height, width } = Dimensions.get('window');
 
@@ -53,7 +53,7 @@ function LoadingScreen({ loading, animationComplete }) {
         }}
       >
         <LinearGradient
-          colors={['#222', '#483d8b']}
+          colors={[black, purple]}
           style={{
             height,
             width,
@@ -61,11 +61,12 @@ function LoadingScreen({ loading, animationComplete }) {
             alignItems: 'center',
           }}
         >
-          <OrbiterAnimation
+          <Orbiter
             orbitCallback={countOrbits}
             radius={100}
             size={30}
             duration={1000}
+            color={lightBlue}
           />
         </LinearGradient>
       </Animated.View>

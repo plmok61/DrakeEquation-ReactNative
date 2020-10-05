@@ -57,7 +57,6 @@ function Equation() {
         ]}
       >
         <Result />
-        {/* <Inputs toggleFlip={toggleFlip} /> */}
         <FlipComponent
           isFlipped={showBack}
           containerStyles={styles.equationContainer}

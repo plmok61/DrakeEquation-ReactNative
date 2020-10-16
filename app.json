@@ -19,6 +19,9 @@
       "**/*"
     ],
     "ios": {
+      "config": { 
+        "usesNonExemptEncryption": false  
+      },
       "bundleIdentifier": "space.drakeequation.DrakeEquationCalculator",
       "icon": "./assets/images/icon.png",
       "supportsTablet": false,

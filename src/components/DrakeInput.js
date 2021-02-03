@@ -54,14 +54,13 @@ function DrakeInput({
         minimumValue={min}
         maximumValue={max}
         step={step}
-        value={defaultValue} // this should never change 
+        value={defaultValue} // this should never change
         // https://stackoverflow.com/questions/54763083/react-native-slider-onvaluechange-calling-setstate-makes-slider-lag/65198567#65198567
         minimumTrackTintColor={purple}
       />
     </View>
   );
 }
-
 
 DrakeInput.propTypes = {
   descriptionText: string.isRequired,

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Animated, Dimensions, Easing } from 'react-native';
+import {
+  View, Animated, Dimensions, Easing,
+} from 'react-native';
 import { bool, func } from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
 import Orbiter from './Orbiter';
@@ -10,29 +12,28 @@ const { height, width } = Dimensions.get('window');
 const useTopAnimation = ({ loading, animationComplete, orbitCount }) => {
   const animatedValueTop = useRef(new Animated.Value(0)).current;
 
-  const topAnimation = () => {
-    Animated.timing(
-      animatedValueTop,
-      {
-        toValue: height,
-        duration: 2000,
-        easing: Easing.linear,
-        useNativeDriver: false,
-      },
-    ).start(animationComplete);
-  }
-  
   useEffect(() => {
-    if (!loading && orbitCount >=2) {
+    const topAnimation = () => {
+      Animated.timing(
+        animatedValueTop,
+        {
+          toValue: height,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: false,
+        },
+      ).start(animationComplete);
+    };
+    if (!loading && orbitCount >= 2) {
       topAnimation();
     }
-  }, [loading, orbitCount]);
+  }, [animatedValueTop, animationComplete, loading, orbitCount]);
 
   return animatedValueTop;
-}
+};
 
 function LoadingScreen({ loading, animationComplete }) {
-  const [orbitCount, setOrbitCount] = useState(0)
+  const [orbitCount, setOrbitCount] = useState(0);
 
   const animatedValueTop = useTopAnimation({
     loading,
@@ -41,7 +42,7 @@ function LoadingScreen({ loading, animationComplete }) {
   });
 
   const countOrbits = () => {
-      setOrbitCount((prev) => prev + 1)
+    setOrbitCount((prev) => prev + 1);
   };
 
   return (

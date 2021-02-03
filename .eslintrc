@@ -1,6 +1,16 @@
-module.exports = {
-  "extends": "airbnb",
+{
+  "root": true,
   "parser": "babel-eslint",
+  "plugins": [
+    "jsx-a11y",
+    "react",
+    "react-native"
+  ],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:jsx-a11y/recommended"
+  ],
   "rules": {
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
     "react/no-unescaped-entities": [0],
@@ -8,6 +18,9 @@ module.exports = {
     "react/forbid-prop-types": [0],
     "global-require": [0],
     "import/no-dynamic-require": [0],
+    "camelcase": [0],
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-props-no-spreading": [0],
     "max-len": [2, 120, 2, {
       "ignoreUrls": true,
       "ignoreComments": false,

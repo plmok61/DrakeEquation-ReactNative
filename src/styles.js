@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width,
     height: '100%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   equation: {
     backgroundColor: lightBlue,

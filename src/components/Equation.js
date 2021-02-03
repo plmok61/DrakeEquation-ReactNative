@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, {
+  useState, useEffect, useCallback, useRef,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { Animated, KeyboardAvoidingView } from 'react-native';
 import FlipComponent from 'react-native-flip-component';
@@ -11,31 +13,31 @@ import { updateNumCivs } from '../actions/equationActions';
 
 const useFadeIn = () => {
   const animatedOpacity = useRef(new Animated.Value(0)).current;
-  const fadeIn = () => {
-    Animated.timing(
-      animatedOpacity,
-      {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      },
-    ).start();
-  }
 
   useEffect(() => {
+    const fadeIn = () => {
+      Animated.timing(
+        animatedOpacity,
+        {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        },
+      ).start();
+    };
     fadeIn();
-  }, []);
+  }, [animatedOpacity]);
 
   return animatedOpacity;
-}
+};
 
 function Equation() {
   const [showBack, setShowBack] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(updateNumCivs())    
-  }, []);
+    dispatch(updateNumCivs());
+  }, [dispatch]);
 
   const animatedOpacity = useFadeIn();
 
@@ -49,11 +51,11 @@ function Equation() {
       style={styles.container}
       keyboardVerticalOffset={ifIphoneX(-58, 0)}
     >
-      <Animated.ScrollView 
-        bounces={false} 
+      <Animated.ScrollView
+        bounces={false}
         style={[
           styles.equationScroll,
-          { opacity: animatedOpacity }
+          { opacity: animatedOpacity },
         ]}
       >
         <Result />

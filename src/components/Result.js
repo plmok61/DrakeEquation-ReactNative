@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { View } from 'react-native';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
-import styles, { teal } from '../styles';
+import styles from '../styles';
 
 function Result() {
   const numCivs = useSelector((state) => state.equationState.numCivs);
@@ -15,10 +15,9 @@ function Result() {
         Civilizations in our galaxy:
       </TextSecondary>
       {
-        orbiters.map(i => (
+        orbiters.map((id) => (
           <Orbiter
-            key={`orbiter-${i}`}
-            index={i}
+            key={id}
             customStyle={styles.resultOrbiter}
             randomStart
           />

@@ -16,9 +16,8 @@ function App() {
 
   const animationComplete = useCallback(() => {
     setAnimationDone(true);
-  });
+  }, []);
 
-  
   if (fontsLoaded && animationDone) {
     return (
       <Provider store={store}>

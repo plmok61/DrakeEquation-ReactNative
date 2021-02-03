@@ -8,11 +8,11 @@ import styles, { purple } from '../styles';
 import { setInputsHeight } from '../actions/equationActions';
 
 function Inputs({ toggleFlip }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <View
       style={styles.inputsContainer}
-      onLayout={event => dispatch(setInputsHeight(event.nativeEvent.layout.height))}
+      onLayout={(event) => dispatch(setInputsHeight(event.nativeEvent.layout.height))}
     >
       <DrakeInput
         inputId="rStar"

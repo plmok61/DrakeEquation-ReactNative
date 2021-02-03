@@ -1,7 +1,13 @@
-import React, { memo, useRef, useEffect } from 'react';
+import React, {
+  memo, useRef, useEffect, useCallback,
+} from 'react';
 import { Animated, Easing, Dimensions } from 'react-native';
-import { number, string, func, bool, oneOfType } from 'prop-types';
-import { lightBlue, teal, red, purple } from '../styles';
+import {
+  number, string, func, bool, oneOfType, object,
+} from 'prop-types';
+import {
+  lightBlue, teal, red, purple,
+} from '../styles';
 
 const { width } = Dimensions.get('window');
 
@@ -18,7 +24,9 @@ function getRandomColor() {
   return colors[index];
 }
 
-const useOrbit = ({ radius, duration, orbitCallback, startPoint }) => {
+const useOrbit = ({
+  radius, duration, orbitCallback, startPoint,
+}) => {
   const animatedOrbit = useRef(new Animated.Value(0)).current;
 
   const r = radius || getRandomInt(1, width / 2);
@@ -44,9 +52,9 @@ const useOrbit = ({ radius, duration, orbitCallback, startPoint }) => {
   // start at random point in orbit
   if (startPoint > 0) {
     const startIndex = getRandomInt(0, frames, startPoint);
-    outputRangeX = [...outputRangeX.slice(startIndex), ...outputRangeX.slice(0, startIndex)];  
+    outputRangeX = [...outputRangeX.slice(startIndex), ...outputRangeX.slice(0, startIndex)];
     outputRangeY = [...outputRangeY.slice(startIndex), ...outputRangeY.slice(0, startIndex)];
-    outputRangeScale = [...outputRangeScale.slice(startIndex), ...outputRangeScale.slice(0, startIndex)];  
+    outputRangeScale = [...outputRangeScale.slice(startIndex), ...outputRangeScale.slice(0, startIndex)];
   }
 
   const translateX = animatedOrbit.interpolate({
@@ -64,7 +72,7 @@ const useOrbit = ({ radius, duration, orbitCallback, startPoint }) => {
     outputRange: outputRangeScale,
   });
 
-  const orbit = () => {
+  const orbit = useCallback(() => {
     animatedOrbit.setValue(0);
     Animated.parallel([
       Animated.timing(
@@ -93,14 +101,14 @@ const useOrbit = ({ radius, duration, orbitCallback, startPoint }) => {
         }
       }
     });
-  }
+  }, [animatedOrbit, d, orbitCallback]);
 
   useEffect(() => {
     orbit();
-  }, []);
+  }, [orbit]);
 
   return [scale, translateY, translateX];
-}
+};
 
 function Orbiter({
   size,
@@ -110,10 +118,11 @@ function Orbiter({
   customStyle,
   color,
   randomStart,
-  index,
 }) {
   const startPoint = randomStart ? Math.random() : 0;
-  const [scale, translateY, translateX] = useOrbit({ radius, duration, orbitCallback, startPoint });
+  const [scale, translateY, translateX] = useOrbit({
+    radius, duration, orbitCallback, startPoint,
+  });
   const diameter = size || getRandomInt(1, 10);
   const backgroundColor = color.length ? color : getRandomColor();
   return (
@@ -123,7 +132,7 @@ function Orbiter({
         height: diameter,
         width: diameter,
         borderRadius: diameter / 2,
-        backgroundColor: backgroundColor,
+        backgroundColor,
         shadowColor: lightBlue,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
@@ -136,7 +145,7 @@ function Orbiter({
         ],
       }}
     />
-  )
+  );
 }
 
 Orbiter.propTypes = {
@@ -144,9 +153,9 @@ Orbiter.propTypes = {
   duration: number,
   radius: number,
   color: string,
-  index: number,
   orbitCallback: oneOfType([func, bool]),
   randomStart: bool,
+  customStyle: object,
 };
 
 Orbiter.defaultProps = {
@@ -155,12 +164,13 @@ Orbiter.defaultProps = {
   radius: 0,
   color: '',
   orbitCallback: false,
-  index: 0,
   randomStart: false,
+  customStyle: {},
 };
 
-const isEqual = (prevProps, nextProps) => nextProps.index === prevProps.index;
+// the size prop will never change so this component should never re-render
+const isEqual = (prevProps, nextProps) => nextProps.size === prevProps.size;
 
-const OrbiterMemo = memo(Orbiter, isEqual)
+const OrbiterMemo = memo(Orbiter, isEqual);
 
 export default OrbiterMemo;

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
+import {
+  array, node, object, oneOfType,
+} from 'prop-types';
 import { lightBlue } from '../styles';
 
 class TextPrimary extends Component {
@@ -19,12 +22,22 @@ class TextPrimary extends Component {
   }
 
   render() {
+    const { children, ...others } = this.props;
     return (
-      <Text {...this.props} style={this.style}>
-        {this.props.children}
+      <Text {...others} style={this.style}>
+        {children}
       </Text>
     );
   }
 }
+
+TextPrimary.propTypes = {
+  style: oneOfType([object, array]),
+  children: node.isRequired,
+};
+
+TextPrimary.defaultProps = {
+  style: {},
+};
 
 export default TextPrimary;

@@ -21,6 +21,7 @@ function Inputs({ toggleFlip }) {
         step={0.1}
         descriptionText="Rate of star formation: "
         key="rStar"
+        defaultValue={3}
       />
       <DrakeInput
         inputId="fPlanets"
@@ -29,6 +30,7 @@ function Inputs({ toggleFlip }) {
         step={0.01}
         descriptionText="Fraction of stars with planets: "
         key="fPlanets"
+        defaultValue={1}
       />
       <DrakeInput
         inputId="nEarthLike"
@@ -37,6 +39,7 @@ function Inputs({ toggleFlip }) {
         step={0.1}
         descriptionText="Earth-like planets per star: "
         key="nEarthLike"
+        defaultValue={0.4}
       />
       <DrakeInput
         inputId="fLife"
@@ -45,6 +48,7 @@ function Inputs({ toggleFlip }) {
         step={0.01}
         descriptionText="Fraction of stars with life: "
         key="fLife"
+        defaultValue={0.01}
       />
       <DrakeInput
         inputId="fIntelligent"
@@ -53,6 +57,7 @@ function Inputs({ toggleFlip }) {
         step={0.01}
         descriptionText="Fraction with intelligence life: "
         key="fIntelligent"
+        defaultValue={0.1}
       />
       <DrakeInput
         inputId="fComm"
@@ -61,6 +66,7 @@ function Inputs({ toggleFlip }) {
         step={0.01}
         descriptionText="Fraction that are communicative: "
         key="fComm"
+        defaultValue={0.1}
       />
       <DrakeInput
         inputId="lComm"
@@ -69,6 +75,7 @@ function Inputs({ toggleFlip }) {
         step={100000}
         descriptionText="Years communicative: "
         key="lComm"
+        defaultValue={10000}
       />
       <TouchableOpacity onPress={toggleFlip}>
         <TextSecondary style={{ textAlign: 'center', color: purple }}>

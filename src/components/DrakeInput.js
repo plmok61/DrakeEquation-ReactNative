@@ -12,11 +12,11 @@ function DrakeInput({
   min,
   max,
   step,
-  descriptionText
+  descriptionText,
+  defaultValue,
 }) {
   const dispatch = useDispatch();
   const inputValue = useSelector((state) => state.equationState.inputs[inputId]);
-
   return (
     <View>
       <View style={styles.flexRow}>
@@ -54,7 +54,8 @@ function DrakeInput({
         minimumValue={min}
         maximumValue={max}
         step={step}
-        value={inputValue}
+        value={defaultValue} // this should never change 
+        // https://stackoverflow.com/questions/54763083/react-native-slider-onvaluechange-calling-setstate-makes-slider-lag/65198567#65198567
         minimumTrackTintColor={purple}
       />
     </View>
@@ -68,6 +69,7 @@ DrakeInput.propTypes = {
   min: number.isRequired,
   max: number.isRequired,
   step: number.isRequired,
+  defaultValue: number.isRequired,
 };
 
 export default DrakeInput;

@@ -1,8 +1,7 @@
 import React, { memo, useRef, useEffect } from 'react';
 import { Animated, Easing, Dimensions } from 'react-native';
 import { number, string, func, bool, oneOfType } from 'prop-types';
-import { LinearGradient } from 'expo-linear-gradient';
-import { lightBlue, teal, red, purple, black } from '../styles';
+import { lightBlue, teal, red, purple } from '../styles';
 
 const { width } = Dimensions.get('window');
 
@@ -124,6 +123,7 @@ function Orbiter({
         height: diameter,
         width: diameter,
         borderRadius: diameter / 2,
+        backgroundColor: backgroundColor,
         shadowColor: lightBlue,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
@@ -135,16 +135,7 @@ function Orbiter({
           { translateX },
         ],
       }}
-    >
-      <LinearGradient 
-        colors={[black, backgroundColor]}
-        style={{
-          height: diameter,
-          width: diameter,
-          borderRadius: diameter / 2,
-        }}
-      />
-    </Animated.View>
+    />
   )
 }
 

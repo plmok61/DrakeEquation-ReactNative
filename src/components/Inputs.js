@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { func } from 'prop-types';
 import DrakeInput from './DrakeInput';
 import TextSecondary from './TextSecondary';
-import styles, { purple } from '../styles';
+import { purple, lightBlue, width } from '../styles';
 import { setInputsHeight } from '../actions/equationActions';
+
+const styles = StyleSheet.create({
+  inputsContainer: {
+    backgroundColor: lightBlue,
+    padding: 20,
+    width,
+    height: '100%',
+    justifyContent: 'space-between',
+  },
+  learnMore: {
+    textAlign: 'center',
+    color: purple,
+  },
+});
 
 function Inputs({ toggleFlip }) {
   const dispatch = useDispatch();
@@ -78,7 +92,7 @@ function Inputs({ toggleFlip }) {
         defaultValue={10000}
       />
       <TouchableOpacity onPress={toggleFlip}>
-        <TextSecondary style={{ textAlign: 'center', color: purple }}>
+        <TextSecondary style={styles.learnMore}>
           Learn More
         </TextSecondary>
       </TouchableOpacity>
@@ -90,4 +104,4 @@ Inputs.propTypes = {
   toggleFlip: func.isRequired,
 };
 
-export default Inputs;
+export default memo(Inputs);

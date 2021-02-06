@@ -1,34 +1,23 @@
-import React, { Component } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
 import {
   array, node, object, oneOfType,
 } from 'prop-types';
 import { lightBlue } from '../styles';
 
-class TextPrimary extends Component {
-  constructor(props) {
-    super(props);
-    this.style = [{
-      color: lightBlue,
-      fontFamily: 'Audiowide_400Regular',
-    }];
-    if (props.style) {
-      if (Array.isArray(props.style)) {
-        this.style = this.style.concat(props.style);
-      } else {
-        this.style.push(props.style);
-      }
-    }
-  }
+const styles = StyleSheet.create({
+  text: {
+    color: lightBlue,
+    fontFamily: 'Audiowide_400Regular',
+  },
+});
 
-  render() {
-    const { children, ...others } = this.props;
-    return (
-      <Text {...others} style={this.style}>
-        {children}
-      </Text>
-    );
-  }
+function TextPrimary({ children, style, ...others }) {
+  return (
+    <Text {...others} style={[styles.text, style]}>
+      {children}
+    </Text>
+  );
 }
 
 TextPrimary.propTypes = {

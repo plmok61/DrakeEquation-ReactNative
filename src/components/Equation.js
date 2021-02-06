@@ -2,14 +2,35 @@ import React, {
   useState, useEffect, useCallback, useRef,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { Animated, KeyboardAvoidingView } from 'react-native';
-import FlipComponent from 'react-native-flip-component';
+import { Animated, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
+import FlipComponent from './Flip';
 import Result from './Result';
 import Inputs from './Inputs';
 import InfoWebView from './InfoWebView';
-import styles from '../styles';
+import {
+  black, marginTop, marginBottom, equationHeight, width,
+} from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
+
+export const resultHeight = 150;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: black,
+  },
+  equationScroll: {
+    marginTop,
+    marginBottom,
+  },
+  equationContainer: {
+    height: equationHeight,
+    width,
+  },
+});
 
 const useFadeIn = () => {
   const animatedOpacity = useRef(new Animated.Value(0)).current;
@@ -42,8 +63,8 @@ function Equation() {
   const animatedOpacity = useFadeIn();
 
   const toggleFlip = useCallback(() => {
-    setShowBack(!showBack);
-  }, [showBack]);
+    setShowBack((prev) => !prev);
+  }, []);
 
   return (
     <KeyboardAvoidingView

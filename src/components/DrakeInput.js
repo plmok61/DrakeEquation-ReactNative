@@ -1,11 +1,29 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { number, string } from 'prop-types';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import TextSecondary from './TextSecondary';
-import styles, { purple } from '../styles';
+import { purple, black } from '../styles';
 import { updateNumCivs, updateInput, createOrbiters } from '../actions/equationActions';
+
+const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  drakeInput: {
+    color: black,
+    fontSize: 19,
+  },
+  drakeTextInput: {
+    fontSize: 19,
+    color: purple,
+    fontFamily: 'Exo2_700Bold',
+    textAlign: 'right',
+    flex: 1,
+  },
+});
 
 function DrakeInput({
   inputId,

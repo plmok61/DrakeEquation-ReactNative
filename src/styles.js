@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 
 const { width, height } = Dimensions.get('window');

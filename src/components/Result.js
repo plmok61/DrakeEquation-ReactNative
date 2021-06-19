@@ -6,20 +6,23 @@ import Orbiter from './Orbiter';
 import { height, resultHeight } from '../styles';
 
 const styles = StyleSheet.create({
-  resultContainer: {
+  container: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 20,
     paddingBottom: 10,
+  },
+  resultContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     position: 'relative',
-    // height: resultHeight,
   },
   civText: {
     fontSize: 25,
   },
   resultOrbiter: {
     position: 'absolute',
-    top: 100,
+    // top: 100,
   },
   totalText: {
     fontSize: 40,
@@ -33,34 +36,36 @@ function Result({ animatedScrollY }) {
   const numCivs = useSelector((state) => state.equationState.numCivs);
   const orbiters = useSelector((state) => state.equationState.orbiters);
 
-  const animationHeight = animatedScrollY.interpolate({
+  const animationY = animatedScrollY.interpolate({
     inputRange: [0, height - startHeight],
-    outputRange: [height - 200, startHeight],
+    outputRange: [startHeight, height],
     extrapolate: 'clamp',
   });
 
   return (
     <Animated.View
       style={[
-        styles.resultContainer,
-        { height: animationHeight },
+        styles.container,
+        { height: animationY },
       ]}
     >
-      <TextSecondary style={styles.civText}>
-        Civilizations in our galaxy:
-      </TextSecondary>
-      {
-          orbiters.map((id) => (
-            <Orbiter
-              key={id}
-              customStyle={styles.resultOrbiter}
-              randomStart
-            />
-          ))
-        }
-      <TextSecondary style={styles.totalText}>
-        {numCivs}
-      </TextSecondary>
+      <View style={styles.resultContainer}>
+        <TextSecondary style={styles.civText}>
+          Civilizations in our galaxy:
+        </TextSecondary>
+        {
+            orbiters.map((id) => (
+              <Orbiter
+                key={id}
+                customStyle={styles.resultOrbiter}
+                randomStart
+              />
+            ))
+          }
+        <TextSecondary style={styles.totalText}>
+          {numCivs}
+        </TextSecondary>
+      </View>
     </Animated.View>
   );
 }

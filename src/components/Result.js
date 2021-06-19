@@ -1,16 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, Animated, View } from 'react-native';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
-import { resultHeight } from '../styles';
+import { height, resultHeight } from '../styles';
 
 const styles = StyleSheet.create({
   resultContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 20,
     paddingBottom: 10,
-    height: resultHeight,
+    position: 'relative',
+    // height: resultHeight,
   },
   civText: {
     fontSize: 25,
@@ -25,27 +27,41 @@ const styles = StyleSheet.create({
   },
 });
 
-function Result() {
+export const startHeight = resultHeight;
+
+function Result({ animatedScrollY }) {
   const numCivs = useSelector((state) => state.equationState.numCivs);
   const orbiters = useSelector((state) => state.equationState.orbiters);
+
+  const animationHeight = animatedScrollY.interpolate({
+    inputRange: [0, height - startHeight],
+    outputRange: [height - 200, startHeight],
+    extrapolate: 'clamp',
+  });
+
   return (
-    <View style={styles.resultContainer}>
+    <Animated.View
+      style={[
+        styles.resultContainer,
+        { height: animationHeight },
+      ]}
+    >
       <TextSecondary style={styles.civText}>
         Civilizations in our galaxy:
       </TextSecondary>
       {
-        orbiters.map((id) => (
-          <Orbiter
-            key={id}
-            customStyle={styles.resultOrbiter}
-            randomStart
-          />
-        ))
-      }
+          orbiters.map((id) => (
+            <Orbiter
+              key={id}
+              customStyle={styles.resultOrbiter}
+              randomStart
+            />
+          ))
+        }
       <TextSecondary style={styles.totalText}>
         {numCivs}
       </TextSecondary>
-    </View>
+    </Animated.View>
   );
 }
 

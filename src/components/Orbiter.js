@@ -74,26 +74,15 @@ const useOrbit = ({
 
   const orbit = useCallback(() => {
     animatedOrbit.setValue(0);
-    Animated.parallel([
-      Animated.timing(
-        animatedOrbit,
-        {
-          toValue: 1,
-          duration: d,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        },
-      ),
-      Animated.timing(
-        animatedOrbit,
-        {
-          toValue: 1,
-          duration: d,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        },
-      ),
-    ]).start((e) => {
+    Animated.timing(
+      animatedOrbit,
+      {
+        toValue: 1,
+        duration: d,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      },
+    ).start((e) => {
       if (e.finished) { // must make this check to prevent memory leak - not documented in RN docs
         orbit();
         if (orbitCallback) {

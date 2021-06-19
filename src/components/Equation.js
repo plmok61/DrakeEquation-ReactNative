@@ -2,7 +2,11 @@ import React, {
   useState, useEffect, useCallback, useRef,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { Animated, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import {
+  Animated, KeyboardAvoidingView, StyleSheet, View,
+} from 'react-native';
+// import { ScrollView } from 'react-native-gesture-handler';
+// import { FlingGestureHandler, Directions, State } from 'react-native-gesture-handler';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 import FlipComponent from './Flip';
 import Result from './Result';
@@ -12,19 +16,24 @@ import {
   black, marginTop, marginBottom, equationHeight, width,
 } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
+import TextSecondary from './TextSecondary';
 
 export const resultHeight = 150;
 
 const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   backgroundColor: black,
+  // },
   container: {
+    marginTop,
+    marginBottom,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: black,
-  },
-  equationScroll: {
-    marginTop,
-    marginBottom,
   },
   equationContainer: {
     height: equationHeight,
@@ -54,6 +63,7 @@ const useFadeIn = () => {
 
 function Equation() {
   const [showBack, setShowBack] = useState(false);
+  const scrollY = useRef(new Animated.Value(0)).current;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -67,19 +77,25 @@ function Equation() {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      style={styles.container}
-      keyboardVerticalOffset={ifIphoneX(-58, 0)}
+    <Animated.View
+      style={[
+        styles.container,
+        { opacity: animatedOpacity },
+      ]}
     >
+      <Result animatedScrollY={scrollY} />
       <Animated.ScrollView
-        bounces={false}
-        style={[
-          styles.equationScroll,
-          { opacity: animatedOpacity },
-        ]}
+        style={{
+          flex: 1,
+        }}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{
+            nativeEvent: { contentOffset: { y: scrollY } },
+          }],
+          { useNativeDriver: false },
+        )}
       >
-        <Result />
         <FlipComponent
           isFlipped={showBack}
           containerStyles={styles.equationContainer}
@@ -87,7 +103,7 @@ function Equation() {
           backView={<InfoWebView toggleFlip={toggleFlip} />}
         />
       </Animated.ScrollView>
-    </KeyboardAvoidingView>
+    </Animated.View>
   );
 }
 

@@ -4,15 +4,20 @@ import { number, string } from 'prop-types';
 import { View, TextInput, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import TextSecondary from './TextSecondary';
-import { purple, black } from '../styles';
+import { purple, black, width } from '../styles';
 import { updateNumCivs, updateInput, createOrbiters } from '../actions/equationActions';
 
 const styles = StyleSheet.create({
+  constainer: {
+    alignItems: 'center',
+  },
   flexRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width,
+    paddingHorizontal: 20,
   },
-  drakeInput: {
+  drakeInputLabel: {
     color: black,
     fontSize: 19,
   },
@@ -22,6 +27,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Exo2_700Bold',
     textAlign: 'right',
     flex: 1,
+  },
+  slider: {
+    width: width - 40,
   },
 });
 
@@ -36,9 +44,9 @@ function DrakeInput({
   const dispatch = useDispatch();
   const inputValue = useSelector((state) => state.equationState.inputs[inputId]);
   return (
-    <View>
+    <View style={styles.constainer}>
       <View style={styles.flexRow}>
-        <TextSecondary style={styles.drakeInput}>
+        <TextSecondary style={styles.drakeInputLabel}>
           {descriptionText}
         </TextSecondary>
         <TextInput
@@ -75,6 +83,7 @@ function DrakeInput({
         value={defaultValue} // this should never change
         // https://stackoverflow.com/questions/54763083/react-native-slider-onvaluechange-calling-setstate-makes-slider-lag/65198567#65198567
         minimumTrackTintColor={purple}
+        style={styles.slider}
       />
     </View>
   );

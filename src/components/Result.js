@@ -30,15 +30,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const startHeight = resultHeight;
-
 function Result({ animatedScrollY }) {
   const numCivs = useSelector((state) => state.equationState.numCivs);
   const orbiters = useSelector((state) => state.equationState.orbiters);
 
   const animationY = animatedScrollY.interpolate({
-    inputRange: [0, height - startHeight],
-    outputRange: [startHeight, height],
+    inputRange: [0, height - resultHeight],
+    outputRange: [resultHeight, height],
     extrapolate: 'clamp',
   });
 

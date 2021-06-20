@@ -4,16 +4,19 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { func } from 'prop-types';
 import DrakeInput from './DrakeInput';
 import TextSecondary from './TextSecondary';
-import { purple, lightBlue, width } from '../styles';
+import {
+  purple, lightBlue, width, sharedStyles,
+} from '../styles';
 import { setInputsHeight } from '../actions/equationActions';
 
 const styles = StyleSheet.create({
   inputsContainer: {
     backgroundColor: lightBlue,
-    padding: 20,
+    paddingTop: 20,
     width,
     height: '100%',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   learnMore: {
     textAlign: 'center',
@@ -91,7 +94,10 @@ function Inputs({ toggleFlip }) {
         key="lComm"
         defaultValue={10000}
       />
-      <TouchableOpacity onPress={toggleFlip}>
+      <TouchableOpacity
+        onPress={toggleFlip}
+        style={sharedStyles.flipButton}
+      >
         <TextSecondary style={styles.learnMore}>
           Learn More
         </TextSecondary>

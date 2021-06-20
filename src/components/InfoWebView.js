@@ -4,20 +4,15 @@ import { func } from 'prop-types';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import TextSecondary from './TextSecondary';
-import { purple, lightBlue, width } from '../styles';
+import { purple, width, sharedStyles } from '../styles';
 
 const styles = StyleSheet.create({
   infoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     width,
-  },
-  backButton: {
-    backgroundColor: lightBlue,
-    width,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: '100%',
+    paddingTop: 20,
   },
   infoWebView: {
     width,
@@ -29,14 +24,14 @@ function InfoWebView({ toggleFlip }) {
   const inputsHeight = useSelector((state) => state.equationState.inputsHeight);
 
   return (
-    <View style={[styles.infoContainer, { height: inputsHeight }]}>
+    <View style={styles.infoContainer}>
       <WebView
         style={[styles.infoWebView, { height: inputsHeight }]}
         source={{ uri: 'https://en.wikipedia.org/wiki/Drake_equation' }}
       />
       <TouchableOpacity
         onPress={toggleFlip}
-        style={styles.backButton}
+        style={sharedStyles.flipButton}
       >
         <TextSecondary style={{ textAlign: 'center', color: purple }}>
           Back

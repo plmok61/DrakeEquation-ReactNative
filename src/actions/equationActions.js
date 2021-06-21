@@ -1,6 +1,5 @@
 export const UPDATE_INPUT = 'UPDATE_INPUT';
 export const UPDATE_NUM_CIVS = 'UPDATE_NUM_CIVS';
-export const SET_INPUTS_HEIGHT = 'SET_INPUTS_HEIGHT';
 export const UPDATE_ORBITERS = 'UPDATE_ORBITERS';
 
 // Update the individual input as the slide moves
@@ -28,17 +27,10 @@ export function updateNumCivs() {
   };
 }
 
-// Set the height to state so the info component can be the same height
-export function setInputsHeight(inputsHeight) {
-  return (dispatch) => {
-    dispatch({
-      type: SET_INPUTS_HEIGHT,
-      inputsHeight,
-    });
-  };
-}
+const brackets = [10, 100, 1000, 10_000, 100_000, 1_000_000,
+  10_000_000, 100_000_000];
 
-const brackets = [10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000];
+const step = 20;
 
 export function createOrbiters() {
   return (dispatch, getState) => {
@@ -46,13 +38,17 @@ export function createOrbiters() {
     const { numCivs, orbiters } = getState().equationState;
     const newOrbiters = orbiters.slice();
 
-    brackets.forEach((item) => {
-      if (numCivs < item) {
-        count += (numCivs / (item / 10));
-      } else {
-        count += 10;
-      }
-    });
+    if (numCivs < 100) {
+      count = numCivs;
+    } else {
+      brackets.forEach((item) => {
+        if (numCivs < item) {
+          count += (numCivs / (item / step));
+        } else {
+          count += step;
+        }
+      });
+    }
 
     const { length } = orbiters;
     let i;
@@ -65,6 +61,7 @@ export function createOrbiters() {
         newOrbiters.pop();
       }
     }
+
     dispatch({
       type: UPDATE_ORBITERS,
       orbiters: newOrbiters,

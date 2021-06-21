@@ -21,4 +21,8 @@ export const sharedStyles = StyleSheet.create({
     width,
     height: 40,
   },
+  flipButtonText: {
+    textAlign: 'center',
+    color: purple,
+  },
 });

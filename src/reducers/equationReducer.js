@@ -1,7 +1,6 @@
 import {
   UPDATE_INPUT,
   UPDATE_NUM_CIVS,
-  SET_INPUTS_HEIGHT,
   UPDATE_ORBITERS,
 } from '../actions/equationActions';
 
@@ -16,7 +15,6 @@ const initialState = {
     fComm: 0.1,
     lComm: 10000,
   },
-  inputsHeight: 0,
   orbiters: [0],
 };
 
@@ -32,8 +30,6 @@ export default function equationReducer(state = initialState, action) {
           [action.inputId]: action.value,
         },
       };
-    case SET_INPUTS_HEIGHT:
-      return { ...state, inputsHeight: action.inputsHeight };
     case UPDATE_ORBITERS:
       return { ...state, orbiters: action.orbiters };
     default:

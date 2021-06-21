@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 import {
-  black, marginTop, marginBottom, equationHeight, width, lightBlue, purple, height, resultHeight,
+  black, width, purple, height, resultHeight,
 } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
 import { getRandomInt } from '../utils';
@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: black,
   },
   animatedContainer: {
-    // marginTop,
-    // marginBottom,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,8 +46,21 @@ const styles = StyleSheet.create({
     width,
     justifyContent: 'center',
     alignItems: 'center',
-    // position: 'absolute',
     zIndex: 1,
+  },
+  dragContainer: {
+    backgroundColor: black,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  dragger: {
+    height: 5,
+    width: 35,
+    backgroundColor: purple,
+    borderRadius: 3,
+    top: 7.5,
+    position: 'absolute',
+    zIndex: 4,
   },
 });
 
@@ -138,11 +149,12 @@ function Equation() {
       translateY: animatedDrag,
     }],
   };
+  const flipContainer = { height: flipHeight };
   return (
-    <View
-      // behavior="padding"
-      style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}
-      // keyboardVerticalOffset={ifIphoneX(-58, 0)}
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={ifIphoneX(-58, 0)}
+      behavior="padding"
+      style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 100 }]}
     >
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
         <Result animatedScrollY={animatedScrollY} />
@@ -151,29 +163,15 @@ function Equation() {
           onHandlerStateChange={handleStateChange}
         >
           <Animated.View style={dragStyle}>
-            <View style={{
-              backgroundColor: lightBlue,
-              alignItems: 'center',
-              position: 'relative',
-            }}
-            >
-              <View style={{
-                height: 5,
-                width: 35,
-                backgroundColor: purple,
-                borderRadius: 3,
-                top: 7.5,
-                position: 'absolute',
-                zIndex: 4,
-              }}
-              />
+            <View style={styles.dragContainer}>
+              <View style={styles.dragger} />
               <FlipComponent
                 isFlipped={showBack}
-                containerStyles={{ height: flipHeight }}
+                containerStyles={flipContainer}
                 frontView={<Inputs toggleFlip={toggleFlip} />}
                 backView={<InfoWebView toggleFlip={toggleFlip} />}
-                frontStyles={{ height: flipHeight }}
-                backStyles={{ height: flipHeight }}
+                frontStyles={flipContainer}
+                backStyles={flipContainer}
               />
             </View>
           </Animated.View>
@@ -187,7 +185,7 @@ function Equation() {
         </TextSecondary>
       </View>
 
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

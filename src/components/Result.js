@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { StyleSheet, Animated, View } from 'react-native';
+import { instanceOf } from 'prop-types';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
 import { height, resultHeight } from '../styles';
@@ -22,7 +23,6 @@ const styles = StyleSheet.create({
   },
   resultOrbiter: {
     position: 'absolute',
-    // top: 100,
   },
   totalText: {
     fontSize: 40,
@@ -67,5 +67,9 @@ function Result({ animatedScrollY }) {
     </Animated.View>
   );
 }
+
+Result.propTypes = {
+  animatedScrollY: instanceOf(Animated.Value).isRequired,
+};
 
 export default Result;

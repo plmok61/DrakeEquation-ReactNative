@@ -42,7 +42,7 @@
     "react-native-gesture-handler": "~1.7.0",
     "react-native-iphone-x-helper": "^1.2.1",
     "react-native-web": "~0.13.12",
-    "react-native-webview": "10.7.0",
+    "react-native-webview": "11.0.0",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",

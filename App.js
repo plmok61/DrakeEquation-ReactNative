@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Provider } from 'react-redux';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Exo2_400Regular, Exo2_700Bold } from '@expo-google-fonts/exo-2';
 import { Audiowide_400Regular } from '@expo-google-fonts/audiowide';
 import Equation from './src/components/Equation';
@@ -21,7 +22,9 @@ function App() {
   if (fontsLoaded && animationDone) {
     return (
       <Provider store={store}>
-        <Equation />
+        <SafeAreaProvider>
+          <Equation />
+        </SafeAreaProvider>
       </Provider>
     );
   }

@@ -1,33 +1,24 @@
 import React, { memo } from 'react';
-import { useDispatch } from 'react-redux';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { func } from 'prop-types';
 import DrakeInput from './DrakeInput';
 import TextSecondary from './TextSecondary';
-import { purple, lightBlue, width } from '../styles';
-import { setInputsHeight } from '../actions/equationActions';
+import { lightBlue, width, sharedStyles } from '../styles';
 
 const styles = StyleSheet.create({
   inputsContainer: {
     backgroundColor: lightBlue,
-    padding: 20,
+    paddingTop: 20,
     width,
     height: '100%',
     justifyContent: 'space-between',
-  },
-  learnMore: {
-    textAlign: 'center',
-    color: purple,
+    alignItems: 'center',
   },
 });
 
 function Inputs({ toggleFlip }) {
-  const dispatch = useDispatch();
   return (
-    <View
-      style={styles.inputsContainer}
-      onLayout={(event) => dispatch(setInputsHeight(event.nativeEvent.layout.height))}
-    >
+    <View style={styles.inputsContainer}>
       <DrakeInput
         inputId="rStar"
         min={0}
@@ -85,14 +76,17 @@ function Inputs({ toggleFlip }) {
       <DrakeInput
         inputId="lComm"
         min={0}
-        max={1000000000}
-        step={100000}
+        max={1_000_000}
+        step={10_000}
         descriptionText="Years communicative: "
         key="lComm"
-        defaultValue={10000}
+        defaultValue={10_000}
       />
-      <TouchableOpacity onPress={toggleFlip}>
-        <TextSecondary style={styles.learnMore}>
+      <TouchableOpacity
+        onPress={toggleFlip}
+        style={sharedStyles.flipButton}
+      >
+        <TextSecondary style={sharedStyles.flipButtonText}>
           Learn More
         </TextSecondary>
       </TouchableOpacity>

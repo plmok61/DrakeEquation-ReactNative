@@ -1,28 +1,16 @@
 import React, {
   memo, useRef, useEffect, useCallback,
 } from 'react';
-import { Animated, Easing, Dimensions } from 'react-native';
 import {
-  number, string, func, bool, oneOfType, object,
+  Animated, Easing, Dimensions, ViewPropTypes,
+} from 'react-native';
+import {
+  number, string, func, bool, oneOfType,
 } from 'prop-types';
-import {
-  lightBlue, teal, red, purple,
-} from '../styles';
+import { lightBlue } from '../styles';
+import { getRandomInt, getRandomColor } from '../utils';
 
 const { width } = Dimensions.get('window');
-
-const colors = [lightBlue, teal, red, purple];
-
-function getRandomInt(mini, maxi, seed = Math.random()) {
-  const min = Math.ceil(mini);
-  const max = Math.floor(maxi);
-  return Math.floor(seed * (max - min + 1)) + min;
-}
-
-function getRandomColor() {
-  const index = getRandomInt(0, 3);
-  return colors[index];
-}
 
 const useOrbit = ({
   radius, duration, orbitCallback, startPoint,
@@ -74,26 +62,15 @@ const useOrbit = ({
 
   const orbit = useCallback(() => {
     animatedOrbit.setValue(0);
-    Animated.parallel([
-      Animated.timing(
-        animatedOrbit,
-        {
-          toValue: 1,
-          duration: d,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        },
-      ),
-      Animated.timing(
-        animatedOrbit,
-        {
-          toValue: 1,
-          duration: d,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        },
-      ),
-    ]).start((e) => {
+    Animated.timing(
+      animatedOrbit,
+      {
+        toValue: 1,
+        duration: d,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      },
+    ).start((e) => {
       if (e.finished) { // must make this check to prevent memory leak - not documented in RN docs
         orbit();
         if (orbitCallback) {
@@ -127,8 +104,7 @@ function Orbiter({
   const backgroundColor = color.length ? color : getRandomColor();
   return (
     <Animated.View
-      style={{
-        ...customStyle,
+      style={[{
         height: diameter,
         width: diameter,
         borderRadius: diameter / 2,
@@ -143,7 +119,7 @@ function Orbiter({
           { translateY },
           { translateX },
         ],
-      }}
+      }, customStyle]}
     />
   );
 }
@@ -155,7 +131,7 @@ Orbiter.propTypes = {
   color: string,
   orbitCallback: oneOfType([func, bool]),
   randomStart: bool,
-  customStyle: object,
+  customStyle: ViewPropTypes.style,
 };
 
 Orbiter.defaultProps = {

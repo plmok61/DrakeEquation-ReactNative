@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 
 const { width, height } = Dimensions.get('window');
@@ -11,6 +11,18 @@ export const teal = '#39818e';
 export const red = '#850d14';
 export const marginTop = getStatusBarHeight();
 export const marginBottom = getBottomSpace();
-
 export const resultHeight = 150;
-export const equationHeight = height - resultHeight - marginTop - marginBottom;
+
+export const sharedStyles = StyleSheet.create({
+  flipButton: {
+    backgroundColor: lightBlue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width,
+    height: 40,
+  },
+  flipButtonText: {
+    textAlign: 'center',
+    color: purple,
+  },
+});

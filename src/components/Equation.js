@@ -103,18 +103,21 @@ function Equation() {
     setShowBack((prev) => !prev);
   }, []);
 
-  const onPanGestureEvent = ({ nativeEvent }) => {
+  const onPanGestureEvent = useCallback(({ nativeEvent }) => {
     const { translationY } = nativeEvent;
 
+    // Drag up to reveal message
     if (translationY > (-1 * messageHeight) && translationY < 0) {
       animatedDrag.setValue(translationY);
     }
+
+    // Drag down to expand result
     if (translationY < 500) {
       animatedScrollY.setValue(translationY);
     }
-  };
+  }, [animatedDrag, animatedScrollY]);
 
-  const handleStateChange = ({ nativeEvent }) => {
+  const handleStateChange = useCallback(({ nativeEvent }) => {
     if (nativeEvent.state === State.END) {
       const ind = getRandomInt(0, quotes.length - 1);
       setIndex(ind);
@@ -140,7 +143,7 @@ function Equation() {
         ),
       ]).start();
     }
-  };
+  }, [animatedDrag, animatedScrollY]);
 
   const flipHeight = height - insets.top - insets.bottom - resultHeight;
   const dragStyle = {

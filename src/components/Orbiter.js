@@ -5,7 +5,7 @@ import {
   Animated, Easing, Dimensions, ViewPropTypes,
 } from 'react-native';
 import {
-  number, string, func, bool, oneOfType,
+  number, string, func, bool, oneOfType, object,
 } from 'prop-types';
 import { lightBlue } from '../styles';
 import { getRandomInt, getRandomColor } from '../utils';
@@ -29,8 +29,10 @@ const useOrbit = ({
   for (let i = 0; i < frames; i += 1) {
     const value = i / frames;
     const x = Math.sin(value * Math.PI * 2) * r;
-    const y = -Math.cos(value * Math.PI * 2) * (r * 0.5);
-    const scale = 0.25 * (Math.cos(value * Math.PI * 2)) + 0.75;
+    // const y = -Math.cos(value * Math.PI * 2) * (r * 0.5);
+    // const scale = 0.25 * (Math.cos(value * Math.PI * 2)) + 0.75;
+    const y = -Math.cos(value * Math.PI * 2) * (r);
+    const scale = 1;
     inputRange.push(value);
     outputRangeX.push(x);
     outputRangeY.push(y);
@@ -95,6 +97,7 @@ function Orbiter({
   customStyle,
   color,
   randomStart,
+  scaleY,
 }) {
   const startPoint = randomStart ? Math.random() : 0;
   const [scale, translateY, translateX] = useOrbit({
@@ -102,25 +105,32 @@ function Orbiter({
   });
   const diameter = size || getRandomInt(1, 10);
   const backgroundColor = color.length ? color : getRandomColor();
+
   return (
     <Animated.View
-      style={[{
-        height: diameter,
-        width: diameter,
-        borderRadius: diameter / 2,
-        backgroundColor,
-        shadowColor: lightBlue,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 5,
-        elevation: 1,
+      style={{
         transform: [
           { scale },
           { translateY },
           { translateX },
         ],
-      }, customStyle]}
-    />
+      }}
+    >
+      <Animated.View
+        style={[{
+          height: diameter,
+          width: diameter,
+          borderRadius: diameter / 2,
+          backgroundColor,
+          shadowColor: lightBlue,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 5,
+          elevation: 1,
+          transform: [{ scaleY }],
+        }, customStyle]}
+      />
+    </Animated.View>
   );
 }
 
@@ -132,6 +142,7 @@ Orbiter.propTypes = {
   orbitCallback: oneOfType([func, bool]),
   randomStart: bool,
   customStyle: ViewPropTypes.style,
+  scaleY: oneOfType([number, object]),
 };
 
 Orbiter.defaultProps = {
@@ -142,6 +153,7 @@ Orbiter.defaultProps = {
   orbitCallback: false,
   randomStart: false,
   customStyle: {},
+  scaleY: 1,
 };
 
 // the size prop will never change so this component should never re-render

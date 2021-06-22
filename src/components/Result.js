@@ -30,13 +30,28 @@ const styles = StyleSheet.create({
   },
 });
 
+const scrollDistance = height - resultHeight;
+
 function Result({ animatedScrollY }) {
   const numCivs = useSelector((state) => state.equationState.numCivs);
   const orbiters = useSelector((state) => state.equationState.orbiters);
 
-  const animationY = animatedScrollY.interpolate({
-    inputRange: [0, height - resultHeight],
+  const animateY = animatedScrollY.interpolate({
+    inputRange: [0, scrollDistance],
     outputRange: [resultHeight, height],
+    extrapolate: 'clamp',
+  });
+
+  const animateRotateX = animatedScrollY.interpolate({
+    inputRange: [0, scrollDistance],
+    outputRange: ['-60deg', '0deg'],
+    extrapolate: 'clamp',
+  });
+
+  // TODO figure out trigonometry for this
+  const animateScaleY = animatedScrollY.interpolate({
+    inputRange: [0, (scrollDistance / 2), scrollDistance],
+    outputRange: [2, 1.41, 1],
     extrapolate: 'clamp',
   });
 
@@ -44,22 +59,26 @@ function Result({ animatedScrollY }) {
     <Animated.View
       style={[
         styles.container,
-        { height: animationY },
+        { height: animateY },
       ]}
     >
       <View style={styles.resultContainer}>
         <TextSecondary style={styles.civText}>
           Civilizations in our galaxy:
         </TextSecondary>
-        {
+        <Animated.View style={{ transform: [{ rotateX: animateRotateX }] }}>
+          {
             orbiters.map((id) => (
               <Orbiter
                 key={id}
                 customStyle={styles.resultOrbiter}
                 randomStart
+                animateY={animatedScrollY}
+                scaleY={animateScaleY}
               />
             ))
           }
+        </Animated.View>
         <TextSecondary style={styles.totalText}>
           {numCivs}
         </TextSecondary>

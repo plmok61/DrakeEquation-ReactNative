@@ -1,11 +1,15 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { number, string } from 'prop-types';
-import { View, TextInput, StyleSheet } from 'react-native';
+import {
+  View, TextInput, StyleSheet, Dimensions,
+} from 'react-native';
 import Slider from '@react-native-community/slider';
 import TextSecondary from './TextSecondary';
-import { purple, black, width } from '../styles';
+import { purple, black } from '../styles';
 import { updateNumCivs, updateInput, createOrbiters } from '../actions/equationActions';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   constainer: {

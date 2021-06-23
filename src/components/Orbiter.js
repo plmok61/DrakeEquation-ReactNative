@@ -2,7 +2,7 @@ import React, {
   memo, useRef, useEffect, useCallback,
 } from 'react';
 import {
-  Animated, Easing, Dimensions, ViewPropTypes,
+  Animated, Easing, ViewPropTypes, useWindowDimensions,
 } from 'react-native';
 import {
   number, string, func, bool, oneOfType, object,
@@ -10,10 +10,8 @@ import {
 import { lightBlue } from '../styles';
 import { getRandomInt, getRandomColor } from '../utils';
 
-const { width } = Dimensions.get('window');
-
 const useOrbit = ({
-  radius, duration, orbitCallback, startPoint,
+  radius, duration, orbitCallback, startPoint, width,
 }) => {
   const animatedOrbit = useRef(new Animated.Value(0)).current;
 
@@ -24,19 +22,17 @@ const useOrbit = ({
   const inputRange = [];
   let outputRangeX = [];
   let outputRangeY = [];
-  let outputRangeScale = [];
+  // let outputRangeScale = [];
 
   for (let i = 0; i < frames; i += 1) {
     const value = i / frames;
     const x = Math.sin(value * Math.PI * 2) * r;
-    // const y = -Math.cos(value * Math.PI * 2) * (r * 0.5);
-    // const scale = 0.25 * (Math.cos(value * Math.PI * 2)) + 0.75;
     const y = -Math.cos(value * Math.PI * 2) * (r);
-    const scale = 1;
+    // const scale = 0.25 * (Math.cos(value * Math.PI * 2)) + 0.75;
     inputRange.push(value);
     outputRangeX.push(x);
     outputRangeY.push(y);
-    outputRangeScale.push(scale);
+    // outputRangeScale.push(scale);
   }
 
   // start at random point in orbit
@@ -44,7 +40,7 @@ const useOrbit = ({
     const startIndex = getRandomInt(0, frames, startPoint);
     outputRangeX = [...outputRangeX.slice(startIndex), ...outputRangeX.slice(0, startIndex)];
     outputRangeY = [...outputRangeY.slice(startIndex), ...outputRangeY.slice(0, startIndex)];
-    outputRangeScale = [...outputRangeScale.slice(startIndex), ...outputRangeScale.slice(0, startIndex)];
+    // outputRangeScale = [...outputRangeScale.slice(startIndex), ...outputRangeScale.slice(0, startIndex)];
   }
 
   const translateX = animatedOrbit.interpolate({
@@ -57,10 +53,10 @@ const useOrbit = ({
     outputRange: outputRangeY,
   });
 
-  const scale = animatedOrbit.interpolate({
-    inputRange,
-    outputRange: outputRangeScale,
-  });
+  // const scale = animatedOrbit.interpolate({
+  //   inputRange,
+  //   outputRange: outputRangeScale,
+  // });
 
   const orbit = useCallback(() => {
     animatedOrbit.setValue(0);
@@ -86,7 +82,7 @@ const useOrbit = ({
     orbit();
   }, [orbit]);
 
-  return [scale, translateY, translateX];
+  return [translateY, translateX];
 };
 
 function Orbiter({
@@ -99,9 +95,10 @@ function Orbiter({
   randomStart,
   scaleY,
 }) {
+  const { width } = useWindowDimensions();
   const startPoint = randomStart ? Math.random() : 0;
-  const [scale, translateY, translateX] = useOrbit({
-    radius, duration, orbitCallback, startPoint,
+  const [translateY, translateX] = useOrbit({
+    radius, duration, orbitCallback, startPoint, width,
   });
   const diameter = size || getRandomInt(1, 10);
   const backgroundColor = color.length ? color : getRandomColor();
@@ -110,7 +107,6 @@ function Orbiter({
     <Animated.View
       style={{
         transform: [
-          { scale },
           { translateY },
           { translateX },
         ],
@@ -127,7 +123,9 @@ function Orbiter({
           shadowOpacity: 0.25,
           shadowRadius: 5,
           elevation: 1,
-          transform: [{ scaleY }],
+          transform: [
+            { scaleY },
+          ],
         }, customStyle]}
       />
     </Animated.View>

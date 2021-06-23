@@ -3,14 +3,11 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  Animated, KeyboardAvoidingView, StyleSheet, View, Easing,
+  Animated, StyleSheet, View, Easing, useWindowDimensions,
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
-import {
-  black, width, purple, height, resultHeight,
-} from '../styles';
+import { black, purple, resultHeight } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
 import { getRandomInt } from '../utils';
 import TextSecondary from './TextSecondary';
@@ -43,10 +40,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     height: messageHeight,
-    width,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
+    position: 'absolute',
   },
   dragContainer: {
     backgroundColor: black,
@@ -85,6 +83,7 @@ const useFadeIn = () => {
 };
 
 function Equation() {
+  const { height, width } = useWindowDimensions();
   const [showBack, setShowBack] = useState(false);
   const animatedScrollY = useRef(new Animated.Value(0)).current;
   const animatedDrag = useRef(new Animated.Value(0)).current;
@@ -154,9 +153,7 @@ function Equation() {
   };
   const flipContainer = { height: flipHeight };
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={ifIphoneX(-58, 0)}
-      behavior="padding"
+    <View
       style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 100 }]}
     >
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
@@ -174,7 +171,7 @@ function Equation() {
                 frontView={<Inputs toggleFlip={toggleFlip} />}
                 backView={<InfoWebView toggleFlip={toggleFlip} />}
                 frontStyles={flipContainer}
-                backStyles={flipContainer}
+                backStyles={{ ...flipContainer, width }}
               />
             </View>
           </Animated.View>
@@ -187,8 +184,7 @@ function Equation() {
           "
         </TextSecondary>
       </View>
-
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

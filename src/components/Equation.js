@@ -137,7 +137,7 @@ function Equation() {
   };
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={containerStyle}>
+    <KeyboardAwareScrollView contentContainerStyle={containerStyle} bounces={false}>
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
         <Result animatedScrollY={animatedScrollY} />
         <PanGestureHandler

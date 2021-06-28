@@ -51,10 +51,9 @@ function Result({ animatedScrollY }) {
     extrapolate: 'clamp',
   });
 
-  // TODO figure out trigonometry for this
   const animateScaleY = animatedScrollY.interpolate({
-    inputRange: [0, (scrollDistance / 2), scrollDistance],
-    outputRange: [2, 1.41, 1],
+    inputRange: [0, (scrollDistance * 0.25), (scrollDistance * 0.5), (scrollDistance * 0.75), scrollDistance],
+    outputRange: [2, 1.414, 1.155, 1.035, 1],
     extrapolate: 'clamp',
   });
 

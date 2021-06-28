@@ -6,6 +6,7 @@ import { func } from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
 import { black, purple, lightBlue } from '../styles';
 import { getRandomInt } from '../utils';
+import Star from './Star';
 
 const useTopAnimation = ({ height, animationComplete }) => {
   const animatedValueTop = useRef(new Animated.Value(0)).current;
@@ -19,7 +20,7 @@ const useTopAnimation = ({ height, animationComplete }) => {
           duration: 500,
           easing: Easing.linear,
           useNativeDriver: true,
-          delay: 2000,
+          delay: 1500,
         },
       ).start(animationComplete);
     };
@@ -64,7 +65,7 @@ function LoadingScreen({ animationComplete }) {
           });
           setStars(newStars);
         });
-      }, 10);
+      }, 5);
     }
     return () => {
       if (t) {
@@ -86,7 +87,7 @@ function LoadingScreen({ animationComplete }) {
           }}
         >
           {stars.map((star) => (
-            <View
+            <Star
               style={star.style}
               key={star.id}
             />
@@ -98,7 +99,6 @@ function LoadingScreen({ animationComplete }) {
 }
 
 LoadingScreen.propTypes = {
-  // loading: bool.isRequired,
   animationComplete: func.isRequired,
 };
 

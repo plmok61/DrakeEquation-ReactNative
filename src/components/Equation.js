@@ -15,6 +15,7 @@ import FlipComponent from './Flip';
 import Result from './Result';
 import Inputs from './Inputs';
 import InfoWebView from './InfoWebView';
+import useFadeIn from '../hooks/useFadeIn';
 
 const quotes = [
   "People don't think the universe be like it is, but it do",
@@ -61,26 +62,6 @@ const styles = StyleSheet.create({
     zIndex: 4,
   },
 });
-
-const useFadeIn = () => {
-  const animatedOpacity = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const fadeIn = () => {
-      Animated.timing(
-        animatedOpacity,
-        {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        },
-      ).start();
-    };
-    fadeIn();
-  }, [animatedOpacity]);
-
-  return animatedOpacity;
-};
 
 function Equation() {
   const { height, width } = useWindowDimensions();

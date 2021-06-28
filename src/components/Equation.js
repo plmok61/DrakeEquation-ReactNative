@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { black, purple, resultHeight } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
 import { getRandomInt } from '../utils';
@@ -21,7 +22,7 @@ const quotes = [
   "People don't think the universe be like it is, but it do",
 ];
 
-const messageHeight = 100;
+const messageHeight = 75;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,11 +36,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: black,
-    zIndex: 2,
   },
   message: {
     bottom: 0,
-    left: 0,
     height: messageHeight,
     width: '100%',
     justifyContent: 'center',
@@ -126,17 +125,19 @@ function Equation() {
   }, [animatedDrag, animatedScrollY]);
 
   const flipHeight = height - insets.top - insets.bottom - resultHeight;
+  const flipContainer = { height: flipHeight };
+
+  const containerStyle = [styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }];
   const dragStyle = {
     flex: 1,
+    zIndex: 2,
     transform: [{
       translateY: animatedDrag,
     }],
   };
-  const flipContainer = { height: flipHeight };
+
   return (
-    <View
-      style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 100 }]}
-    >
+    <KeyboardAwareScrollView contentContainerStyle={containerStyle}>
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
         <Result animatedScrollY={animatedScrollY} />
         <PanGestureHandler
@@ -157,15 +158,15 @@ function Equation() {
             </View>
           </Animated.View>
         </PanGestureHandler>
+        <View style={styles.message}>
+          <TextSecondary style={{ color: 'white' }}>
+            "
+            {quotes[quoteIndex]}
+            "
+          </TextSecondary>
+        </View>
       </Animated.View>
-      <View style={styles.message}>
-        <TextSecondary style={{ color: 'white' }}>
-          "
-          {quotes[quoteIndex]}
-          "
-        </TextSecondary>
-      </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

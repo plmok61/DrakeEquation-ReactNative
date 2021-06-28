@@ -51,6 +51,11 @@ function Result({ animatedScrollY }) {
     extrapolate: 'clamp',
   });
 
+  /* The angle goes from 60deg to 0. The ouput range is the scaleY
+   needed to keep the orbiter looking like a circle at:
+   60, 45, 30, 15, 0
+   This could be improved with more frames but it looks okay
+   */
   const animateScaleY = animatedScrollY.interpolate({
     inputRange: [0, (scrollDistance * 0.25), (scrollDistance * 0.5), (scrollDistance * 0.75), scrollDistance],
     outputRange: [2, 1.414, 1.155, 1.035, 1],

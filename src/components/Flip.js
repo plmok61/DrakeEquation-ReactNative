@@ -139,7 +139,7 @@ Flip.defaultProps = {
   frontPerspective: 1000,
   backPerspective: 1000,
   scaleDuration: 100,
-  rotateDuration: 300,
+  rotateDuration: 200,
   containerStyles: null,
   frontStyles: null,
   backStyles: null,

@@ -20,21 +20,19 @@ function App() {
     setAnimationDone(true);
   }, []);
 
-  if (fontsLoaded && animationDone) {
-    return (
-      <Provider store={store}>
-        <SafeAreaProvider>
-          <Equation />
-        </SafeAreaProvider>
-      </Provider>
-    );
-  }
-
   return (
-    <LoadingScreen
-      loading={!fontsLoaded}
-      animationComplete={animationComplete}
-    />
+    <Provider store={store}>
+      <SafeAreaProvider>
+        {fontsLoaded && animationDone ? (
+          <Equation />
+        ) : (
+          <LoadingScreen
+            loading={!fontsLoaded}
+            animationComplete={animationComplete}
+          />
+        )}
+      </SafeAreaProvider>
+    </Provider>
   );
 }
 

@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StyleSheet, Animated, View } from 'react-native';
+import {
+  StyleSheet, Animated, View, useWindowDimensions,
+} from 'react-native';
 import { instanceOf } from 'prop-types';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
-import { height, resultHeight } from '../styles';
+import { resultHeight } from '../styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,12 +33,27 @@ const styles = StyleSheet.create({
 });
 
 function Result({ animatedScrollY }) {
+  const { height } = useWindowDimensions();
+  const scrollDistance = (height - resultHeight) < 0 ? 1 : height - resultHeight;
+
   const numCivs = useSelector((state) => state.equationState.numCivs);
   const orbiters = useSelector((state) => state.equationState.orbiters);
 
-  const animationY = animatedScrollY.interpolate({
-    inputRange: [0, height - resultHeight],
+  const animateY = animatedScrollY.interpolate({
+    inputRange: [0, scrollDistance],
     outputRange: [resultHeight, height],
+    extrapolate: 'clamp',
+  });
+
+  const animateRotateX = animatedScrollY.interpolate({
+    inputRange: [0, scrollDistance],
+    outputRange: ['-60deg', '0deg'],
+    extrapolate: 'clamp',
+  });
+
+  const animateScaleY = animatedScrollY.interpolate({
+    inputRange: [0, (scrollDistance * 0.25), (scrollDistance * 0.5), (scrollDistance * 0.75), scrollDistance],
+    outputRange: [2, 1.414, 1.155, 1.035, 1],
     extrapolate: 'clamp',
   });
 
@@ -44,22 +61,24 @@ function Result({ animatedScrollY }) {
     <Animated.View
       style={[
         styles.container,
-        { height: animationY },
+        { height: animateY },
       ]}
     >
       <View style={styles.resultContainer}>
         <TextSecondary style={styles.civText}>
           Civilizations in our galaxy:
         </TextSecondary>
-        {
-            orbiters.map((id) => (
-              <Orbiter
-                key={id}
-                customStyle={styles.resultOrbiter}
-                randomStart
-              />
-            ))
-          }
+        <Animated.View style={{ transform: [{ rotateX: animateRotateX }] }}>
+          {orbiters.map((id) => (
+            <Orbiter
+              key={id}
+              customStyle={styles.resultOrbiter}
+              randomStart
+              animateY={animatedScrollY}
+              scaleY={animateScaleY}
+            />
+          ))}
+        </Animated.View>
         <TextSecondary style={styles.totalText}>
           {numCivs}
         </TextSecondary>

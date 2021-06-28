@@ -3,14 +3,11 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  Animated, KeyboardAvoidingView, StyleSheet, View, Easing,
+  Animated, StyleSheet, View, Easing, useWindowDimensions,
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
-import {
-  black, width, purple, height, resultHeight,
-} from '../styles';
+import { black, purple, resultHeight } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
 import { getRandomInt } from '../utils';
 import TextSecondary from './TextSecondary';
@@ -18,6 +15,7 @@ import FlipComponent from './Flip';
 import Result from './Result';
 import Inputs from './Inputs';
 import InfoWebView from './InfoWebView';
+import useFadeIn from '../hooks/useFadeIn';
 
 const quotes = [
   "People don't think the universe be like it is, but it do",
@@ -43,10 +41,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     height: messageHeight,
-    width,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
+    position: 'absolute',
   },
   dragContainer: {
     backgroundColor: black,
@@ -64,27 +63,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const useFadeIn = () => {
-  const animatedOpacity = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const fadeIn = () => {
-      Animated.timing(
-        animatedOpacity,
-        {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        },
-      ).start();
-    };
-    fadeIn();
-  }, [animatedOpacity]);
-
-  return animatedOpacity;
-};
-
 function Equation() {
+  const { height, width } = useWindowDimensions();
   const [showBack, setShowBack] = useState(false);
   const animatedScrollY = useRef(new Animated.Value(0)).current;
   const animatedDrag = useRef(new Animated.Value(0)).current;
@@ -103,18 +83,21 @@ function Equation() {
     setShowBack((prev) => !prev);
   }, []);
 
-  const onPanGestureEvent = ({ nativeEvent }) => {
+  const onPanGestureEvent = useCallback(({ nativeEvent }) => {
     const { translationY } = nativeEvent;
 
+    // Drag up to reveal message
     if (translationY > (-1 * messageHeight) && translationY < 0) {
       animatedDrag.setValue(translationY);
     }
+
+    // Drag down to expand result
     if (translationY < 500) {
       animatedScrollY.setValue(translationY);
     }
-  };
+  }, [animatedDrag, animatedScrollY]);
 
-  const handleStateChange = ({ nativeEvent }) => {
+  const handleStateChange = useCallback(({ nativeEvent }) => {
     if (nativeEvent.state === State.END) {
       const ind = getRandomInt(0, quotes.length - 1);
       setIndex(ind);
@@ -140,7 +123,7 @@ function Equation() {
         ),
       ]).start();
     }
-  };
+  }, [animatedDrag, animatedScrollY]);
 
   const flipHeight = height - insets.top - insets.bottom - resultHeight;
   const dragStyle = {
@@ -151,9 +134,7 @@ function Equation() {
   };
   const flipContainer = { height: flipHeight };
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={ifIphoneX(-58, 0)}
-      behavior="padding"
+    <View
       style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 100 }]}
     >
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
@@ -171,7 +152,7 @@ function Equation() {
                 frontView={<Inputs toggleFlip={toggleFlip} />}
                 backView={<InfoWebView toggleFlip={toggleFlip} />}
                 frontStyles={flipContainer}
-                backStyles={flipContainer}
+                backStyles={{ ...flipContainer, width }}
               />
             </View>
           </Animated.View>
@@ -184,8 +165,7 @@ function Equation() {
           "
         </TextSecondary>
       </View>
-
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

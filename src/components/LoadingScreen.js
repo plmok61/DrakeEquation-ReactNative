@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View, Animated, Dimensions, Easing,
+  View, Animated, Easing, useWindowDimensions,
 } from 'react-native';
-import { bool, func } from 'prop-types';
+import { func } from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
-import Orbiter from './Orbiter';
-import { black, lightBlue, purple } from '../styles';
+import { black, purple, lightBlue } from '../styles';
+import { getRandomInt } from '../utils';
+import Star from './Star';
 
-const { height, width } = Dimensions.get('window');
-
-const useTopAnimation = ({ loading, animationComplete, orbitCount }) => {
+const useTopAnimation = ({ height, animationComplete }) => {
   const animatedValueTop = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -18,41 +17,66 @@ const useTopAnimation = ({ loading, animationComplete, orbitCount }) => {
         animatedValueTop,
         {
           toValue: height,
-          duration: 2000,
+          duration: 500,
           easing: Easing.linear,
-          useNativeDriver: false,
+          useNativeDriver: true,
+          delay: 1500,
         },
       ).start(animationComplete);
     };
-    if (!loading && orbitCount >= 2) {
-      topAnimation();
-    }
-  }, [animatedValueTop, animationComplete, loading, orbitCount]);
+
+    topAnimation();
+  }, [animatedValueTop, height, animationComplete]);
 
   return animatedValueTop;
 };
 
-function LoadingScreen({ loading, animationComplete }) {
-  const [orbitCount, setOrbitCount] = useState(0);
-
+function LoadingScreen({ animationComplete }) {
+  const { height, width } = useWindowDimensions();
+  const [stars, setStars] = useState([]);
   const animatedValueTop = useTopAnimation({
-    loading,
+    height,
     animationComplete,
-    orbitCount,
   });
 
-  const countOrbits = () => {
-    setOrbitCount((prev) => prev + 1);
-  };
+  useEffect(() => {
+    let t;
+    if (stars.length < 200) {
+      t = setTimeout(() => {
+        const size = getRandomInt(2, 10);
+        const radius = size / 2;
+        setStars((prev) => {
+          const newStars = [...prev];
+          newStars.push({
+            id: prev.length + 1,
+            style: {
+              height: size,
+              width: size,
+              borderRadius: radius,
+              backgroundColor: lightBlue,
+              position: 'absolute',
+              top: getRandomInt(0, height),
+              left: getRandomInt(0, width),
+              shadowColor: lightBlue,
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.25,
+              shadowRadius: 5,
+            },
+          });
+          setStars(newStars);
+        });
+      }, 5);
+    }
+    return () => {
+      if (t) {
+        clearTimeout(t);
+      }
+    };
+  }, [height, stars, width]);
 
   return (
     <View style={{ backgroundColor: black, flex: 1 }}>
-      <Animated.View
-        style={{
-          position: 'absolute',
-          top: animatedValueTop,
-        }}
-      >
+      <Animated.View style={{ backgroundColor: black, transform: [{ translateY: animatedValueTop }] }}>
         <LinearGradient
           colors={[black, purple]}
           style={{
@@ -62,13 +86,12 @@ function LoadingScreen({ loading, animationComplete }) {
             alignItems: 'center',
           }}
         >
-          <Orbiter
-            orbitCallback={countOrbits}
-            radius={100}
-            size={30}
-            duration={1000}
-            color={lightBlue}
-          />
+          {stars.map((star) => (
+            <Star
+              style={star.style}
+              key={star.id}
+            />
+          ))}
         </LinearGradient>
       </Animated.View>
     </View>
@@ -76,7 +99,6 @@ function LoadingScreen({ loading, animationComplete }) {
 }
 
 LoadingScreen.propTypes = {
-  loading: bool.isRequired,
   animationComplete: func.isRequired,
 };
 

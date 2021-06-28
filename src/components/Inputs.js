@@ -1,15 +1,16 @@
 import React, { memo } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, TouchableOpacity, StyleSheet } from 'react-native';
 import { func } from 'prop-types';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 import DrakeInput from './DrakeInput';
 import TextSecondary from './TextSecondary';
-import { lightBlue, width, sharedStyles } from '../styles';
+import { lightBlue, sharedStyles } from '../styles';
 
 const styles = StyleSheet.create({
   inputsContainer: {
     backgroundColor: lightBlue,
     paddingTop: 20,
-    width,
+    width: '100%',
     height: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -18,7 +19,11 @@ const styles = StyleSheet.create({
 
 function Inputs({ toggleFlip }) {
   return (
-    <View style={styles.inputsContainer}>
+    <KeyboardAvoidingView
+      style={styles.inputsContainer}
+      keyboardVerticalOffset={ifIphoneX(-58, 0)}
+      behavior="padding"
+    >
       <DrakeInput
         inputId="rStar"
         min={0}
@@ -90,7 +95,7 @@ function Inputs({ toggleFlip }) {
           Learn More
         </TextSecondary>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -77,11 +77,11 @@ function Inputs({ toggleFlip }) {
       <DrakeInput
         inputId="lComm"
         min={0}
-        max={1_000_000}
-        step={10_000}
+        max={1000000}
+        step={10000}
         descriptionText="Years communicative: "
         key="lComm"
-        defaultValue={10_000}
+        defaultValue={10000}
       />
       <TouchableOpacity
         onPress={toggleFlip}

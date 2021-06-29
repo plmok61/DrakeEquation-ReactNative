@@ -6,6 +6,7 @@ import {
 import { instanceOf } from 'prop-types';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
+import StarBackground from './StarBackground';
 import { resultHeight } from '../styles';
 
 const styles = StyleSheet.create({
@@ -33,7 +34,8 @@ const styles = StyleSheet.create({
 });
 
 function Result({ animatedScrollY }) {
-  const { height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
+
   const scrollDistance = (height - resultHeight) < 0 ? 1 : height - resultHeight;
 
   const numCivs = useSelector((state) => state.equationState.numCivs);
@@ -66,9 +68,13 @@ function Result({ animatedScrollY }) {
     <Animated.View
       style={[
         styles.container,
-        { height: animateY },
+        { height: animateY, width },
       ]}
     >
+      <StarBackground
+        animatedScrollY={animatedScrollY}
+        scrollDistance={scrollDistance}
+      />
       <View style={styles.resultContainer}>
         <TextSecondary style={styles.civText}>
           Civilizations in our galaxy:

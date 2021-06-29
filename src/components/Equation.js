@@ -20,6 +20,10 @@ import useFadeIn from '../hooks/useFadeIn';
 
 const quotes = [
   "People don't think the universe be like it is, but it do",
+  'We are a way for the cosmost to know itself',
+  'We only have to look at ourselves to see how intelligent life might develop into something we wouldn’t want to meet.',
+  'Someday, from somewhere out among the stars, will come the answers to many of the oldest, most important, and most exciting questions mankind has asked.',
+  "The dinosaurs became extinct because they didn't have a space program. And if we become extinct because we don't have a space program, it'll serve us right!",
 ];
 
 const messageHeight = 75;
@@ -159,7 +163,7 @@ function Equation() {
           </Animated.View>
         </PanGestureHandler>
         <View style={styles.message}>
-          <TextSecondary style={{ color: 'white' }}>
+          <TextSecondary style={{ color: 'white', paddingHorizontal: 15 }}>
             "
             {quotes[quoteIndex]}
             "

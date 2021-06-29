@@ -6,6 +6,7 @@ import {
 import { instanceOf } from 'prop-types';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
+import StarBackground from './StarBackground';
 import { resultHeight } from '../styles';
 
 const styles = StyleSheet.create({
@@ -33,7 +34,8 @@ const styles = StyleSheet.create({
 });
 
 function Result({ animatedScrollY }) {
-  const { height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
+
   const scrollDistance = (height - resultHeight) < 0 ? 1 : height - resultHeight;
 
   const numCivs = useSelector((state) => state.equationState.numCivs);
@@ -51,6 +53,11 @@ function Result({ animatedScrollY }) {
     extrapolate: 'clamp',
   });
 
+  /* The angle goes from 60deg to 0. The ouput range is the scaleY
+   needed to keep the orbiter looking like a circle at:
+   60, 45, 30, 15, 0
+   This could be improved with more frames but it looks okay
+   */
   const animateScaleY = animatedScrollY.interpolate({
     inputRange: [0, (scrollDistance * 0.25), (scrollDistance * 0.5), (scrollDistance * 0.75), scrollDistance],
     outputRange: [2, 1.414, 1.155, 1.035, 1],
@@ -61,9 +68,13 @@ function Result({ animatedScrollY }) {
     <Animated.View
       style={[
         styles.container,
-        { height: animateY },
+        { height: animateY, width },
       ]}
     >
+      <StarBackground
+        animatedScrollY={animatedScrollY}
+        scrollDistance={scrollDistance}
+      />
       <View style={styles.resultContainer}>
         <TextSecondary style={styles.civText}>
           Civilizations in our galaxy:

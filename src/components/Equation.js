@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { black, purple, resultHeight } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
 import { getRandomInt } from '../utils';
@@ -19,9 +20,13 @@ import useFadeIn from '../hooks/useFadeIn';
 
 const quotes = [
   "People don't think the universe be like it is, but it do",
+  'We are a way for the cosmost to know itself',
+  'We only have to look at ourselves to see how intelligent life might develop into something we wouldn’t want to meet.',
+  'Someday, from somewhere out among the stars, will come the answers to many of the oldest, most important, and most exciting questions mankind has asked.',
+  "The dinosaurs became extinct because they didn't have a space program. And if we become extinct because we don't have a space program, it'll serve us right!",
 ];
 
-const messageHeight = 100;
+const messageHeight = 75;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,11 +40,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: black,
-    zIndex: 2,
   },
   message: {
     bottom: 0,
-    left: 0,
     height: messageHeight,
     width: '100%',
     justifyContent: 'center',
@@ -126,17 +129,19 @@ function Equation() {
   }, [animatedDrag, animatedScrollY]);
 
   const flipHeight = height - insets.top - insets.bottom - resultHeight;
+  const flipContainer = { height: flipHeight };
+
+  const containerStyle = [styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }];
   const dragStyle = {
     flex: 1,
+    zIndex: 2,
     transform: [{
       translateY: animatedDrag,
     }],
   };
-  const flipContainer = { height: flipHeight };
+
   return (
-    <View
-      style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 100 }]}
-    >
+    <KeyboardAwareScrollView contentContainerStyle={containerStyle} bounces={false}>
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
         <Result animatedScrollY={animatedScrollY} />
         <PanGestureHandler
@@ -157,15 +162,15 @@ function Equation() {
             </View>
           </Animated.View>
         </PanGestureHandler>
+        <View style={styles.message}>
+          <TextSecondary style={{ color: 'white', paddingHorizontal: 15 }}>
+            "
+            {quotes[quoteIndex]}
+            "
+          </TextSecondary>
+        </View>
       </Animated.View>
-      <View style={styles.message}>
-        <TextSecondary style={{ color: 'white' }}>
-          "
-          {quotes[quoteIndex]}
-          "
-        </TextSecondary>
-      </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

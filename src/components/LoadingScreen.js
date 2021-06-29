@@ -17,10 +17,10 @@ const useTopAnimation = ({ height, animationComplete }) => {
         animatedValueTop,
         {
           toValue: height,
-          duration: 500,
+          duration: 800,
           easing: Easing.linear,
           useNativeDriver: true,
-          delay: 1500,
+          delay: 2000,
         },
       ).start(animationComplete);
     };

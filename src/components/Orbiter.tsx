@@ -2,26 +2,31 @@ import React, {
   memo, useRef, useEffect, useCallback,
 } from 'react';
 import {
-  Animated, Easing, ViewPropTypes, useWindowDimensions,
+  Animated, Easing, useWindowDimensions, ViewStyle,
 } from 'react-native';
-import {
-  number, string, func, bool, oneOfType, object,
-} from 'prop-types';
 import { lightBlue } from '../styles';
 import { getRandomInt, getRandomColor } from '../utils';
 
+interface UseOrbitProps {
+  radius?: number;
+  duration?: number;
+  orbitCallback?: () => void;
+  startPoint: number;
+  width: number;
+}
+
 const useOrbit = ({
   radius, duration, orbitCallback, startPoint, width,
-}) => {
+}: UseOrbitProps) => {
   const animatedOrbit = useRef(new Animated.Value(0)).current;
 
   const r = radius || getRandomInt(1, width / 2);
   const d = duration || 5000 + (r * 50);
   const frames = 50;
 
-  const inputRange = [];
-  let outputRangeX = [];
-  let outputRangeY = [];
+  const inputRange: number[] = [];
+  let outputRangeX: number[] = [];
+  let outputRangeY: number[] = [];
   // let outputRangeScale = [];
 
   for (let i = 0; i < frames; i += 1) {
@@ -85,23 +90,35 @@ const useOrbit = ({
   return [translateY, translateX];
 };
 
+interface OrbiterProps {
+  size?: number;
+  radius?: number;
+  duration?: number;
+  orbitCallback?: () => void;
+  customStyle?: ViewStyle;
+  color?: string;
+  randomStart?: boolean;
+  scaleY?: number | Animated.AnimatedInterpolation<number>;
+  animateY?: Animated.Value;
+}
+
 function Orbiter({
-  size,
-  radius,
-  duration,
-  orbitCallback,
+  size = 0,
+  radius = 0,
+  duration = 0,
+  orbitCallback = undefined,
   customStyle,
-  color,
-  randomStart,
-  scaleY,
-}) {
+  color = '',
+  randomStart = false,
+  scaleY = 1,
+}: OrbiterProps) {
   const { width } = useWindowDimensions();
   const startPoint = randomStart ? Math.random() : 0;
   const [translateY, translateX] = useOrbit({
     radius, duration, orbitCallback, startPoint, width,
   });
   const diameter = size || getRandomInt(1, 10);
-  const backgroundColor = color.length ? color : getRandomColor();
+  const backgroundColor = color && color.length ? color : getRandomColor();
 
   return (
     <Animated.View
@@ -132,31 +149,10 @@ function Orbiter({
   );
 }
 
-Orbiter.propTypes = {
-  size: number,
-  duration: number,
-  radius: number,
-  color: string,
-  orbitCallback: oneOfType([func, bool]),
-  randomStart: bool,
-  customStyle: ViewPropTypes.style,
-  scaleY: oneOfType([number, object]),
-};
-
-Orbiter.defaultProps = {
-  size: 0,
-  duration: 0,
-  radius: 0,
-  color: '',
-  orbitCallback: false,
-  randomStart: false,
-  customStyle: {},
-  scaleY: 1,
-};
-
 // the size prop will never change so this component should never re-render
-const isEqual = (prevProps, nextProps) => nextProps.size === prevProps.size;
+const isEqual = (prevProps: OrbiterProps, nextProps: OrbiterProps) => nextProps.size === prevProps.size;
 
 const OrbiterMemo = memo(Orbiter, isEqual);
 
 export default OrbiterMemo;
+

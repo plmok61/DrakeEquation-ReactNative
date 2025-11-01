@@ -1,8 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
-import {
-  array, node, object, oneOfType,
-} from 'prop-types';
+import { Text, StyleSheet, TextProps, ViewStyle, TextStyle } from 'react-native';
 import { lightBlue } from '../styles';
 
 const styles = StyleSheet.create({
@@ -12,7 +9,12 @@ const styles = StyleSheet.create({
   },
 });
 
-function TextPrimary({ children, style, ...others }) {
+interface TextPrimaryProps extends TextProps {
+  children: React.ReactNode;
+  style?: ViewStyle | TextStyle | (ViewStyle | TextStyle)[];
+}
+
+function TextPrimary({ children, style = {}, ...others }: TextPrimaryProps) {
   return (
     <Text {...others} style={[styles.text, style]}>
       {children}
@@ -20,13 +22,5 @@ function TextPrimary({ children, style, ...others }) {
   );
 }
 
-TextPrimary.propTypes = {
-  style: oneOfType([object, array]),
-  children: node.isRequired,
-};
-
-TextPrimary.defaultProps = {
-  style: {},
-};
-
 export default TextPrimary;
+

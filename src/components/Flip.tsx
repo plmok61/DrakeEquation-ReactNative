@@ -1,12 +1,15 @@
 import React, { useRef, useEffect } from 'react';
-import { bool, node, number } from 'prop-types';
 import {
-  View, Animated, Easing, ViewPropTypes,
+  View, Animated, Easing, useWindowDimensions,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { resultHeight } from '../styles';
 
-const useFlip = ({
-  isFlipped, scale, scaleDuration, rotateDuration,
-}) => {
+interface UseFlipProps {
+  isFlipped: boolean;
+}
+
+const useFlip = ({ isFlipped }: UseFlipProps) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
   const animatedView = useRef(new Animated.Value(0)).current;
 
@@ -20,7 +23,7 @@ const useFlip = ({
   });
   const scaleInterpolate = animatedScale.interpolate({
     inputRange: [0, 1],
-    outputRange: [1, scale],
+    outputRange: [1, 0.8],
   });
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const useFlip = ({
           animatedScale,
           {
             toValue: 1,
-            duration: scaleDuration,
+            duration: 100,
             easing: Easing.linear,
             useNativeDriver: true,
           },
@@ -40,7 +43,7 @@ const useFlip = ({
           animatedView,
           {
             toValue,
-            duration: rotateDuration,
+            duration: 200,
             easing: Easing.linear,
             useNativeDriver: true,
           },
@@ -49,7 +52,7 @@ const useFlip = ({
           animatedScale,
           {
             toValue: 0,
-            duration: scaleDuration,
+            duration: 100,
             easing: Easing.linear,
             useNativeDriver: true,
           },
@@ -57,43 +60,41 @@ const useFlip = ({
       ]).start();
     };
     flip();
-  }, [animatedScale, animatedView, isFlipped, rotateDuration, scaleDuration]);
+  }, [animatedScale, animatedView, isFlipped]);
 
   return [frontInterpolate, backInterpolate, scaleInterpolate];
 };
 
-function Flip({
-  isFlipped,
-  frontView,
-  backView,
-  scale,
-  frontPerspective,
-  backPerspective,
-  scaleDuration,
-  rotateDuration,
-  containerStyles,
-  frontStyles,
-  backStyles,
-}) {
-  const [frontInterpolate, backInterpolate, scaleInterpolate] = useFlip({
-    isFlipped, scale, scaleDuration, rotateDuration,
-  });
+interface FlipProps {
+  isFlipped: boolean;
+  frontView: React.ReactNode;
+  backView: React.ReactNode;
+}
+
+function Flip({ isFlipped, frontView, backView }: FlipProps) {
+  const { height, width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const [frontInterpolate, backInterpolate, scaleInterpolate] = useFlip({ isFlipped });
   const frontAnimatedStyle = { rotateY: frontInterpolate };
   const backAnimatedStyle = { rotateY: backInterpolate };
   const scaleAnimatedStyle = { scale: scaleInterpolate };
+
+  const flipHeight = height - insets.top - insets.bottom - resultHeight;
+  const flipContainer = { height: flipHeight };
+
   return (
-    <View style={containerStyles}>
+    <View style={flipContainer}>
       <Animated.View
         style={[
           {
             backfaceVisibility: 'hidden',
             transform: [
-              { perspective: frontPerspective },
+              { perspective: 1000 },
               frontAnimatedStyle,
               scaleAnimatedStyle,
             ],
           },
-          frontStyles,
+          flipContainer,
         ]}
         pointerEvents={isFlipped ? 'none' : 'auto'}
       >
@@ -105,12 +106,12 @@ function Flip({
             backfaceVisibility: 'hidden',
             position: 'absolute',
             transform: [
-              { perspective: backPerspective },
+              { perspective: 1000 },
               backAnimatedStyle,
               scaleAnimatedStyle,
             ],
           },
-          backStyles,
+          { ...flipContainer, width },
         ]}
         pointerEvents={isFlipped ? 'auto' : 'none'}
       >
@@ -120,29 +121,5 @@ function Flip({
   );
 }
 
-Flip.propTypes = {
-  isFlipped: bool.isRequired,
-  frontView: node.isRequired,
-  backView: node.isRequired,
-  scale: number,
-  frontPerspective: number,
-  backPerspective: number,
-  scaleDuration: number,
-  rotateDuration: number,
-  containerStyles: ViewPropTypes.style,
-  frontStyles: ViewPropTypes.style,
-  backStyles: ViewPropTypes.style,
-};
-
-Flip.defaultProps = {
-  scale: 0.8,
-  frontPerspective: 1000,
-  backPerspective: 1000,
-  scaleDuration: 100,
-  rotateDuration: 200,
-  containerStyles: null,
-  frontStyles: null,
-  backStyles: null,
-};
-
 export default Flip;
+

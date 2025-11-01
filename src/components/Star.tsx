@@ -1,8 +1,12 @@
 import React from 'react';
-import { Animated, ViewPropTypes } from 'react-native';
+import { Animated, ViewStyle } from 'react-native';
 import useFadeIn from '../hooks/useFadeIn';
 
-function Star({ style }) {
+interface StarProps {
+  style?: ViewStyle;
+}
+
+function Star({ style = {} }: StarProps) {
   const animatedOpacity = useFadeIn(200);
   return (
     <Animated.View
@@ -11,12 +15,5 @@ function Star({ style }) {
   );
 }
 
-Star.propTypes = {
-  style: ViewPropTypes.style,
-};
-
-Star.defaultProps = {
-  style: {},
-};
-
 export default Star;
+

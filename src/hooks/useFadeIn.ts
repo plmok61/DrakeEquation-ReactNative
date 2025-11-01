@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-const useFadeIn = (duration = 1000) => {
+const useFadeIn = (duration: number = 1000): Animated.Value => {
   const animatedOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -22,3 +22,4 @@ const useFadeIn = (duration = 1000) => {
 };
 
 export default useFadeIn;
+

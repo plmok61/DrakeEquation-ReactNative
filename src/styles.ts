@@ -23,3 +23,4 @@ export const sharedStyles = StyleSheet.create({
     color: purple,
   },
 });
+

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import {
   StyleSheet, Animated, View, useWindowDimensions,
 } from 'react-native';
-import { instanceOf } from 'prop-types';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
 import StarBackground from './StarBackground';
@@ -33,13 +32,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function Result({ animatedScrollY }) {
+interface ResultProps {
+  animatedScrollY: Animated.Value;
+}
+
+function Result({ animatedScrollY }: ResultProps) {
   const { height, width } = useWindowDimensions();
 
   const scrollDistance = (height - resultHeight) < 0 ? 1 : height - resultHeight;
 
-  const numCivs = useSelector((state) => state.equationState.numCivs);
-  const orbiters = useSelector((state) => state.equationState.orbiters);
+  const numCivs = useSelector((state: any) => state.equationState.numCivs);
+  const orbiters = useSelector((state: any) => state.equationState.orbiters);
 
   const animateY = animatedScrollY.interpolate({
     inputRange: [0, scrollDistance],
@@ -80,7 +83,7 @@ function Result({ animatedScrollY }) {
           Civilizations in our galaxy:
         </TextSecondary>
         <Animated.View style={{ transform: [{ rotateX: animateRotateX }] }}>
-          {orbiters.map((id) => (
+          {orbiters.map((id: number) => (
             <Orbiter
               key={id}
               customStyle={styles.resultOrbiter}
@@ -98,8 +101,5 @@ function Result({ animatedScrollY }) {
   );
 }
 
-Result.propTypes = {
-  animatedScrollY: instanceOf(Animated.Value).isRequired,
-};
-
 export default Result;
+

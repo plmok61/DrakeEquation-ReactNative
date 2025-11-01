@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { func } from 'prop-types';
 import DrakeInput from './DrakeInput';
 import TextSecondary from './TextSecondary';
 import { lightBlue, sharedStyles } from '../styles';
@@ -15,7 +14,11 @@ const styles = StyleSheet.create({
   },
 });
 
-function Inputs({ toggleFlip }) {
+interface InputsProps {
+  toggleFlip: () => void;
+}
+
+function Inputs({ toggleFlip }: InputsProps) {
   return (
     <View
       style={styles.inputsContainer}
@@ -95,8 +98,5 @@ function Inputs({ toggleFlip }) {
   );
 }
 
-Inputs.propTypes = {
-  toggleFlip: func.isRequired,
-};
-
 export default memo(Inputs);
+

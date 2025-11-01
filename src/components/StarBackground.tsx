@@ -1,17 +1,26 @@
 import React, { useEffect, useState, memo } from 'react';
-import { Animated, useWindowDimensions } from 'react-native';
-import { instanceOf, number } from 'prop-types';
+import { Animated, useWindowDimensions, ViewStyle } from 'react-native';
 import Star from './Star';
 import { lightBlue } from '../styles';
 import { getRandomInt } from '../utils';
 
-function StarBackground({ animatedScrollY, scrollDistance }) {
+interface StarBackgroundProps {
+  animatedScrollY: Animated.Value;
+  scrollDistance: number;
+}
+
+interface StarStyle {
+  id: number;
+  style: ViewStyle;
+}
+
+function StarBackground({ animatedScrollY, scrollDistance }: StarBackgroundProps) {
   const { height, width } = useWindowDimensions();
-  const [stars, setStars] = useState([]);
+  const [stars, setStars] = useState<StarStyle[]>([]);
 
   useEffect(() => {
     if (!stars.length) {
-      const s = [];
+      const s: StarStyle[] = [];
       for (let i = 0; i <= 100; i += 1) {
         const size = getRandomInt(1, 5);
         const radius = size / 2;
@@ -62,11 +71,7 @@ function StarBackground({ animatedScrollY, scrollDistance }) {
   );
 }
 
-StarBackground.propTypes = {
-  animatedScrollY: instanceOf(Animated.Value).isRequired,
-  scrollDistance: number.isRequired,
-};
-
 const StarBackgroundMemo = memo(StarBackground);
 
 export default StarBackgroundMemo;
+

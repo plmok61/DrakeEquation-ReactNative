@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { number, string } from 'prop-types';
 import {
   View, TextInput, StyleSheet, Dimensions,
 } from 'react-native';
@@ -37,6 +36,15 @@ const styles = StyleSheet.create({
   },
 });
 
+interface DrakeInputProps {
+  inputId: string;
+  min: number;
+  max: number;
+  step: number;
+  descriptionText: string;
+  defaultValue: number;
+}
+
 function DrakeInput({
   inputId,
   min,
@@ -44,9 +52,9 @@ function DrakeInput({
   step,
   descriptionText,
   defaultValue,
-}) {
+}: DrakeInputProps) {
   const dispatch = useDispatch();
-  const inputValue = useSelector((state) => state.equationState.inputs[inputId]);
+  const inputValue = useSelector((state: any) => state.equationState.inputs[inputId]);
   return (
     <View style={styles.constainer}>
       <View style={styles.flexRow}>
@@ -93,13 +101,5 @@ function DrakeInput({
   );
 }
 
-DrakeInput.propTypes = {
-  descriptionText: string.isRequired,
-  inputId: string.isRequired,
-  min: number.isRequired,
-  max: number.isRequired,
-  step: number.isRequired,
-  defaultValue: number.isRequired,
-};
-
 export default DrakeInput;
+

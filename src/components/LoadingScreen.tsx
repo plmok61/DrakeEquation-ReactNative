@@ -1,14 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View, Animated, Easing, useWindowDimensions,
+  View, Animated, Easing, useWindowDimensions, ViewStyle,
 } from 'react-native';
-import { func } from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
 import { black, purple, lightBlue } from '../styles';
 import { getRandomInt } from '../utils';
 import Star from './Star';
 
-const useTopAnimation = ({ height, animationComplete }) => {
+interface LoadingScreenProps {
+  loading?: boolean;
+  animationComplete: () => void;
+}
+
+interface StarStyle {
+  id: number;
+  style: ViewStyle;
+}
+
+const useTopAnimation = ({ height, animationComplete }: { height: number; animationComplete: () => void }) => {
   const animatedValueTop = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -31,24 +40,27 @@ const useTopAnimation = ({ height, animationComplete }) => {
   return animatedValueTop;
 };
 
-function LoadingScreen({ animationComplete }) {
+function LoadingScreen({ animationComplete }: LoadingScreenProps) {
   const { height, width } = useWindowDimensions();
-  const [stars, setStars] = useState([]);
+  const [stars, setStars] = useState<StarStyle[]>([]);
   const animatedValueTop = useTopAnimation({
     height,
     animationComplete,
   });
 
   useEffect(() => {
-    let t;
+    if (!height || !width) return;
+
+    let t: NodeJS.Timeout;
     if (stars.length < 200) {
       t = setTimeout(() => {
         const size = getRandomInt(2, 10);
         const radius = size / 2;
         setStars((prev) => {
-          const newStars = [...prev];
+          const safePrev = prev && Array.isArray(prev) ? prev : [];
+          const newStars = [...safePrev];
           newStars.push({
-            id: prev.length + 1,
+            id: safePrev.length + 1,
             style: {
               height: size,
               width: size,
@@ -63,7 +75,7 @@ function LoadingScreen({ animationComplete }) {
               shadowRadius: 5,
             },
           });
-          setStars(newStars);
+          return newStars;
         });
       }, 5);
     }
@@ -98,8 +110,5 @@ function LoadingScreen({ animationComplete }) {
   );
 }
 
-LoadingScreen.propTypes = {
-  animationComplete: func.isRequired,
-};
-
 export default LoadingScreen;
+

@@ -1,11 +1,17 @@
 import React, { useEffect, useState, memo } from 'react';
-import { Animated, useWindowDimensions, ViewStyle } from 'react-native';
+import { useWindowDimensions, ViewStyle } from 'react-native';
+import Animated, {
+  Extrapolation,
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import Star from './Star';
 import { lightBlue } from '../styles';
 import { getRandomInt } from '../utils';
 
 interface StarBackgroundProps {
-  animatedScrollY: Animated.Value;
+  scrollY: SharedValue<number>;
   scrollDistance: number;
 }
 
@@ -14,7 +20,7 @@ interface StarStyle {
   style: ViewStyle;
 }
 
-function StarBackground({ animatedScrollY, scrollDistance }: StarBackgroundProps) {
+function StarBackground({ scrollY, scrollDistance }: StarBackgroundProps) {
   const { height, width } = useWindowDimensions();
   const [stars, setStars] = useState<StarStyle[]>([]);
 
@@ -46,20 +52,20 @@ function StarBackground({ animatedScrollY, scrollDistance }: StarBackgroundProps
     }
   }, [stars.length, height, width]);
 
-  const animatedOpacity = animatedScrollY.interpolate({
-    inputRange: [0, scrollDistance],
-    outputRange: [0, 1],
-    extrapolate: 'clamp',
-  });
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(scrollY.value, [0, scrollDistance], [0, 1], Extrapolation.CLAMP),
+  }));
 
   return (
     <Animated.View
-      style={{
-        height,
-        width,
-        position: 'absolute',
-        opacity: animatedOpacity,
-      }}
+      style={[
+        {
+          height,
+          width,
+          position: 'absolute',
+        },
+        animatedStyle,
+      ]}
     >
       {stars.map((star) => (
         <Star
@@ -74,4 +80,3 @@ function StarBackground({ animatedScrollY, scrollDistance }: StarBackgroundProps
 const StarBackgroundMemo = memo(StarBackground);
 
 export default StarBackgroundMemo;
-

@@ -1,14 +1,19 @@
 import React, {
-  useState, useEffect, useCallback, useRef, useMemo,
+  useState, useEffect, useCallback, useMemo,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Animated, StyleSheet, View, Easing, useWindowDimensions,
-} from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Reanimated, {
+  Easing,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { black, purple, resultHeight } from '../styles';
+import { black, purple } from '../styles';
 import { updateNumCivs } from '../actions/equationActions';
 import { getRandomInt } from '../utils';
 import TextSecondary from './TextSecondary';
@@ -50,6 +55,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
     position: 'absolute',
   },
+  dragWrapper: {
+    flex: 1,
+    zIndex: 2,
+  },
   dragContainer: {
     backgroundColor: black,
     alignItems: 'center',
@@ -68,8 +77,8 @@ const styles = StyleSheet.create({
 
 function Equation() {
   const [showBack, setShowBack] = useState(false);
-  const animatedScrollY = useRef(new Animated.Value(0)).current;
-  const animatedDrag = useRef(new Animated.Value(0)).current;
+  const scrollY = useSharedValue(0);
+  const drag = useSharedValue(0);
   const [quoteIndex, setIndex] = useState(0);
   const dispatch = useDispatch();
 
@@ -85,64 +94,49 @@ function Equation() {
     setShowBack((prev) => !prev);
   }, []);
 
+  const pickQuote = useCallback(() => {
+    setIndex(getRandomInt(0, quotes.length - 1));
+  }, []);
+
   const panGesture = useMemo(
     () => Gesture.Pan()
       .onUpdate((event) => {
+        'worklet';
+
         const { translationY } = event;
 
         // Drag up to reveal message
         if (translationY > (-1 * messageHeight) && translationY < 0) {
-          animatedDrag.setValue(translationY);
+          drag.value = translationY;
         }
 
         // Drag down to expand result
         if (translationY < 500) {
-          animatedScrollY.setValue(translationY);
+          scrollY.value = translationY;
         }
       })
       .onEnd(() => {
-        const ind = getRandomInt(0, quotes.length - 1);
-        setIndex(ind);
+        'worklet';
 
-        Animated.parallel([
-          Animated.timing(
-            animatedScrollY,
-            {
-              toValue: 0,
-              duration: 200,
-              easing: Easing.linear,
-              useNativeDriver: false,
-            },
-          ),
-          Animated.timing(
-            animatedDrag,
-            {
-              toValue: 0,
-              duration: 200,
-              easing: Easing.linear,
-              useNativeDriver: true,
-            },
-          ),
-        ]).start();
+        scrollY.value = withTiming(0, { duration: 200, easing: Easing.linear });
+        drag.value = withTiming(0, { duration: 200, easing: Easing.linear });
+        runOnJS(pickQuote)();
       }),
-    [animatedDrag, animatedScrollY],
+    [drag, scrollY, pickQuote],
   );
 
   const containerStyle = [styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }];
-  const dragStyle = {
-    flex: 1,
-    zIndex: 2,
-    transform: [{
-      translateY: animatedDrag,
-    }],
-  };
+
+  const dragAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: drag.value }],
+  }));
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={containerStyle} bounces={false}>
       <Animated.View style={[styles.animatedContainer, { opacity: animatedOpacity }]}>
-        <Result animatedScrollY={animatedScrollY} />
+        <Result scrollY={scrollY} />
         <GestureDetector gesture={panGesture}>
-          <Animated.View style={dragStyle}>
+          <Reanimated.View style={[styles.dragWrapper, dragAnimatedStyle]}>
             <View style={styles.dragContainer}>
               <View style={styles.dragger} />
               <FlipComponent
@@ -151,7 +145,7 @@ function Equation() {
                 backView={<InfoWebView toggleFlip={toggleFlip} />}
               />
             </View>
-          </Animated.View>
+          </Reanimated.View>
         </GestureDetector>
         <View style={styles.message}>
           <TextSecondary style={{ color: 'white', paddingHorizontal: 15 }}>
@@ -166,4 +160,3 @@ function Equation() {
 }
 
 export default Equation;
-

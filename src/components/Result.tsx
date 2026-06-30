@@ -1,8 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  StyleSheet, Animated, View, useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import Animated, {
+  Extrapolation,
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import TextSecondary from './TextSecondary';
 import Orbiter from './Orbiter';
 import StarBackground from './StarBackground';
@@ -33,10 +37,10 @@ const styles = StyleSheet.create({
 });
 
 interface ResultProps {
-  animatedScrollY: Animated.Value;
+  scrollY: SharedValue<number>;
 }
 
-function Result({ animatedScrollY }: ResultProps) {
+function Result({ scrollY }: ResultProps) {
   const { height, width } = useWindowDimensions();
 
   const scrollDistance = (height - resultHeight) < 0 ? 1 : height - resultHeight;
@@ -44,55 +48,29 @@ function Result({ animatedScrollY }: ResultProps) {
   const numCivs = useSelector((state: any) => state.equationState.numCivs);
   const orbiters = useSelector((state: any) => state.equationState.orbiters);
 
-  const animateY = animatedScrollY.interpolate({
-    inputRange: [0, scrollDistance],
-    outputRange: [resultHeight, height],
-    extrapolate: 'clamp',
-  });
-
-  const animateRotateX = animatedScrollY.interpolate({
-    inputRange: [0, scrollDistance],
-    outputRange: ['-60deg', '0deg'],
-    extrapolate: 'clamp',
-  });
-
-  /* The angle goes from 60deg to 0. The ouput range is the scaleY
-   needed to keep the orbiter looking like a circle at:
-   60, 45, 30, 15, 0
-   This could be improved with more frames but it looks okay
-   */
-  const animateScaleY = animatedScrollY.interpolate({
-    inputRange: [0, (scrollDistance * 0.25), (scrollDistance * 0.5), (scrollDistance * 0.75), scrollDistance],
-    outputRange: [2, 1.414, 1.155, 1.035, 1],
-    extrapolate: 'clamp',
-  });
+  // Expand the result area as the panel is dragged down.
+  const containerStyle = useAnimatedStyle(() => ({
+    height: interpolate(scrollY.value, [0, scrollDistance], [resultHeight, height], Extrapolation.CLAMP),
+  }));
 
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        { height: animateY, width },
-      ]}
-    >
-      <StarBackground
-        animatedScrollY={animatedScrollY}
-        scrollDistance={scrollDistance}
-      />
+    <Animated.View style={[styles.container, { width }, containerStyle]}>
+      <StarBackground scrollY={scrollY} scrollDistance={scrollDistance} />
       <View style={styles.resultContainer}>
         <TextSecondary style={styles.civText}>
           Civilizations in our galaxy:
         </TextSecondary>
-        <Animated.View style={{ transform: [{ rotateX: animateRotateX }] }}>
+        <View>
           {orbiters.map((id: number) => (
             <Orbiter
               key={id}
               customStyle={styles.resultOrbiter}
               randomStart
-              animateY={animatedScrollY}
-              scaleY={animateScaleY}
+              scrollY={scrollY}
+              scrollDistance={scrollDistance}
             />
           ))}
-        </Animated.View>
+        </View>
         <TextSecondary style={styles.totalText}>
           {numCivs}
         </TextSecondary>
@@ -102,4 +80,3 @@ function Result({ animatedScrollY }: ResultProps) {
 }
 
 export default Result;
-
